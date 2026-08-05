@@ -79,7 +79,7 @@ else:
     st.sidebar.info("Note: BLS does not publish Parish/MSA-level CPI. Regional and National indices are shown above.")
 
 start_year = int(st.sidebar.number_input("Start Year", min_value=1990, max_value=datetime.now().year, value=2015))
-end_year = int(st.sidebar.number_input("End Year", min_value=1990, max_value=datetime.now().year, value=2024))
+end_year = int(st.sidebar.number_input("End Year", min_value=1990, max_value=datetime.now().year, value=2026))
 
 def fetch_bls_series(series_id, start_yr, end_yr, api_key):
     """Fetches data across multi-year chunks to bypass the BLS 10-year limit."""
