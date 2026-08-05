@@ -438,11 +438,40 @@ with tab2:
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # -----------------------------------------------------------------------------
-# TAB 3: ROBUST, FAST & PARALLELIZED QCEW INTERFACE
+# SAFE CACHED QCEW FETCHER
 # -----------------------------------------------------------------------------
+@st.cache_data(ttl=86400, show_spinner=False)
+def fetch_single_qcew_csv(year, period, area_code):
+    """
+    Fetches and caches a single QCEW CSV slice.
+    Strict 2.0 second timeout prevents UI thread lockups.
+    """
+    area_clean = str(area_code).strip().lower()
+    p_clean = str(period).strip().lower()
+    url = f"https://data.bls.gov/cew/data/api/{year}/{p_clean}/area/{area_clean}.csv"
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+    }
+    
+    try:
+        res = requests.get(url, headers=headers, timeout=2.0)
+        if res.status_code == 200:
+            df = pd.read_csv(io.StringIO(res.text), dtype=str)
+            df.columns = [c.replace('"', '').replace("'", '').strip() for c in df.columns]
+            for col in df.columns:
+                df[col] = df[col].astype(str).str.replace('"', '').str.replace("'", '').str.strip()
+            return df
+    except Exception:
+        pass
+    return pd.DataFrame()
+
+# =============================================================================
+# TAB 3: CONTROLLED & FAST QCEW INTERFACE
+# =============================================================================
 with tab3:
     st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
-    st.caption("Deep-dive into granular industry sectors, manufacturing sub-industries, and annual averages.")
+    st.caption("Deep-dive into granular industry sectors and annual averages.")
 
     q_col1, q_col2 = st.columns([1, 3])
 
@@ -454,7 +483,7 @@ with tab3:
         selected_qcew_areas = st.multiselect(
             "Regions / MSAs:",
             options=list(QCEW_AREAS.keys()),
-            default=["Baton Rouge MSA", "New Orleans-Metairie MSA", "Lake Charles MSA", "Houma-Thibodaux MSA"]
+            default=["Baton Rouge MSA", "New Orleans-Metairie MSA"]
         )
 
         st.subheader("3. Select Industry Level")
@@ -474,13 +503,13 @@ with tab3:
             default_sel = ["10 - Total, All Industries", "1013 - Manufacturing"]
         elif taxonomy_level == "2-Digit NAICS Sectors":
             active_dict = QCEW_SECTORS_2DIGIT
-            default_sel = ["31-33 - Manufacturing (Total)", "23 - Construction", "54 - Professional, Scientific, Tech"]
+            default_sel = ["31-33 - Manufacturing (Total)", "23 - Construction"]
         elif taxonomy_level == "3-Digit Manufacturing Subsectors":
             active_dict = QCEW_MANUFACTURING_SUBSECTORS
-            default_sel = ["325 - Chemical Manufacturing", "324 - Petroleum & Coal Products Manufacturing", "336 - Transportation Equipment (Shipbuilding/Aerospace)"]
+            default_sel = ["325 - Chemical Manufacturing", "324 - Petroleum & Coal Products Manufacturing"]
         else:
             active_dict = QCEW_MANUFACTURING_DETAILED
-            default_sel = ["3251 - Basic Chemical Manufacturing", "3241 - Petroleum Refineries & Asphalt", "3366 - Ship & Boat Building"]
+            default_sel = ["3251 - Basic Chemical Manufacturing", "3241 - Petroleum Refineries & Asphalt"]
 
         selected_qcew_industries = st.multiselect(
             "Select Industries to Query:",
@@ -497,11 +526,10 @@ with tab3:
             metric_col = QCEW_METRICS[selected_qcew_metric]
 
         c_yr1, c_yr2 = st.columns(2)
-        cur_year = datetime.now().year
         with c_yr1:
-            start_yr_qcew = st.number_input("Start Year", min_value=2012, max_value=cur_year, value=2018)
+            start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2024, value=2021)
         with c_yr2:
-            end_yr_qcew = st.number_input("End Year", min_value=2012, max_value=cur_year, value=2024)
+            end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2024, value=2023)
 
         with st.expander("⚙️ Advanced Settings (Ownership Sector)"):
             ownership_map = {
@@ -518,82 +546,60 @@ with tab3:
 
     with q_col2:
         if run_qcew:
-            combined_qcew = []
-
+            # Safeguard to prevent excessive network queries in a single click
             years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
             periods_to_fetch = ["a"] if time_freq == "Annual Averages (Full Year)" else ["1", "2", "3", "4"]
-            ind_codes = [str(active_dict[i]).strip() for i in selected_qcew_industries]
-
-            # Build list of discrete slice tasks
-            tasks = []
-            for area_name in selected_qcew_areas:
-                fips = QCEW_AREAS[area_name]
-                for yr in years_to_fetch:
-                    for p_code in periods_to_fetch:
-                        tasks.append((area_name, fips, yr, p_code))
-
-            progress_bar = st.progress(0)
-            status_text = st.empty()
-            total_tasks = len(tasks)
-            completed_tasks = 0
-
-            # Parallel worker function
-            def worker(task):
-                area_name, fips, yr, p_code = task
-                df_slice = fetch_qcew_area_slice(yr, p_code, fips)
-                if not df_slice.empty and 'own_code' in df_slice.columns and 'industry_code' in df_slice.columns:
-                    filtered_slice = df_slice[
-                        (df_slice['own_code'] == str(ownership_type)) & 
-                        (df_slice['industry_code'].isin(ind_codes))
-                    ].copy()
-                    if not filtered_slice.empty:
-                        filtered_slice['Region'] = area_name
-                        filtered_slice['Period'] = f"{yr}" if p_code == "a" else f"{yr} Q{p_code}"
-                        return filtered_slice
-                return None
-
-            status_text.text(f"Fetching {total_tasks} data slices in parallel...")
-
-            # Run parallel thread pool (max 10 concurrent requests)
-            with ThreadPoolExecutor(max_workers=10) as executor:
-                future_to_task = {executor.submit(worker, t): t for t in tasks}
-                for future in as_completed(future_to_task):
-                    completed_tasks += 1
-                    progress_bar.progress(completed_tasks / total_tasks)
-                    res = future.result()
-                    if res is not None:
-                        combined_qcew.append(res)
-
-            status_text.empty()
-            progress_bar.empty()
-
-            if combined_qcew:
-                qcew_df = pd.concat(combined_qcew, ignore_index=True)
-                
-                if metric_col in qcew_df.columns:
-                    qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
-
-                    inv_ind_map = {v: k for k, v in active_dict.items()}
-                    qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
-
-                    st.subheader(f"Results: {selected_qcew_metric}")
-                    
-                    focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
-                    sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
-
-                    if not sub_df.empty:
-                        piv_table = sub_df.pivot(index="Period", columns="Region", values=metric_col)
-                        
-                        st.line_chart(piv_table)
-                        
-                        fmt_str = "${:,.2f}" if "$" in selected_qcew_metric or "pay" in metric_col or "wage" in metric_col else "{:,.0f}"
-                        st.subheader(f"Data Table: {focus_q_ind}")
-                        st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
-                    else:
-                        st.warning("No data returned for the specified industry/year selection.")
-                else:
-                    st.error(f"Selected metric '{selected_qcew_metric}' is missing from the retrieved dataset.")
+            
+            total_requests = len(selected_qcew_areas) * len(years_to_fetch) * len(periods_to_fetch)
+            
+            if total_requests > 40:
+                st.warning(f"⚠️ Query requires {total_requests} separate API downloads. Please narrow your year range or region selection to speed up loading.")
             else:
-                st.error("No QCEW data retrieved. Verify that data for the requested years has been published by BLS for these regions.")
+                combined_qcew = []
+                ind_codes = [str(active_dict[i]).strip() for i in selected_qcew_industries]
 
+                with st.spinner(f"Downloading {total_requests} data slices from BLS..."):
+                    for area_name in selected_qcew_areas:
+                        fips = QCEW_AREAS[area_name]
+                        for yr in years_to_fetch:
+                            for p_code in periods_to_fetch:
+                                df_slice = fetch_single_qcew_csv(yr, p_code, fips)
+                                
+                                if not df_slice.empty and 'own_code' in df_slice.columns and 'industry_code' in df_slice.columns:
+                                    filtered_slice = df_slice[
+                                        (df_slice['own_code'] == str(ownership_type)) & 
+                                        (df_slice['industry_code'].isin(ind_codes))
+                                    ].copy()
+                                    
+                                    if not filtered_slice.empty:
+                                        filtered_slice['Region'] = area_name
+                                        filtered_slice['Period'] = f"{yr}" if p_code == "a" else f"{yr} Q{p_code}"
+                                        combined_qcew.append(filtered_slice)
 
+                if combined_qcew:
+                    qcew_df = pd.concat(combined_qcew, ignore_index=True)
+                    
+                    if metric_col in qcew_df.columns:
+                        qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
+
+                        inv_ind_map = {v: k for k, v in active_dict.items()}
+                        qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
+
+                        st.subheader(f"Results: {selected_qcew_metric}")
+                        
+                        focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
+                        sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
+
+                        if not sub_df.empty:
+                            piv_table = sub_df.pivot(index="Period", columns="Region", values=metric_col)
+                            st.line_chart(piv_table)
+                            
+                            fmt_str = "${:,.2f}" if "$" in selected_qcew_metric or "pay" in metric_col or "wage" in metric_col else "{:,.0f}"
+                            st.subheader(f"Data Table: {focus_q_ind}")
+                            st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
+                        else:
+                            st.warning("No records found for the selected industry in this timeframe.")
+                    else:
+                        st.error(f"Selected metric '{selected_qcew_metric}' is not present in the downloaded schema.")
+                else:
+                    st.error("No data retrieved from BLS. Verify that data for these years and regions has been published.")
