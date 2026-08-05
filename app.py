@@ -542,7 +542,7 @@ with tab3:
         with c_yr1:
             start_yr_qcew = st.number_input("Start Year", min_value=2012, max_value=cur_year, value=2018)
         with c_yr2:
-            end_yr_qcew = st.number_input("End Year", min_value=2012, max_value=cur_year, value=2024)
+            end_yr_qcew = st.number_input("End Year", min_value=2012, max_value=cur_year, value=2026)
 
         with st.expander("⚙️ Advanced Settings (Ownership Sector)"):
             ownership_map = {
