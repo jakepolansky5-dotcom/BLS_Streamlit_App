@@ -435,9 +435,11 @@ with tab2:
                         occ_trend['Value_Formatted'] = occ_trend['Value'].apply(lambda x: fmt.format(x) if pd.notnull(x) else "")
                         st.dataframe(occ_trend[['year', 'Area', 'Occupation', 'Value_Formatted']].rename(columns={'year': 'Year', 'Value_Formatted': 'Value'}), use_container_width=True)
 
-# =============================================================================
-# TAB 3: ROBUST & FLEXIBLE QCEW INTERFACE
-# =============================================================================
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# -----------------------------------------------------------------------------
+# TAB 3: ROBUST, FAST & PARALLELIZED QCEW INTERFACE
+# -----------------------------------------------------------------------------
 with tab3:
     st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
     st.caption("Deep-dive into granular industry sectors, manufacturing sub-industries, and annual averages.")
@@ -518,27 +520,52 @@ with tab3:
         if run_qcew:
             combined_qcew = []
 
-            with st.spinner("Fetching QCEW data slices from BLS Open Data..."):
-                years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
-                periods_to_fetch = ["a"] if time_freq == "Annual Averages (Full Year)" else ["1", "2", "3", "4"]
-                ind_codes = [str(active_dict[i]).strip() for i in selected_qcew_industries]
+            years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
+            periods_to_fetch = ["a"] if time_freq == "Annual Averages (Full Year)" else ["1", "2", "3", "4"]
+            ind_codes = [str(active_dict[i]).strip() for i in selected_qcew_industries]
 
-                for area_name in selected_qcew_areas:
-                    fips = QCEW_AREAS[area_name]
-                    for yr in years_to_fetch:
-                        for p_code in periods_to_fetch:
-                            df_slice = fetch_qcew_area_slice(yr, p_code, fips)
-                            if not df_slice.empty:
-                                # Ensure strict string comparison on own_code and industry_code
-                                filtered_slice = df_slice[
-                                    (df_slice['own_code'] == str(ownership_type)) & 
-                                    (df_slice['industry_code'].isin(ind_codes))
-                                ].copy()
-                                
-                                if not filtered_slice.empty:
-                                    filtered_slice['Region'] = area_name
-                                    filtered_slice['Period'] = f"{yr}" if p_code == "a" else f"{yr} Q{p_code}"
-                                    combined_qcew.append(filtered_slice)
+            # Build list of discrete slice tasks
+            tasks = []
+            for area_name in selected_qcew_areas:
+                fips = QCEW_AREAS[area_name]
+                for yr in years_to_fetch:
+                    for p_code in periods_to_fetch:
+                        tasks.append((area_name, fips, yr, p_code))
+
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            total_tasks = len(tasks)
+            completed_tasks = 0
+
+            # Parallel worker function
+            def worker(task):
+                area_name, fips, yr, p_code = task
+                df_slice = fetch_qcew_area_slice(yr, p_code, fips)
+                if not df_slice.empty and 'own_code' in df_slice.columns and 'industry_code' in df_slice.columns:
+                    filtered_slice = df_slice[
+                        (df_slice['own_code'] == str(ownership_type)) & 
+                        (df_slice['industry_code'].isin(ind_codes))
+                    ].copy()
+                    if not filtered_slice.empty:
+                        filtered_slice['Region'] = area_name
+                        filtered_slice['Period'] = f"{yr}" if p_code == "a" else f"{yr} Q{p_code}"
+                        return filtered_slice
+                return None
+
+            status_text.text(f"Fetching {total_tasks} data slices in parallel...")
+
+            # Run parallel thread pool (max 10 concurrent requests)
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                future_to_task = {executor.submit(worker, t): t for t in tasks}
+                for future in as_completed(future_to_task):
+                    completed_tasks += 1
+                    progress_bar.progress(completed_tasks / total_tasks)
+                    res = future.result()
+                    if res is not None:
+                        combined_qcew.append(res)
+
+            status_text.empty()
+            progress_bar.empty()
 
             if combined_qcew:
                 qcew_df = pd.concat(combined_qcew, ignore_index=True)
