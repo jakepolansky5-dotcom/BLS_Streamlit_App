@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 from datetime import datetime
+import io
 
 st.set_page_config(page_title="Louisiana Economic Data Explorer", layout="wide")
 st.title("📈 Louisiana Economic & Occupational Explorer (BLS)")
@@ -49,7 +50,7 @@ SAE_INDUSTRIES = {
     "Government": "90000000"
 }
 
-# OEWS Area Mapping (7-digit BLS OEWS Area Codes)
+# OEWS Area Mapping
 LA_OEWS_AREAS = {
     "Louisiana (Statewide)": ("S", "2200000"),
     "Alexandria MSA": ("M", "0010780"),
@@ -83,6 +84,43 @@ OEWS_DATA_TYPES = {
     "Annual Mean Wage ($)": "04",
     "Hourly Median Wage ($)": "13",
     "Annual Median Wage ($)": "14"
+}
+
+# QCEW FIPS Mapping (5-digit Area FIPS)
+QCEW_AREAS = {
+    "United States (National)": "US000",
+    "Louisiana (Statewide)": "22000",
+    "Alexandria MSA": "C1078",
+    "Baton Rouge MSA": "C1294",
+    "Hammond MSA": "C2522",
+    "Houma-Thibodaux MSA": "C2638",
+    "Lafayette MSA": "C2918",
+    "Lake Charles MSA": "C2934",
+    "Monroe MSA": "C3374",
+    "New Orleans-Metairie MSA": "C3538",
+    "Shreveport-Bossier City MSA": "C4334"
+}
+
+QCEW_INDUSTRIES = {
+    "10 Total, all industries": "10",
+    "1012 Goods-producing": "1012",
+    "1013 Service-providing": "1013",
+    "1021 Natural resources and mining": "1021",
+    "1022 Construction": "1022",
+    "1023 Manufacturing": "1023",
+    "1024 Trade, transportation, and utilities": "1024",
+    "1025 Information": "1025",
+    "1026 Financial activities": "1026",
+    "1027 Professional and business services": "1027",
+    "1028 Education and health services": "1028",
+    "1029 Leisure and hospitality": "1029"
+}
+
+QCEW_METRICS = {
+    "Average Weekly Wage ($)": "avg_wkly_wage",
+    "Month 3 Employment Level": "month3_emplvl",
+    "Total Quarterly Wages ($)": "total_qtrly_wages",
+    "Establishment Count": "qtrly_estabs"
 }
 
 # -----------------------------------------------------------------------------
@@ -126,11 +164,28 @@ def fetch_bls_batch(series_dict, start_year, end_year, api_key):
     df['Value'] = pd.to_numeric(df['value'], errors='coerce')
     return df
 
+@st.cache_data(ttl=3600)
+def fetch_qcew_area_slice(year, quarter, area_fips):
+    """Fetches QCEW area CSV slice directly from BLS Open Data."""
+    q_str = "a" if str(quarter).upper() == "A" else str(quarter)
+    url = f"https://data.bls.gov/cew/data/api/{year}/{q_str}/area/{area_fips}.csv"
+    try:
+        res = requests.get(url, timeout=10)
+        if res.status_code == 200:
+            return pd.read_csv(io.StringIO(res.text), dtype={'area_fips': str, 'industry_code': str, 'own_code': str})
+    except Exception:
+        pass
+    return pd.DataFrame()
+
 # -----------------------------------------------------------------------------
 # NAVIGATION TABS
 # -----------------------------------------------------------------------------
 
-tab1, tab2 = st.tabs(["📊 State & MSA Industry Data (Monthly)", "💼 Occupational Employment & Wages - OEWS (Annual)"])
+tab1, tab2, tab3 = st.tabs([
+    "📊 State & MSA Industry Data (Monthly)", 
+    "💼 Occupational Employment & Wages (OEWS)", 
+    "🏢 Quarterly Census of Employment & Wages (QCEW)"
+])
 
 # =============================================================================
 # TAB 1: INDUSTRY EMPLOYMENT, HOURS & EARNINGS
@@ -198,8 +253,6 @@ with tab1:
                         if not filtered.empty:
                             st.subheader(f"{selected_metric} Matrix ({sae_mo} {sae_yr})")
                             pivot_df = filtered.pivot(index="Industry", columns="Area", values="Value")
-                            
-                            # Apply precision rounding: 1 decimal place for Employment, 2 for Earnings/Hours
                             fmt = "{:,.1f}" if "Employees" in selected_metric else "${:,.2f}" if "$" in selected_metric else "{:,.2f}"
                             st.dataframe(pivot_df.style.format(fmt, na_rep="N/A"), use_container_width=True)
                         else:
@@ -208,7 +261,6 @@ with tab1:
                     df_res = fetch_bls_batch(series_map, sae_start, sae_end, BLS_API_KEY)
                     if not df_res.empty:
                         df_res = df_res[df_res['period'].str.startswith('M') & (df_res['period'] != 'M13')].copy()
-                        # Formatted Date without exact days (e.g., May 2024)
                         df_res['Date_Dt'] = pd.to_datetime(df_res['year'] + '-' + df_res['period'].str.replace('M', ''), format='%Y-%m')
                         df_res['Month_Year'] = df_res['Date_Dt'].dt.strftime('%b %Y')
                         df_res = df_res.sort_values('Date_Dt')
@@ -218,7 +270,6 @@ with tab1:
                         chart_pivot = trend_df.pivot(index="Month_Year", columns="Area", values="Value")
                         
                         st.line_chart(chart_pivot)
-                        
                         st.subheader("Raw Historical Table")
                         fmt = "{:,.1f}" if "Employees" in selected_metric else "{:,.2f}"
                         formatted_df = trend_df[['Month_Year', 'Area', 'Industry', 'Value']].copy()
@@ -265,8 +316,6 @@ with tab2:
             if not BLS_API_KEY:
                 st.error("Missing BLS API Key!")
             else:
-                # OEWS Series ID Structure:
-                # OE + U + AreaType (1) + AreaCode (7) + Industry (000000) + Occupation (6) + DataType (2)
                 dtype_code = OEWS_DATA_TYPES[selected_oews_metric]
                 oews_series_map = {}
                 
@@ -283,28 +332,119 @@ with tab2:
 
                 if oews_view == "Regional Comparison (Single Year)":
                     df_oews = fetch_bls_batch(oews_series_map, oews_year, oews_year, BLS_API_KEY)
-                    
                     if not df_oews.empty:
                         st.subheader(f"{selected_oews_metric} Matrix ({oews_year})")
                         pivot_oews = df_oews.pivot(index="Occupation", columns="Area", values="Value")
-                        
                         fmt = "${:,.2f}" if "$" in selected_oews_metric else "{:,.0f}"
                         st.dataframe(pivot_oews.style.format(fmt, na_rep="N/A"), use_container_width=True)
                     else:
                         st.warning(f"No OEWS data returned for {oews_year}.")
                 else:
                     df_oews = fetch_bls_batch(oews_series_map, oews_start_yr, oews_end_yr, BLS_API_KEY)
-                    
                     if not df_oews.empty:
                         df_oews = df_oews.sort_values('year')
-                        
                         focus_occ = st.selectbox("Select Occupation to Trend Across Regions:", selected_occupations)
                         occ_trend = df_oews[df_oews['Occupation'] == focus_occ]
                         chart_piv = occ_trend.pivot(index="year", columns="Area", values="Value")
                         
                         st.line_chart(chart_piv)
-                        
                         st.subheader("Raw Annual Data Table")
                         fmt = "${:,.2f}" if "$" in selected_oews_metric else "{:,.0f}"
                         occ_trend['Value_Formatted'] = occ_trend['Value'].apply(lambda x: fmt.format(x) if pd.notnull(x) else "")
                         st.dataframe(occ_trend[['year', 'Area', 'Occupation', 'Value_Formatted']].rename(columns={'year': 'Year', 'Value_Formatted': 'Value'}), use_container_width=True)
+
+# =============================================================================
+# TAB 3: QUARTERLY CENSUS OF EMPLOYMENT & WAGES (QCEW)
+# =============================================================================
+with tab3:
+    st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
+    st.caption("Compare establishments, employment levels, and weekly wages across US, Louisiana, and MSAs.")
+
+    q_col1, q_col2 = st.columns([1, 3])
+
+    with q_col1:
+        data_source = st.radio("Data Source Mode:", ["API Fetch (Automated)", "Manual CSV Upload"])
+        
+        selected_qcew_areas = st.multiselect(
+            "Select Regions to Compare:",
+            options=list(QCEW_AREAS.keys()),
+            default=["United States (National)", "Louisiana (Statewide)", "Baton Rouge MSA", "New Orleans-Metairie MSA"]
+        )
+        
+        selected_qcew_industries = st.multiselect(
+            "Select Industries:",
+            options=list(QCEW_INDUSTRIES.keys()),
+            default=["10 Total, all industries", "1022 Construction", "1023 Manufacturing", "1027 Professional and business services"]
+        )
+        
+        selected_qcew_metric = st.selectbox("Select Metric:", list(QCEW_METRICS.keys()))
+        metric_col = QCEW_METRICS[selected_qcew_metric]
+
+        start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2025, value=2021, key="qcew_start")
+        end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2025, value=2024, key="qcew_end")
+        
+        ownership_type = st.selectbox("Ownership Sector:", {"Total Covered (All)": "5", "Private": "5", "State Govt": "2", "Local Govt": "3", "Federal Govt": "1"}, index=0)
+
+        uploaded_files = None
+        if data_source == "Manual CSV Upload":
+            uploaded_files = st.file_uploader("Upload QCEW Area CSV Files:", type=["csv"], accept_multiple_files=True)
+            
+        run_qcew = st.button("Generate QCEW Comparison")
+
+    with q_col2:
+        if run_qcew:
+            combined_qcew = []
+
+            if data_source == "API Fetch (Automated)":
+                with st.spinner("Fetching QCEW data slices from BLS..."):
+                    years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
+                    quarters = ["1", "2", "3", "4"]
+
+                    inv_area_map = {v: k for k, v in QCEW_AREAS.items()}
+                    
+                    for area_name in selected_qcew_areas:
+                        fips = QCEW_AREAS[area_name]
+                        for yr in years_to_fetch:
+                            for qtr in quarters:
+                                df_slice = fetch_qcew_area_slice(yr, qtr, fips)
+                                if not df_slice.empty:
+                                    # Filter by Total Covered ownership and selected industries
+                                    ind_codes = [QCEW_INDUSTRIES[i] for i in selected_qcew_industries]
+                                    filtered_slice = df_slice[(df_slice['own_code'].astype(str) == ownership_type) & 
+                                                              (df_slice['industry_code'].astype(str).isin(ind_codes))].copy()
+                                    if not filtered_slice.empty:
+                                        filtered_slice['Region'] = area_name
+                                        filtered_slice['Period'] = f"{yr} Q{qtr}"
+                                        combined_qcew.append(filtered_slice)
+
+            elif data_source == "Manual CSV Upload" and uploaded_files:
+                for file in uploaded_files:
+                    df_up = pd.read_csv(file, dtype={'area_fips': str, 'industry_code': str, 'own_code': str})
+                    combined_qcew.append(df_up)
+
+            if combined_qcew:
+                qcew_df = pd.concat(combined_qcew, ignore_index=True)
+                qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
+
+                # Code to Label mapping
+                inv_ind_map = {v: k for k, v in QCEW_INDUSTRIES.items()}
+                qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
+
+                st.subheader(f"Comparison Matrix: {selected_qcew_metric}")
+                
+                # Pivot table by Period & Region for a single chosen industry or across industries
+                focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
+                sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
+
+                if not sub_df.empty:
+                    piv_table = sub_df.pivot(index="Period", columns="Region", values=metric_col)
+                    
+                    st.line_chart(piv_table)
+                    
+                    fmt_str = "${:,.2f}" if "$" in selected_qcew_metric else "{:,.0f}"
+                    st.subheader(f"Data Summary: {focus_q_ind}")
+                    st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
+                else:
+                    st.warning("No data found for the selected combination.")
+            else:
+                st.error("No QCEW data retrieved. Check selected years/regions or uploaded files.")
