@@ -10,10 +10,10 @@ st.title("📈 Louisiana Economic & Occupational Explorer (BLS)")
 BLS_API_KEY = st.secrets.get("BLS_API_KEY", "")
 
 # -----------------------------------------------------------------------------
-# REFERENCE DICTIONARIES
+# REFERENCE DICTIONARIES & ORGANIZED TAXONOMIES
 # -----------------------------------------------------------------------------
 
-# SAE Area Codes (Corrected for BLS)
+# SAE Area Codes
 LA_SAE_AREAS = {
     "Louisiana (Statewide)": "00000",
     "Alexandria MSA": "10780",
@@ -86,11 +86,11 @@ OEWS_DATA_TYPES = {
     "Annual Median Wage ($)": "14"
 }
 
-# QCEW FIPS Mapping (5-digit Area FIPS)
+# QCEW FIPS Mapping
 QCEW_AREAS = {
     "United States (National)": "US000",
     "Louisiana (Statewide)": "22000",
-    "Alexandria MSA": "C1078",
+    "Alexandria MSA": "C1002",
     "Baton Rouge MSA": "C1294",
     "Hammond MSA": "C2522",
     "Houma-Thibodaux MSA": "C2638",
@@ -101,45 +101,72 @@ QCEW_AREAS = {
     "Shreveport-Bossier City MSA": "C4334"
 }
 
-# CORRECTED QCEW INDUSTRY TAXONOMY
-QCEW_INDUSTRIES = {
-    # High-Level Aggregates & Supersectors
-    "10 Total, All Industries": "10",
-    "101 Goods-Producing Domain": "101",
-    "1011 Natural Resources & Mining": "1011",
-    "1012 Construction": "1012",
-    "1013 Manufacturing": "1013",
-    "102 Service-Providing Domain": "102",
-    "1021 Trade, Transportation, & Utilities": "1021",
-    "1022 Information": "1022",
-    "1023 Financial Activities": "1023",
-    "1024 Professional & Business Services": "1024",
-    "1025 Education & Health Services": "1025",
-    "1026 Leisure & Hospitality": "1026",
-    "1027 Other Services": "1027",
-    "1028 Public Administration": "1028",
-    
-    # Standard 2-Digit NAICS Sectors
-    "NAICS 11 Agriculture, Forestry, Fishing": "11",
-    "NAICS 21 Mining, Quarrying, Oil & Gas": "21",
-    "NAICS 22 Utilities": "22",
-    "NAICS 23 Construction": "23",
-    "NAICS 31-33 Manufacturing": "31-33",
-    "NAICS 42 Wholesale Trade": "42",
-    "NAICS 44-45 Retail Trade": "44-45",
-    "NAICS 48-49 Transportation & Warehousing": "48-49",
-    "NAICS 51 Information": "51",
-    "NAICS 52 Finance & Insurance": "52",
-    "NAICS 53 Real Estate & Rental/Leasing": "53",
-    "NAICS 54 Professional, Scientific, Tech": "54",
-    "NAICS 55 Management of Companies": "55",
-    "NAICS 56 Admin & Support / Waste Mgmt": "56",
-    "NAICS 61 Educational Services": "61",
-    "NAICS 62 Health Care & Social Assistance": "62",
-    "NAICS 71 Arts, Entertainment, Recreation": "71",
-    "NAICS 72 Accommodation & Food Services": "72",
-    "NAICS 81 Other Services (ex. Public Admin)": "81",
-    "NAICS 92 Public Administration": "92"
+# HIGHLY ORGANIZED QCEW TAXONOMY (Grouped by Granularity)
+QCEW_AGGREGATES = {
+    "10 - Total, All Industries": "10",
+    "101 - Goods-Producing Domain": "101",
+    "102 - Service-Providing Domain": "102",
+    "1011 - Natural Resources & Mining": "1011",
+    "1012 - Construction": "1012",
+    "1013 - Manufacturing": "1013",
+    "1021 - Trade, Transportation, & Utilities": "1021",
+    "1022 - Information": "1022",
+    "1023 - Financial Activities": "1023",
+    "1024 - Professional & Business Services": "1024",
+    "1025 - Education & Health Services": "1025",
+    "1026 - Leisure & Hospitality": "1026",
+    "1027 - Other Services": "1027",
+    "1028 - Public Administration": "1028"
+}
+
+QCEW_SECTORS_2DIGIT = {
+    "11 - Agriculture, Forestry, Fishing": "11",
+    "21 - Mining, Quarrying, Oil & Gas": "21",
+    "22 - Utilities": "22",
+    "23 - Construction": "23",
+    "31-33 - Manufacturing (Total)": "31-33",
+    "42 - Wholesale Trade": "42",
+    "44-45 - Retail Trade": "44-45",
+    "48-49 - Transportation & Warehousing": "48-49",
+    "51 - Information": "51",
+    "52 - Finance & Insurance": "52",
+    "53 - Real Estate & Rental/Leasing": "53",
+    "54 - Professional, Scientific, Tech": "54",
+    "55 - Management of Companies": "55",
+    "56 - Admin & Support / Waste Mgmt": "56",
+    "61 - Educational Services": "61",
+    "62 - Health Care & Social Assistance": "62",
+    "71 - Arts, Entertainment, Recreation": "71",
+    "72 - Accommodation & Food Services": "72",
+    "81 - Other Services": "81",
+    "92 - Public Administration": "92"
+}
+
+QCEW_MANUFACTURING_SUBSECTORS = {
+    "311 - Food Manufacturing": "311",
+    "312 - Beverage & Tobacco Products": "312",
+    "321 - Wood Products Manufacturing": "321",
+    "322 - Paper Manufacturing": "322",
+    "324 - Petroleum & Coal Products Manufacturing": "324",
+    "325 - Chemical Manufacturing": "325",
+    "326 - Plastics & Rubber Products": "326",
+    "327 - Nonmetallic Mineral Products": "327",
+    "331 - Primary Metal Manufacturing": "331",
+    "332 - Fabricated Metal Products": "332",
+    "333 - Machinery Manufacturing": "333",
+    "334 - Computer & Electronic Products": "334",
+    "335 - Electrical Equipment & Appliances": "335",
+    "336 - Transportation Equipment (Shipbuilding/Aerospace)": "336"
+}
+
+QCEW_MANUFACTURING_DETAILED = {
+    "3241 - Petroleum Refineries & Asphalt": "3241",
+    "3251 - Basic Chemical Manufacturing": "3251",
+    "3252 - Resin, Synthetic Rubber, & Fibers": "3252",
+    "3253 - Pesticide, Fertilizer, & Agricultural Chemicals": "3253",
+    "3327 - Machine Shops & Turned Products": "3327",
+    "3331 - Agriculture, Construction, & Mining Machinery": "3331",
+    "3366 - Ship & Boat Building": "3366"
 }
 
 QCEW_METRICS = {
@@ -147,6 +174,13 @@ QCEW_METRICS = {
     "Month 3 Employment Level": "month3_emplvl",
     "Total Quarterly Wages ($)": "total_qtrly_wages",
     "Establishment Count": "qtrly_estabs"
+}
+
+QCEW_ANNUAL_METRICS = {
+    "Annual Average Employment Level": "annual_avg_emplvl",
+    "Average Annual Pay ($)": "avg_annual_pay",
+    "Total Annual Wages ($)": "total_annual_wages",
+    "Annual Average Establishment Count": "annual_avg_estabs"
 }
 
 # -----------------------------------------------------------------------------
@@ -192,8 +226,7 @@ def fetch_bls_batch(series_dict, start_year, end_year, api_key):
 
 @st.cache_data(ttl=3600)
 def fetch_qcew_area_slice(year, quarter, area_fips):
-    """Fetches QCEW area CSV slice directly from BLS Open Data."""
-    q_str = "a" if str(quarter).upper() == "A" else str(quarter)
+    q_str = str(quarter).lower()
     url = f"https://data.bls.gov/cew/data/api/{year}/{q_str}/area/{area_fips}.csv"
     try:
         res = requests.get(url, timeout=10)
@@ -208,13 +241,13 @@ def fetch_qcew_area_slice(year, quarter, area_fips):
 # -----------------------------------------------------------------------------
 
 tab1, tab2, tab3 = st.tabs([
-    "📊 State & MSA Industry Data (Monthly)", 
-    "💼 Occupational Employment & Wages (OEWS)", 
-    "🏢 Quarterly Census of Employment & Wages (QCEW)"
+    "📊 Monthly Employment & Hours (SAE)", 
+    "💼 Occupational Wages (OEWS)", 
+    "🏢 Detailed Industry Wages & Employment (QCEW)"
 ])
 
 # =============================================================================
-# TAB 1: INDUSTRY EMPLOYMENT, HOURS & EARNINGS
+# TAB 1: SAE
 # =============================================================================
 with tab1:
     st.header("Industry Nonfarm Employment, Hours & Earnings")
@@ -250,7 +283,7 @@ with tab1:
             sae_start = st.number_input("Start Year", min_value=2010, max_value=cur_yr, value=2020, key="sae_s")
             sae_end = st.number_input("End Year", min_value=2010, max_value=cur_yr, value=2024, key="sae_e")
 
-        run_sae = st.button("Extract Industry Data")
+        run_sae = st.button("Extract SAE Data", type="primary")
 
     with col2:
         if run_sae:
@@ -303,7 +336,7 @@ with tab1:
                         st.dataframe(formatted_df, use_container_width=True)
 
 # =============================================================================
-# TAB 2: OCCUPATIONAL EMPLOYMENT & WAGES (OEWS)
+# TAB 2: OEWS
 # =============================================================================
 with tab2:
     st.header("💼 Occupational Employment & Wage Statistics (OEWS)")
@@ -335,7 +368,7 @@ with tab2:
             oews_start_yr = st.number_input("Start Year", min_value=2015, max_value=2025, value=2018, key="oews_s")
             oews_end_yr = st.number_input("End Year", min_value=2015, max_value=2025, value=2025, key="oews_e")
             
-        run_oews = st.button("Extract OEWS Data")
+        run_oews = st.button("Extract OEWS Data", type="primary")
 
     with o_col2:
         if run_oews:
@@ -380,109 +413,141 @@ with tab2:
                         st.dataframe(occ_trend[['year', 'Area', 'Occupation', 'Value_Formatted']].rename(columns={'year': 'Year', 'Value_Formatted': 'Value'}), use_container_width=True)
 
 # =============================================================================
-# TAB 3: QUARTERLY CENSUS OF EMPLOYMENT & WAGES (QCEW)
+# TAB 3: REDESIGNED USER-FRIENDLY QCEW INTERFACE
 # =============================================================================
 with tab3:
     st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
-    st.caption("Compare establishments, employment levels, and weekly wages across US, Louisiana, and MSAs.")
+    st.caption("Deep-dive into granular industry sectors, manufacturing sub-industries, and annual averages.")
 
     q_col1, q_col2 = st.columns([1, 3])
 
     with q_col1:
-        data_source = st.radio("Data Source Mode:", ["API Fetch (Automated)", "Manual CSV Upload"])
+        st.subheader("1. Scope & Frequency")
+        time_freq = st.radio("Time Resolution:", ["Annual Averages (Full Year)", "Quarterly Data"], index=0)
         
+        st.subheader("2. Select Regions")
         selected_qcew_areas = st.multiselect(
-            "Select Regions to Compare:",
+            "Regions / MSAs:",
             options=list(QCEW_AREAS.keys()),
-            default=["United States (National)", "Louisiana (Statewide)", "Baton Rouge MSA", "New Orleans-Metairie MSA"]
+            default=["Baton Rouge MSA", "New Orleans-Metairie MSA", "Lake Charles MSA", "Houma-Thibodaux MSA"]
         )
-        
+
+        st.subheader("3. Select Industry Level")
+        taxonomy_level = st.radio(
+            "NAICS Detail Level:",
+            [
+                "Broad Supersectors & Aggregates",
+                "2-Digit NAICS Sectors",
+                "3-Digit Manufacturing Subsectors",
+                "4-Digit Detailed Manufacturing"
+            ],
+            index=2
+        )
+
+        # Dynamic Dropdown Population Based on User Choice
+        if taxonomy_level == "Broad Supersectors & Aggregates":
+            active_dict = QCEW_AGGREGATES
+            default_sel = ["10 - Total, All Industries", "1013 - Manufacturing"]
+        elif taxonomy_level == "2-Digit NAICS Sectors":
+            active_dict = QCEW_SECTORS_2DIGIT
+            default_sel = ["31-33 - Manufacturing (Total)", "23 - Construction", "54 - Professional, Scientific, Tech"]
+        elif taxonomy_level == "3-Digit Manufacturing Subsectors":
+            active_dict = QCEW_MANUFACTURING_SUBSECTORS
+            default_sel = ["325 - Chemical Manufacturing", "324 - Petroleum & Coal Products Manufacturing", "336 - Transportation Equipment (Shipbuilding/Aerospace)"]
+        else:
+            active_dict = QCEW_MANUFACTURING_DETAILED
+            default_sel = ["3251 - Basic Chemical Manufacturing", "3241 - Petroleum Refineries & Asphalt", "3366 - Ship & Boat Building"]
+
         selected_qcew_industries = st.multiselect(
-            "Select Industries:",
-            options=list(QCEW_INDUSTRIES.keys()),
-            default=["10 Total, All Industries", "1012 Construction", "1013 Manufacturing", "1024 Professional & Business Services"]
+            "Select Industries to Query:",
+            options=list(active_dict.keys()),
+            default=default_sel
         )
-        
-        selected_qcew_metric = st.selectbox("Select Metric:", list(QCEW_METRICS.keys()))
-        metric_col = QCEW_METRICS[selected_qcew_metric]
 
-        start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2025, value=2021, key="qcew_start")
-        end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2025, value=2024, key="qcew_end")
-        
-        # Ownership mapping dictionary to ensure correct value handling
-        ownership_map = {
-            "Total Covered (All)": "5",
-            "Private": "5",
-            "State Govt": "2",
-            "Local Govt": "3",
-            "Federal Govt": "1"
-        }
-        selected_ownership_label = st.selectbox("Ownership Sector:", list(ownership_map.keys()), index=0)
-        ownership_type = ownership_map[selected_ownership_label]
+        st.subheader("4. Metrics & Timeframe")
+        if time_freq == "Annual Averages (Full Year)":
+            selected_qcew_metric = st.selectbox("Select Metric:", list(QCEW_ANNUAL_METRICS.keys()), index=0)
+            metric_col = QCEW_ANNUAL_METRICS[selected_qcew_metric]
+        else:
+            selected_qcew_metric = st.selectbox("Select Metric:", list(QCEW_METRICS.keys()), index=0)
+            metric_col = QCEW_METRICS[selected_qcew_metric]
 
-        uploaded_files = None
-        if data_source == "Manual CSV Upload":
-            uploaded_files = st.file_uploader("Upload QCEW Area CSV Files:", type=["csv"], accept_multiple_files=True)
-            
-        run_qcew = st.button("Generate QCEW Comparison")
+        c_yr1, c_yr2 = st.columns(2)
+        with c_yr1:
+            start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2025, value=2020)
+        with c_yr2:
+            end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2025, value=2023)
+
+        with st.expander("⚙️ Advanced Settings (Ownership Sector)"):
+            ownership_map = {
+                "Private Industry Only (Default)": "5",
+                "Total Covered (Private + Govt)": "5",
+                "State Government": "2",
+                "Local Government": "3",
+                "Federal Government": "1"
+            }
+            selected_ownership_label = st.selectbox("Ownership Sector:", list(ownership_map.keys()), index=0)
+            ownership_type = ownership_map[selected_ownership_label]
+
+        run_qcew = st.button("Generate QCEW Analysis", type="primary", use_container_width=True)
 
     with q_col2:
         if run_qcew:
             combined_qcew = []
 
-            if data_source == "API Fetch (Automated)":
-                with st.spinner("Fetching QCEW data slices from BLS..."):
-                    years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
-                    quarters = ["1", "2", "3", "4"]
+            with st.spinner("Fetching QCEW data slices from BLS Open Data..."):
+                years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
+                periods_to_fetch = ["a"] if time_freq == "Annual Averages (Full Year)" else ["1", "2", "3", "4"]
+                ind_codes = [active_dict[i] for i in selected_qcew_industries]
 
-                    inv_area_map = {v: k for k, v in QCEW_AREAS.items()}
-                    ind_codes = [QCEW_INDUSTRIES[i] for i in selected_qcew_industries]
-                    
-                    for area_name in selected_qcew_areas:
-                        fips = QCEW_AREAS[area_name]
-                        for yr in years_to_fetch:
-                            for qtr in quarters:
-                                df_slice = fetch_qcew_area_slice(yr, qtr, fips)
-                                if not df_slice.empty:
-                                    # Filter by ownership code and selected industry codes
-                                    filtered_slice = df_slice[
-                                        (df_slice['own_code'].astype(str) == ownership_type) & 
-                                        (df_slice['industry_code'].astype(str).isin(ind_codes))
-                                    ].copy()
-                                    
-                                    if not filtered_slice.empty:
-                                        filtered_slice['Region'] = area_name
-                                        filtered_slice['Period'] = f"{yr} Q{qtr}"
-                                        combined_qcew.append(filtered_slice)
-
-            elif data_source == "Manual CSV Upload" and uploaded_files:
-                for file in uploaded_files:
-                    df_up = pd.read_csv(file, dtype={'area_fips': str, 'industry_code': str, 'own_code': str})
-                    combined_qcew.append(df_up)
+                for area_name in selected_qcew_areas:
+                    fips = QCEW_AREAS[area_name]
+                    for yr in years_to_fetch:
+                        for p_code in periods_to_fetch:
+                            df_slice = fetch_qcew_area_slice(yr, p_code, fips)
+                            if not df_slice.empty:
+                                # Clean column strings
+                                df_slice.columns = [c.replace('"', '').strip() for c in df_slice.columns]
+                                
+                                # Filter slice
+                                filtered_slice = df_slice[
+                                    (df_slice['own_code'].astype(str) == ownership_type) & 
+                                    (df_slice['industry_code'].astype(str).isin(ind_codes))
+                                ].copy()
+                                
+                                if not filtered_slice.empty:
+                                    filtered_slice['Region'] = area_name
+                                    filtered_slice['Period'] = f"{yr}" if p_code == "a" else f"{yr} Q{p_code}"
+                                    combined_qcew.append(filtered_slice)
 
             if combined_qcew:
                 qcew_df = pd.concat(combined_qcew, ignore_index=True)
-                qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
-
-                # Code to Label mapping
-                inv_ind_map = {v: k for k, v in QCEW_INDUSTRIES.items()}
-                qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
-
-                st.subheader(f"Comparison Matrix: {selected_qcew_metric}")
                 
-                # Filter selection for charting
-                focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
-                sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
+                if metric_col in qcew_df.columns:
+                    qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
 
-                if not sub_df.empty:
-                    piv_table = sub_df.pivot(index="Period", columns="Region", values=metric_col)
+                    # Map Code back to user label
+                    inv_ind_map = {v: k for k, v in active_dict.items()}
+                    qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
+
+                    st.subheader(f"Results: {selected_qcew_metric}")
                     
-                    st.line_chart(piv_table)
-                    
-                    fmt_str = "${:,.2f}" if "$" in selected_qcew_metric else "{:,.0f}"
-                    st.subheader(f"Data Summary: {focus_q_ind}")
-                    st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
+                    # Single Industry Filter for clean Line Charts
+                    focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
+                    sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
+
+                    if not sub_df.empty:
+                        piv_table = sub_df.pivot(index="Period", columns="Region", values=metric_col)
+                        
+                        st.line_chart(piv_table)
+                        
+                        fmt_str = "${:,.2f}" if "$" in selected_qcew_metric or "pay" in metric_col or "wage" in metric_col else "{:,.0f}"
+                        st.subheader(f"Data Table: {focus_q_ind}")
+                        st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
+                    else:
+                        st.warning("No data found for the selected combinations.")
                 else:
-                    st.warning("No data found for the selected combination.")
+                    st.error(f"Selected metric '{selected_qcew_metric}' is not present in the returned BLS dataset.")
             else:
-                st.error("No QCEW data retrieved. Check selected years/regions or uploaded files.")
+                st.error("No QCEW data retrieved. Verify selected regions, years, or industry codes.")
+
