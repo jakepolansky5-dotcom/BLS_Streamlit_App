@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from datetime import datetime
 
 # -----------------------------------------------------------------------------
-# PAGE CONFIG & GLOBAL SETTINGS
+# PAGE CONFIG (Must be the very first Streamlit command)
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Louisiana Economic Data Explorer", 
@@ -20,7 +19,6 @@ HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 # -----------------------------------------------------------------------------
 # REFERENCE DICTIONARIES
 # -----------------------------------------------------------------------------
-# Common Regions
 LA_AREAS = {
     "Louisiana (Statewide)": "22000",
     "Alexandria MSA": "c1002",
@@ -34,7 +32,6 @@ LA_AREAS = {
     "Shreveport-Bossier City MSA": "c4334"
 }
 
-# SAE (State and Area Employment) Industries
 SAE_INDUSTRIES = {
     "Total Nonfarm": "00000000",
     "Total Private": "05000000",
@@ -50,7 +47,6 @@ SAE_INDUSTRIES = {
     "Government": "90000000"
 }
 
-# OEWS Occupations (SOC Codes)
 OEWS_OCCUPATIONS = {
     "All Occupations (Total)": "00-0000",
     "Management Occupations": "11-0000",
@@ -62,7 +58,6 @@ OEWS_OCCUPATIONS = {
     "Production Occupations": "51-0000"
 }
 
-# QCEW Reference Dictionaries
 QCEW_AREAS = {"United States (National)": "us000", **LA_AREAS}
 
 QCEW_AGGREGATES = {
@@ -102,12 +97,10 @@ QCEW_METRICS = {
 }
 
 # -----------------------------------------------------------------------------
-# SAFE DATA FETCHERS (NO UI LOCKS)
+# SAFE CACHED DATA FETCHERS
 # -----------------------------------------------------------------------------
 @st.cache_data(ttl=86400, show_spinner=False)
 def get_sae_data(series_code: str, start_year: int, end_year: int):
-    """Fetches SAE monthly employment time series."""
-    # Simulating BLS flat file retrieval or synthetic generation fallback
     dates = pd.date_range(start=f"{start_year}-01-01", end=f"{end_year}-12-01", freq="MS")
     np.random.seed(abs(hash(series_code)) % (2**32 - 1))
     
@@ -121,7 +114,6 @@ def get_sae_data(series_code: str, start_year: int, end_year: int):
 
 @st.cache_data(ttl=86400, show_spinner=False)
 def get_oews_data(area_name: str, soc_code: str):
-    """Fetches OEWS wage and employment benchmarks by occupation."""
     np.random.seed(abs(hash(area_name + soc_code)) % (2**32 - 1))
     
     hourly_mean = np.round(np.random.uniform(18.50, 65.00), 2)
@@ -136,7 +128,6 @@ def get_oews_data(area_name: str, soc_code: str):
 
 @st.cache_data(ttl=86400, show_spinner=False)
 def get_qcew_slice(year: int, period: str, area_fips: str):
-    """Direct CSV reader for QCEW API."""
     url = f"https://data.bls.gov/cew/data/api/{year}/{period.lower()}/area/{area_fips.lower()}.csv"
     try:
         df = pd.read_csv(
@@ -158,7 +149,7 @@ def get_qcew_slice(year: int, period: str, area_fips: str):
         return None
 
 # -----------------------------------------------------------------------------
-# APP INTERFACE (TABS)
+# APP INTERFACE
 # -----------------------------------------------------------------------------
 tab1, tab2, tab3 = st.tabs([
     "📊 Monthly Employment (SAE)", 
@@ -166,9 +157,7 @@ tab1, tab2, tab3 = st.tabs([
     "🏢 Detailed Industry Wages (QCEW)"
 ])
 
-# -----------------------------------------------------------------------------
 # TAB 1: SAE
-# -----------------------------------------------------------------------------
 with tab1:
     st.header("📊 Current Employment Statistics (SAE)")
     st.write("Track monthly nonfarm employment trends across Louisiana MSAs.")
@@ -179,10 +168,8 @@ with tab1:
         st.subheader("Parameters")
         sae_area = st.selectbox("Select Area:", list(LA_AREAS.keys()), key="sae_area")
         sae_ind = st.selectbox("Select Industry:", list(SAE_INDUSTRIES.keys()), key="sae_ind")
-        
         sae_start = st.number_input("Start Year", 2015, 2024, 2018, key="sae_start")
         sae_end = st.number_input("End Year", 2015, 2024, 2023, key="sae_end")
-        
         btn_sae = st.button("Fetch SAE Data", type="primary", use_container_width=True)
 
     with col2:
@@ -193,18 +180,16 @@ with tab1:
             if records:
                 df_sae = pd.DataFrame(records)
                 df_sae["Date"] = pd.to_datetime(df_sae["Date"])
-                
                 st.subheader(f"Employment Trend: {sae_ind} in {sae_area}")
                 st.line_chart(df_sae.set_index("Date")["Employment (Thousands)"])
-                
                 with st.expander("View Data Table"):
                     st.dataframe(df_sae, use_container_width=True)
             else:
                 st.error("Unable to load SAE records for this selection.")
+        else:
+            st.info("Select parameters on the left and click **Fetch SAE Data** to begin.")
 
-# -----------------------------------------------------------------------------
 # TAB 2: OEWS
-# -----------------------------------------------------------------------------
 with tab2:
     st.header("💼 Occupational Employment & Wage Statistics (OEWS)")
     st.write("Explore occupational wage estimates and employment density.")
@@ -215,7 +200,6 @@ with tab2:
         st.subheader("Parameters")
         oews_area = st.selectbox("Select Region:", list(LA_AREAS.keys()), key="oews_area")
         oews_occ = st.selectbox("Select Occupation:", list(OEWS_OCCUPATIONS.keys()), key="oews_occ")
-        
         btn_oews = st.button("Fetch OEWS Data", type="primary", use_container_width=True)
 
     with col2:
@@ -226,7 +210,6 @@ with tab2:
             st.subheader(f"Wage & Employment Metrics")
             st.caption(f"Occupation: **{oews_occ}** | Region: **{oews_area}**")
             
-            # Display Key Metrics
             m1, m2, m3 = st.columns(3)
             m1.metric("Hourly Mean", df_oews.iloc[1]["Value"])
             m2.metric("Annual Mean", df_oews.iloc[2]["Value"])
@@ -234,10 +217,10 @@ with tab2:
             
             st.divider()
             st.dataframe(df_oews, use_container_width=True)
+        else:
+            st.info("Select parameters on the left and click **Fetch OEWS Data** to begin.")
 
-# -----------------------------------------------------------------------------
 # TAB 3: QCEW
-# -----------------------------------------------------------------------------
 with tab3:
     st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
     st.write("Analyze establishment counts, average weekly wages, and total payroll.")
@@ -321,22 +304,21 @@ with tab3:
                     
                     if metric_col in df_final.columns:
                         df_final[metric_col] = pd.to_numeric(df_final[metric_col], errors='coerce')
-                        
                         inv_map = {v: k for k, v in active_dict.items()}
                         df_final['Industry_Name'] = df_final['industry_code'].map(inv_map)
 
                         st.subheader(f"Data Output: {selected_metric_label}")
-                        
                         pivot_df = df_final.pivot_table(
                             index="Period", 
                             columns=["Region", "Industry_Name"], 
                             values=metric_col,
                             aggfunc="first"
                         )
-                        
                         st.line_chart(pivot_df)
                         st.dataframe(pivot_df, use_container_width=True)
                     else:
                         st.error(f"Metric '{metric_col}' was not returned by BLS.")
                 else:
                     st.error("No matching records found. Verify that BLS has published data for the chosen years.")
+        else:
+            st.info("Select parameters on the left and click **Fetch QCEW Data** to begin.")
