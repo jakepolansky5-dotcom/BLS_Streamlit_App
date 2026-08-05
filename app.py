@@ -4,33 +4,17 @@ import pandas as pd
 from datetime import datetime
 
 st.set_page_config(page_title="Louisiana Economic Data Explorer", layout="wide")
-st.title("📈 Louisiana Economic Data Explorer (BLS)")
-st.write("Analyze Unemployment Rates across Louisiana Parishes/MSAs alongside Consumer Price Index metrics.")
+st.title("📈 Louisiana State & MSA Economic Explorer (BLS)")
+st.write("Compare Nonfarm Employment, Earnings, and Hours across Louisiana MSAs, Supersectors, and Detailed Industries.")
 
 BLS_API_KEY = st.secrets.get("BLS_API_KEY", "")
 
-# --- Reference Mappings for Louisiana ---
-LA_PARISHES = {
-    "Acadia Parish": "001", "Allen Parish": "003", "Ascension Parish": "005", "Assumption Parish": "007",
-    "Avoyelles Parish": "009", "Beauregard Parish": "011", "Bienville Parish": "013", "Bossier Parish": "015",
-    "Caddo Parish": "017", "Calcasieu Parish": "019", "Caldwell Parish": "021", "Cameron Parish": "023",
-    "Catahoula Parish": "025", "Claiborne Parish": "027", "Concordia Parish": "029", "De Soto Parish": "031",
-    "East Baton Rouge Parish": "033", "East Carroll Parish": "035", "East Feliciana Parish": "037",
-    "Evangeline Parish": "039", "Franklin Parish": "041", "Grant Parish": "043", "Iberia Parish": "045",
-    "Iberville Parish": "047", "Jackson Parish": "049", "Jefferson Parish": "051", "Jefferson Davis Parish": "053",
-    "Lafayette Parish": "055", "Lafourche Parish": "057", "LaSalle Parish": "059", "Lincoln Parish": "061",
-    "Livingston Parish": "063", "Madison Parish": "065", "Morehouse Parish": "067", "Natchitoches Parish": "069",
-    "Orleans Parish": "071", "Ouachita Parish": "073", "Plaquemines Parish": "075", "Pointe Coupee Parish": "077",
-    "Rapides Parish": "079", "Red River Parish": "081", "Richland Parish": "083", "Sabine Parish": "085",
-    "St. Bernard Parish": "087", "St. Charles Parish": "089", "St. Helena Parish": "091", "St. James Parish": "093",
-    "St. John the Baptist Parish": "095", "St. Landry Parish": "097", "St. Martin Parish": "099",
-    "St. Mary Parish": "101", "St. Tammany Parish": "103", "Tangipahoa Parish": "105", "Tensas Parish": "107",
-    "Terrebonne Parish": "109", "Union Parish": "111", "Vermilion Parish": "113", "Vernon Parish": "115",
-    "Washington Parish": "117", "Webster Parish": "119", "West Baton Rouge Parish": "121",
-    "West Carroll Parish": "123", "West Feliciana Parish": "125", "Winn Parish": "127"
-}
+# -----------------------------------------------------------------------------
+# REFERENCE MAPPINGS (BLS State & Area Employment - SAE)
+# -----------------------------------------------------------------------------
 
-LA_MSAS = {
+LA_AREAS = {
+    "Louisiana (Statewide)": "00000",
     "Alexandria MSA": "10780",
     "Baton Rouge MSA": "12900",
     "Hammond MSA": "25220",
@@ -42,58 +26,71 @@ LA_MSAS = {
     "Shreveport-Bossier City MSA": "38200"
 }
 
-CPI_OPTIONS = {
-    "South Region Urban CPI (CUUR0400SA0)": "CUUR0400SA0",
-    "U.S. City Average CPI (CUUR0000SA0)": "CUUR0000SA0"
+SAE_DATA_TYPES = {
+    "All Employees (Thousands)": "01",
+    "Average Hourly Earnings ($)": "03",
+    "Average Weekly Hours": "07",
+    "Average Weekly Earnings ($)": "11"
 }
 
-# --- Sidebar Controls ---
-st.sidebar.header("Query Settings")
+# Major Supersectors & Key Industries
+SAE_INDUSTRIES = {
+    "Total Nonfarm": "00000000",
+    "Total Private": "05000000",
+    "Goods Producing": "06000000",
+    "Service-Providing": "07000000",
+    "Mining, Logging, and Construction": "15000000",
+    "Construction": "20000000",
+    "Manufacturing": "30000000",
+    "Durable Goods": "31000000",
+    "Nondurable Goods": "32000000",
+    "Trade, Transportation, and Utilities": "40000000",
+    "Wholesale Trade": "41000000",
+    "Retail Trade": "42000000",
+    "Transportation, Warehousing, and Utilities": "43000000",
+    "Information": "50000000",
+    "Financial Activities": "55000000",
+    "Professional and Business Services": "60000000",
+    "Education and Health Services": "65000000",
+    "Health Care and Social Assistance": "62000000",
+    "Leisure and Hospitality": "70000000",
+    "Accommodation and Food Services": "72000000",
+    "Other Services": "80000000",
+    "Government": "90000000",
+    "Federal Government": "90910000",
+    "State Government": "90920000",
+    "Local Government": "90930000"
+}
 
-indicator_type = st.sidebar.radio("Select Category:", ["Unemployment Rate (LAUS)", "Consumer Price Index (CPI)"])
+# Inverse lookups for decoding API responses
+AREA_LOOKUP = {v: k for k, v in LA_AREAS.items()}
+INDUSTRY_LOOKUP = {v: k for k, v in SAE_INDUSTRIES.items()}
+DATATYPE_LOOKUP = {v: k for k, v in SAE_DATA_TYPES.items()}
 
-series_id = ""
-selected_label = ""
+# -----------------------------------------------------------------------------
+# HELPER FUNCTIONS FOR BATCH API CALLS
+# -----------------------------------------------------------------------------
 
-if indicator_type == "Unemployment Rate (LAUS)":
-    geo_level = st.sidebar.selectbox("Geographic Level:", ["Statewide (Louisiana)", "Parish", "Metropolitan Statistical Area (MSA)"])
-    
-    if geo_level == "Statewide (Louisiana)":
-        series_id = "LAUST220000000000003"
-        selected_label = "Louisiana Statewide Unemployment Rate"
-    elif geo_level == "Parish":
-        parish = st.sidebar.selectbox("Select Parish:", list(LA_PARISHES.keys()))
-        fips = LA_PARISHES[parish]
-        series_id = f"LAUCN22{fips}0000000003"
-        selected_label = f"{parish} Unemployment Rate"
-    else:
-        msa = st.sidebar.selectbox("Select MSA:", list(LA_MSAS.keys()))
-        msa_code = LA_MSAS[msa]
-        series_id = f"LAUMT22{msa_code}00000003"
-        selected_label = f"{msa} Unemployment Rate"
+def chunk_list(lst, n):
+    """Yield successive n-sized chunks from lst (BLS API accepts up to 50 series per call)."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
-else:
-    cpi_choice = st.sidebar.selectbox("Select CPI Index:", list(CPI_OPTIONS.keys()))
-    series_id = CPI_OPTIONS[cpi_choice]
-    selected_label = cpi_choice
-    st.sidebar.info("Note: BLS does not publish Parish/MSA-level CPI. Regional and National indices are shown above.")
-
-start_year = int(st.sidebar.number_input("Start Year", min_value=1990, max_value=datetime.now().year, value=2015))
-end_year = int(st.sidebar.number_input("End Year", min_value=1990, max_value=datetime.now().year, value=2026))
-
-def fetch_bls_series(series_id, start_yr, end_yr, api_key):
-    """Fetches data across multi-year chunks to bypass the BLS 10-year limit."""
+def fetch_bls_batch(series_dict, start_year, end_year, api_key):
+    """
+    Fetches data for multiple series IDs simultaneously.
+    series_dict maps series_id -> dict of metadata (Area, Industry, DataType)
+    """
+    series_ids = list(series_dict.keys())
     all_records = []
-    chunk_size = 10
     
-    for yr in range(start_yr, end_yr + 1, chunk_size):
-        chunk_end = min(yr + chunk_size - 1, end_yr)
-        
+    # Split into chunks of 50 series IDs max
+    for series_chunk in chunk_list(series_ids, 50):
         url = "https://api.bls.gov/publicAPI/v2/timeseries/data/"
         payload = {
-            "seriesid": [series_id],
-            "startyear": str(yr),
-            "endyear": str(chunk_end),
+            "seriesid": series_chunk,
+            "startyear": str(start_year),
+            "endyear": str(end_year),
             "registrationkey": api_key
         }
         
@@ -101,46 +98,163 @@ def fetch_bls_series(series_id, start_yr, end_yr, api_key):
         res_data = response.json()
         
         if res_data.get("status") == "REQUEST_SUCCEEDED":
-            series_list = res_data.get("Results", {}).get("series", [])
-            if series_list and series_list[0].get("data"):
-                all_records.extend(series_list[0]["data"])
+            for series_item in res_data.get("Results", {}).get("series", []):
+                s_id = series_item.get("seriesID")
+                meta = series_dict.get(s_id, {})
+                for record in series_item.get("data", []):
+                    record_copy = record.copy()
+                    record_copy.update(meta)
+                    all_records.append(record_copy)
         else:
-            st.error(f"API Error during period {yr}-{chunk_end}: {res_data.get('message')}")
-            break
+            st.error(f"API Batch Error: {res_data.get('message')}")
             
-    return all_records
+    if not all_records:
+        return pd.DataFrame()
 
-if st.sidebar.button("Fetch Data"):
+    df = pd.DataFrame(all_records)
+    df = df[df['period'].str.startswith('M') & (df['period'] != 'M13')].copy()
+    df['Value'] = pd.to_numeric(df['value'], errors='coerce')
+    df['Date'] = pd.to_datetime(df['year'] + '-' + df['period'].str.replace('M', ''), format='%Y-%m')
+    df['MonthName'] = df['Date'].dt.strftime('%B %Y')
+    return df.sort_values('Date').reset_index(drop=True)
+
+# -----------------------------------------------------------------------------
+# SIDEBAR CONTROLS
+# -----------------------------------------------------------------------------
+
+st.sidebar.header("Navigation & Settings")
+view_mode = st.sidebar.radio(
+    "Choose View Mode:",
+    ["Regional Comparison Matrix (Single Month)", "Multi-MSA Trend Analysis (Time Series)"]
+)
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("Filters")
+
+selected_areas = st.sidebar.multiselect(
+    "Select Regions / MSAs:",
+    options=list(LA_AREAS.keys()),
+    default=["Louisiana (Statewide)", "Baton Rouge MSA", "New Orleans-Metairie MSA", "Lafayette MSA"]
+)
+
+selected_datatype = st.sidebar.selectbox(
+    "Select Metric:",
+    options=list(SAE_DATA_TYPES.keys()),
+    index=0
+)
+
+selected_industries = st.sidebar.multiselect(
+    "Select Industry Supersectors / Sub-industries:",
+    options=list(SAE_INDUSTRIES.keys()),
+    default=["Total Nonfarm", "Construction", "Manufacturing", "Trade, Transportation, and Utilities", "Leisure and Hospitality"]
+)
+
+current_year = datetime.now().year
+
+if view_mode == "Regional Comparison Matrix (Single Month)":
+    target_year = st.sidebar.number_input("Target Year", min_value=2010, max_value=current_year, value=2024)
+    target_month = st.sidebar.selectbox("Target Month", [
+        "January", "February", "March", "April", "May", "June", 
+        "July", "August", "September", "October", "November", "December"
+    ], index=4)
+else:
+    start_yr = st.sidebar.number_input("Start Year", min_value=2010, max_value=current_year, value=2020)
+    end_yr = st.sidebar.number_input("End Year", min_value=2010, max_value=current_year, value=2024)
+
+# -----------------------------------------------------------------------------
+# MAIN APP EXECUTION
+# -----------------------------------------------------------------------------
+
+if st.sidebar.button("Run Data Extraction"):
     if not BLS_API_KEY:
-        st.error("Missing BLS API Key! Please configure it in Streamlit secrets.")
-    elif start_year > end_year:
-        st.error("Start Year must be less than or equal to End Year.")
+        st.error("Missing BLS API Key! Please set `BLS_API_KEY` in Streamlit secrets.")
+    elif not selected_areas:
+        st.warning("Please select at least one Region or MSA.")
+    elif not selected_industries:
+        st.warning("Please select at least one Industry.")
     else:
-        with st.spinner(f"Fetching historical data for {selected_label}..."):
-            records = fetch_bls_series(series_id, start_year, end_year, BLS_API_KEY)
+        # Build Series Map dynamically
+        # SAE Format: SMU + 22 (LA) + Area (5) + Industry (8) + DataType (2)
+        dtype_code = SAE_DATA_TYPES[selected_datatype]
+        series_map = {}
+        
+        for area_name in selected_areas:
+            area_code = LA_AREAS[area_name]
+            for ind_name in selected_industries:
+                ind_code = SAE_INDUSTRIES[ind_name]
+                s_id = f"SMU22{area_code}{ind_code}{dtype_code}"
+                series_map[s_id] = {
+                    "Area": area_name,
+                    "Industry": ind_name,
+                    "Metric": selected_datatype
+                }
+
+        # ---------------------------------------------------------------------
+        # VIEW MODE 1: COMPARISON MATRIX
+        # ---------------------------------------------------------------------
+        if view_mode == "Regional Comparison Matrix (Single Month)":
+            month_map = {
+                "January": "M01", "February": "M02", "March": "M03", "April": "M04",
+                "May": "M05", "June": "M06", "July": "M07", "August": "M08",
+                "September": "M09", "October": "M10", "November": "M11", "December": "M12"
+            }
+            target_period = month_map[target_month]
             
-            if records:
-                df = pd.DataFrame(records)
+            with st.spinner(f"Extracting {selected_datatype} for {target_month} {target_year}..."):
+                df_res = fetch_bls_batch(series_map, target_year, target_year, BLS_API_KEY)
                 
-                # Filter out annual averages (M13) if present
-                df = df[df['period'].str.startswith('M') & (df['period'] != 'M13')].copy()
+                if not df_res.empty:
+                    # Filter specifically for target month
+                    filtered = df_res[(df_res['year'] == str(target_year)) & (df_res['period'] == target_period)]
+                    
+                    if not filtered.empty:
+                        st.subheader(f"📊 {selected_datatype} Comparison ({target_month} {target_year})")
+                        
+                        # Pivot table: Industries on Rows, Regions on Columns
+                        pivot_df = filtered.pivot(index="Industry", columns="Area", values="Value")
+                        
+                        # Reorder rows to match selection order
+                        pivot_df = pivot_df.reindex([i for i in selected_industries if i in pivot_df.index])
+                        
+                        st.dataframe(
+                            pivot_df.style.format("{:,.2f}", na_rep="N/A"),
+                            use_container_width=True
+                        )
+                        
+                        st.download_button(
+                            label="📥 Download Matrix as CSV",
+                            data=pivot_df.to_csv().encode('utf-8'),
+                            file_name=f"louisiana_economic_matrix_{target_month}_{target_year}.csv",
+                            mime="text/csv"
+                        )
+                    else:
+                        st.warning(f"No data reported by BLS for {target_month} {target_year}. Try selecting an earlier date range.")
+                else:
+                    st.error("Failed to retrieve data from BLS API.")
+
+        # ---------------------------------------------------------------------
+        # VIEW MODE 2: MULTI-MSA TIME SERIES TRENDS
+        # ---------------------------------------------------------------------
+        else:
+            with st.spinner("Fetching historical time series across selected regions..."):
+                df_res = fetch_bls_batch(series_map, start_yr, end_yr, BLS_API_KEY)
                 
-                # Format numerical data and datetime
-                df['Value'] = pd.to_numeric(df['value'], errors='coerce')
-                df['Date'] = pd.to_datetime(df['year'] + '-' + df['period'].str.replace('M', ''), format='%Y-%m')
-                df = df.sort_values('Date').reset_index(drop=True)
-                
-                st.subheader(f"{selected_label}")
-                st.caption(f"BLS Series ID: `{series_id}`")
-                
-                st.line_chart(df, x="Date", y="Value")
-                
-                st.subheader("Raw Data Table")
-                st.dataframe(
-                    df[['year', 'periodName', 'value']].rename(
-                        columns={'year': 'Year', 'periodName': 'Month', 'value': 'Value'}
-                    ),
-                    use_container_width=True
-                )
-            else:
-                st.error("No data returned for the selected series and timeframe.")
+                if not df_res.empty:
+                    st.subheader(f"📈 Historical Trends: {selected_datatype}")
+                    
+                    focus_industry = st.selectbox(
+                        "Choose Industry to Plot Across Regions:",
+                        options=[i for i in selected_industries if i in df_res['Industry'].unique()]
+                    )
+                    
+                    trend_df = df_res[df_res['Industry'] == focus_industry]
+                    chart_pivot = trend_df.pivot(index="Date", columns="Area", values="Value")
+                    
+                    st.line_chart(chart_pivot)
+                    
+                    st.subheader("Raw Time Series Table")
+                    formatted_table = trend_df[['Date', 'Area', 'Industry', 'Value']].copy()
+                    formatted_table['Value'] = formatted_table['Value'].map('{:,.2f}'.format)
+                    st.dataframe(formatted_table, use_container_width=True)
+                else:
+                    st.error("No time series data returned for the selected query.")
