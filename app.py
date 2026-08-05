@@ -101,19 +101,45 @@ QCEW_AREAS = {
     "Shreveport-Bossier City MSA": "C4334"
 }
 
+# CORRECTED QCEW INDUSTRY TAXONOMY
 QCEW_INDUSTRIES = {
-    "10 Total, all industries": "10",
-    "1012 Goods-producing": "1012",
-    "1013 Service-providing": "1013",
-    "1021 Natural resources and mining": "1021",
-    "1022 Construction": "1022",
-    "1023 Manufacturing": "1023",
-    "1024 Trade, transportation, and utilities": "1024",
-    "1025 Information": "1025",
-    "1026 Financial activities": "1026",
-    "1027 Professional and business services": "1027",
-    "1028 Education and health services": "1028",
-    "1029 Leisure and hospitality": "1029"
+    # High-Level Aggregates & Supersectors
+    "10 Total, All Industries": "10",
+    "101 Goods-Producing Domain": "101",
+    "1011 Natural Resources & Mining": "1011",
+    "1012 Construction": "1012",
+    "1013 Manufacturing": "1013",
+    "102 Service-Providing Domain": "102",
+    "1021 Trade, Transportation, & Utilities": "1021",
+    "1022 Information": "1022",
+    "1023 Financial Activities": "1023",
+    "1024 Professional & Business Services": "1024",
+    "1025 Education & Health Services": "1025",
+    "1026 Leisure & Hospitality": "1026",
+    "1027 Other Services": "1027",
+    "1028 Public Administration": "1028",
+    
+    # Standard 2-Digit NAICS Sectors
+    "NAICS 11 Agriculture, Forestry, Fishing": "11",
+    "NAICS 21 Mining, Quarrying, Oil & Gas": "21",
+    "NAICS 22 Utilities": "22",
+    "NAICS 23 Construction": "23",
+    "NAICS 31-33 Manufacturing": "31-33",
+    "NAICS 42 Wholesale Trade": "42",
+    "NAICS 44-45 Retail Trade": "44-45",
+    "NAICS 48-49 Transportation & Warehousing": "48-49",
+    "NAICS 51 Information": "51",
+    "NAICS 52 Finance & Insurance": "52",
+    "NAICS 53 Real Estate & Rental/Leasing": "53",
+    "NAICS 54 Professional, Scientific, Tech": "54",
+    "NAICS 55 Management of Companies": "55",
+    "NAICS 56 Admin & Support / Waste Mgmt": "56",
+    "NAICS 61 Educational Services": "61",
+    "NAICS 62 Health Care & Social Assistance": "62",
+    "NAICS 71 Arts, Entertainment, Recreation": "71",
+    "NAICS 72 Accommodation & Food Services": "72",
+    "NAICS 81 Other Services (ex. Public Admin)": "81",
+    "NAICS 92 Public Administration": "92"
 }
 
 QCEW_METRICS = {
@@ -374,7 +400,7 @@ with tab3:
         selected_qcew_industries = st.multiselect(
             "Select Industries:",
             options=list(QCEW_INDUSTRIES.keys()),
-            default=["10 Total, all industries", "1022 Construction", "1023 Manufacturing", "1027 Professional and business services"]
+            default=["10 Total, All Industries", "1012 Construction", "1013 Manufacturing", "1024 Professional & Business Services"]
         )
         
         selected_qcew_metric = st.selectbox("Select Metric:", list(QCEW_METRICS.keys()))
@@ -383,7 +409,16 @@ with tab3:
         start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2025, value=2021, key="qcew_start")
         end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2025, value=2024, key="qcew_end")
         
-        ownership_type = st.selectbox("Ownership Sector:", {"Total Covered (All)": "5", "Private": "5", "State Govt": "2", "Local Govt": "3", "Federal Govt": "1"}, index=0)
+        # Ownership mapping dictionary to ensure correct value handling
+        ownership_map = {
+            "Total Covered (All)": "5",
+            "Private": "5",
+            "State Govt": "2",
+            "Local Govt": "3",
+            "Federal Govt": "1"
+        }
+        selected_ownership_label = st.selectbox("Ownership Sector:", list(ownership_map.keys()), index=0)
+        ownership_type = ownership_map[selected_ownership_label]
 
         uploaded_files = None
         if data_source == "Manual CSV Upload":
@@ -401,6 +436,7 @@ with tab3:
                     quarters = ["1", "2", "3", "4"]
 
                     inv_area_map = {v: k for k, v in QCEW_AREAS.items()}
+                    ind_codes = [QCEW_INDUSTRIES[i] for i in selected_qcew_industries]
                     
                     for area_name in selected_qcew_areas:
                         fips = QCEW_AREAS[area_name]
@@ -408,10 +444,12 @@ with tab3:
                             for qtr in quarters:
                                 df_slice = fetch_qcew_area_slice(yr, qtr, fips)
                                 if not df_slice.empty:
-                                    # Filter by Total Covered ownership and selected industries
-                                    ind_codes = [QCEW_INDUSTRIES[i] for i in selected_qcew_industries]
-                                    filtered_slice = df_slice[(df_slice['own_code'].astype(str) == ownership_type) & 
-                                                              (df_slice['industry_code'].astype(str).isin(ind_codes))].copy()
+                                    # Filter by ownership code and selected industry codes
+                                    filtered_slice = df_slice[
+                                        (df_slice['own_code'].astype(str) == ownership_type) & 
+                                        (df_slice['industry_code'].astype(str).isin(ind_codes))
+                                    ].copy()
+                                    
                                     if not filtered_slice.empty:
                                         filtered_slice['Region'] = area_name
                                         filtered_slice['Period'] = f"{yr} Q{qtr}"
@@ -432,7 +470,7 @@ with tab3:
 
                 st.subheader(f"Comparison Matrix: {selected_qcew_metric}")
                 
-                # Pivot table by Period & Region for a single chosen industry or across industries
+                # Filter selection for charting
                 focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
                 sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
 
