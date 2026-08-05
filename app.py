@@ -1,57 +1,4 @@
-import streamlit as st
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as io
-import requests
-import io
-import re
 
-# ==========================================
-# PAGE CONFIGURATION
-# ==========================================
-st.set_page_config(
-    page_title="Louisiana Economic Data Explorer (QCEW)",
-    page_icon="📊",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# ==========================================
-# REFERENCE DICTIONARIES & METADATA
-# ==========================================
-
-# Comprehensive 64 Louisiana Parish FIPS Code Dictionary
-LA_PARISH_FIPS = {
-    "Statewide (Louisiana Total)": "22000",
-    "Acadia Parish": "22001", "Allen Parish": "22003", "Ascension Parish": "22005",
-    "Assumption Parish": "22007", "Avoyelles Parish": "22009", "Beauregard Parish": "22011",
-    "Bienville Parish": "22013", "Bossier Parish": "22015", "Caddo Parish": "22017",
-    "Calcasieu Parish": "22019", "Caldwell Parish": "22021", "Cameron Parish": "22023",
-    "Catahoula Parish": "22025", "Claiborne Parish": "22027", "Concordia Parish": "22029",
-    "DeSoto Parish": "22031", "East Baton Rouge Parish": "22033", "East Carroll Parish": "22035",
-    "East Feliciana Parish": "22037", "Evangeline Parish": "22039",
-    "Franklin Parish": "22041", "Grant Parish": "22043", "Iberia Parish": "22045",
-    "Iberville Parish": "22047", "Jackson Parish": "22049", "Jefferson Parish": "22051",
-    "Jefferson Davis Parish": "22053", "Lafayette Parish": "22055",
-    "Lafourche Parish": "22057", "LaSalle Parish": "22059", "Lincoln Parish": "22061",
-    "Livingston Parish": "22063", "Madison Parish": "22065", "Morehouse Parish": "22067",
-    "Natchitoches Parish": "22069", "Orleans Parish": "22071", "Ouachita Parish": "22073", "Plaquemines Parish": "22075", "Pointe Coupee Parish": "22077",
-    "Rapides Parish": "22079", "Red River Parish": "22081", "Richland Parish": "22083",
-    "Sabine Parish": "22085", "St. Bernard Parish": "22087", "St. Charles Parish": "22089",
-    "St. Helena Parish": "22091", "St. James Parish": "22093", "St. John the Baptist Parish": "22095",
-    "St. Landry Parish": "22097", "St. Martin Parish": "22099", "St. Mary Parish": "22101",
-    "St. Tammany Parish": "22103", "Tangipahoa Parish": "22105", "Tensas Parish": "22107",
-    "Terrebonne Parish": "22109", "Union Parish": "22111", "Vermilion Parish": "22113",
-    "Vernon Parish": "22115", "Washington Parish": "22117", "Webster Parish": "22119",
-    "West Baton Rouge Parish": "22121", "West Carroll Parish": "22123", "West Feliciana Parish": "22125",
-    "Winn Parish": "22127"
-}
-    
-# Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
-
-# It incorporates all 64 Louisiana parish FIPS codes, complete 6-digit NAICS industry hierarchy support, corrected QCEW ownership mapping, and the updated multi-tab analytical layout.
-
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -208,9 +155,8 @@ NAICS_HIERARCHY = {
 def fetch_qcew_area_data(year: int, quarter: str, fips_code: str) -> pd.DataFrame:
     """
     Fetches QCEW data from BLS API by Area (State/Parish), Year, and Quarter.
-    API Docs: [https://www.bls.gov/cew/about-data/downloadable-files-api.htm](https://www.bls.gov/cew/about-data/downloadable-files-api.htm)
     """
-    url = f"[https://data.bls.gov/cew/data/api/](https://data.bls.gov/cew/data/api/){year}/{quarter}/area/{fips_code}.csv"
+    url = f"https://data.bls.gov/cew/data/api/{year}/{quarter}/area/{fips_code}.csv"
     try:
         df = pd.read_csv(url, dtype=str)
         # Standardize numeric columns
@@ -232,7 +178,7 @@ def fetch_qcew_industry_data(year: int, quarter: str, industry_code: str) -> pd.
     """
     Fetches QCEW data across all areas for a specific industry code.
     """
-    url = f"[https://data.bls.gov/cew/data/api/](https://data.bls.gov/cew/data/api/){year}/{quarter}/industry/{industry_code}.csv"
+    url = f"https://data.bls.gov/cew/data/api/{year}/{quarter}/industry/{industry_code}.csv"
     try:
         df = pd.read_csv(url, dtype=str)
         numeric_cols = ['month3_emplvl', 'total_qtrly_wages', 'avg_wkly_wage']
@@ -256,7 +202,7 @@ selected_quarter = st.sidebar.selectbox("Select Quarter", ["1", "2", "3", "4"], 
 
 # Parish Selection
 selected_parish_name = st.sidebar.selectbox(
-    "Select Location", 
+    "Select Location",
     options=list(LA_PARISH_FIPS.keys()),
     index=0
 )
@@ -343,17 +289,17 @@ tab1, tab2, tab3 = st.tabs([
 # ------------------------------------------------------------------------------
 with tab1:
     st.subheader(f"Industry Breakdown for {selected_parish_name}")
-    
+
     # Filter for 2-digit major sectors for overview visualization
     df_sectors = df_filtered_own[
-        (df_filtered_own['industry_code'].isin(NAICS_2DIGIT.keys())) & 
+        (df_filtered_own['industry_code'].isin(NAICS_2DIGIT.keys())) &
         (df_filtered_own['industry_code'] != '10')
     ].copy()
-    
+
     df_sectors['industry_title'] = df_sectors['industry_code'].map(NAICS_2DIGIT)
-    
+
     col_t1_left, col_t1_right = st.columns([6, 4])
-    
+
     with col_t1_left:
         st.markdown("#### Top Sectors by Employment")
         if not df_sectors.empty:
@@ -375,7 +321,7 @@ with tab1:
     with col_t1_right:
         st.markdown("#### Selected Code Target Detail")
         selected_ind_data = df_filtered_own[df_filtered_own['industry_code'] == selected_naics]
-        
+
         if not selected_ind_data.empty:
             row = selected_ind_data.iloc[0]
             st.markdown(f"**NAICS Code:** `{selected_naics}`")
@@ -384,7 +330,7 @@ with tab1:
             st.markdown(f"**Month 3 Employment:** {int(row.get('month3_emplvl', 0)):,}")
             st.markdown(f"**Total Quarterly Wages:** ${float(row.get('total_qtrly_wages', 0)):,.2f}")
             st.markdown(f"**Avg Weekly Wage:** ${float(row.get('avg_wkly_wage', 0)):,.2f}")
-            
+
             lq = float(row.get('lq_month3_emplvl', 0))
             if lq > 0:
                 st.markdown(f"**Location Quotient (LQ):** `{lq:.2f}`")
@@ -407,25 +353,25 @@ with tab1:
 with tab2:
     st.subheader("Geographic Cross-Parish Comparison")
     st.markdown(f"Analyzing NAICS Industry Code: **`{selected_naics}`** across all 64 Louisiana Parishes.")
-    
+
     with st.spinner(f"Fetching statewide data for NAICS {selected_naics}..."):
         df_ind_statewide = fetch_qcew_industry_data(selected_year, selected_quarter, selected_naics)
-    
+
     if not df_ind_statewide.empty:
         # Filter for Louisiana FIPS codes (22001 - 22127)
         la_fips_list = [v for k, v in LA_PARISH_FIPS.items() if k != "Statewide (Louisiana Total)"]
         df_la_parishes = df_ind_statewide[df_ind_statewide['area_fips'].isin(la_fips_list)].copy()
-        
+
         # Map FIPS to Parish Name
         fips_to_name = {v: k for k, v in LA_PARISH_FIPS.items()}
         df_la_parishes['parish_name'] = df_la_parishes['area_fips'].map(fips_to_name)
-        
+
         col_t2_left, col_t2_right = st.columns([6, 4])
-        
+
         with col_t2_left:
             st.markdown(f"#### Top Parishes for NAICS {selected_naics}")
             top_parishes = df_la_parishes.sort_values(by='month3_emplvl', ascending=False).head(15)
-            
+
             fig_parish = px.bar(
                 top_parishes,
                 x='month3_emplvl',
@@ -437,7 +383,7 @@ with tab2:
             )
             fig_parish.update_layout(yaxis={'categoryorder': 'total ascending'}, height=480)
             st.plotly_chart(fig_parish, use_container_width=True)
-            
+
         with col_t2_right:
             st.markdown("#### Parish Summary Table")
             summary_df = df_la_parishes[['parish_name', 'month3_emplvl', 'total_qtrly_wages', 'avg_wkly_wage']].sort_values(
@@ -452,7 +398,7 @@ with tab2:
 # ------------------------------------------------------------------------------
 with tab3:
     st.subheader("Comparative Analysis & Multi-Year Benchmarking")
-    
+
     col_t3_1, col_t3_2 = st.columns(2)
     with col_t3_1:
         benchmark_parish = st.selectbox(
@@ -461,17 +407,17 @@ with tab3:
             index=0
         )
         benchmark_fips = LA_PARISH_FIPS[benchmark_parish]
-    
+
     with col_t3_2:
         compare_year = st.selectbox("Select Benchmark Year", list(range(current_year - 1, 2014, -1)), index=2)
-    
+
     with st.spinner("Loading comparative datasets..."):
         df_bench_area = fetch_qcew_area_data(selected_year, selected_quarter, benchmark_fips)
         df_hist_area = fetch_qcew_area_data(compare_year, selected_quarter, selected_fips)
-    
+
     # Primary Metrics Comparison
     st.markdown("#### Current vs. Benchmark Comparison")
-    
+
     def get_naics_metrics(df_source, naics):
         row = df_source[df_source['industry_code'] == naics]
         if not row.empty:
@@ -485,13 +431,13 @@ with tab3:
     curr_metrics = get_naics_metrics(df_area, selected_naics)
     bench_metrics = get_naics_metrics(df_bench_area, selected_naics)
     hist_metrics = get_naics_metrics(df_hist_area, selected_naics)
-    
+
     comp_df = pd.DataFrame([
         {"Metric": "Employment (Month 3)", f"{selected_parish_name} ({selected_year})": f"{curr_metrics['emp']:,}", f"{benchmark_parish} ({selected_year})": f"{bench_metrics['emp']:,}", f"{selected_parish_name} ({compare_year})": f"{hist_metrics['emp']:,}"},
         {"Metric": "Total Wages", f"{selected_parish_name} ({selected_year})": f"${curr_metrics['wages']:,.2f}", f"{benchmark_parish} ({selected_year})": f"${bench_metrics['wages']:,.2f}", f"{selected_parish_name} ({compare_year})": f"${hist_metrics['wages']:,.2f}"},
         {"Metric": "Avg Weekly Wage", f"{selected_parish_name} ({selected_year})": f"${curr_metrics['avg_weekly']:,.0f}", f"{benchmark_parish} ({selected_year})": f"${bench_metrics['avg_weekly']:,.0f}", f"{selected_parish_name} ({compare_year})": f"${hist_metrics['avg_weekly']:,.0f}"}
     ])
-    
+
     st.table(comp_df)
 
 # ==============================================================================
@@ -499,3 +445,5 @@ with tab3:
 # ==============================================================================
 st.markdown("---")
 st.markdown("💡 **Data Source:** U.S. Bureau of Labor Statistics (BLS) Quarterly Census of Employment and Wages (QCEW) Open API.")
+
+
