@@ -84,7 +84,11 @@ LOUISIANA_PARISHES = {
     "22117": "Washington Parish",
     "22119": "Webster Parish",
     "22121": "West Baton Rouge Parish",
-    "22123Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
+    "22123": "West Carroll Parish",
+    "22125": "West Feliciana Parish",
+    "22127": "Winn Parish"
+    
+    Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
 
 It incorporates all 64 Louisiana parish FIPS codes, complete 6-digit NAICS industry hierarchy support, corrected QCEW ownership mapping, and the updated multi-tab analytical layout.
 
