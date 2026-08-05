@@ -56,7 +56,6 @@ st.markdown("""
 # 2. REFERENCE DICTIONARIES & MAPPINGS
 # ==============================================================================
 
-# Complete 64 Louisiana Parishes (FIPS State Code: 22)
 LA_PARISH_FIPS = {
     "Statewide (Louisiana Total)": "22000",
     "Acadia Parish": "22001", "Allen Parish": "22003", "Ascension Parish": "22005",
@@ -83,7 +82,6 @@ LA_PARISH_FIPS = {
     "Winn Parish": "22127"
 }
 
-# QCEW Ownership Code Mapping
 QCEW_OWNERSHIP_MAP = {
     "0": "Total Covered (All Ownerships)",
     "1": "Federal Government",
@@ -94,7 +92,6 @@ QCEW_OWNERSHIP_MAP = {
     "8": "Total Covered (Excl. Federal)"
 }
 
-# Standard NAICS 2-Digit Sectors
 NAICS_2DIGIT = {
     "10": "Total, All Industries",
     "11": "Agriculture, Forestry, Fishing and Hunting",
@@ -119,7 +116,6 @@ NAICS_2DIGIT = {
     "92": "Public Administration"
 }
 
-# Expanded NAICS Codes (Including common 3 to 6-digit codes relevant to LA economy)
 NAICS_HIERARCHY = {
     "10": "10 - Total, All Industries",
     "21": "21 - Mining, Quarrying, and Oil & Gas Extraction",
@@ -153,9 +149,6 @@ NAICS_HIERARCHY = {
 
 @st.cache_data(ttl=86400)
 def fetch_qcew_area_data(year: int, quarter: str, fips_code: str) -> pd.DataFrame:
-    """
-    Fetches QCEW data from BLS API by Area (State/Parish), Year, and Quarter.
-    """
     url = f"https://data.bls.gov/cew/data/api/{year}/{quarter}/area/{fips_code}.csv"
     try:
         df = pd.read_csv(url, dtype=str)
@@ -175,10 +168,6 @@ def fetch_qcew_area_data(year: int, quarter: str, fips_code: str) -> pd.DataFram
 
 @st.cache_data(ttl=86400)
 def fetch_qcew_annual_data(year: int, fips_code: str) -> pd.DataFrame:
-    """
-    Fetches QCEW annual average data from BLS API by Area (State/Parish) and Year.
-    Uses quarter 'a' for annual averages.
-    """
     url = f"https://data.bls.gov/cew/data/api/{year}/a/area/{fips_code}.csv"
     try:
         df = pd.read_csv(url, dtype=str)
@@ -196,9 +185,6 @@ def fetch_qcew_annual_data(year: int, fips_code: str) -> pd.DataFrame:
 
 @st.cache_data(ttl=86400)
 def fetch_qcew_industry_data(year: int, quarter: str, industry_code: str) -> pd.DataFrame:
-    """
-    Fetches QCEW data across all areas for a specific industry code.
-    """
     url = f"https://data.bls.gov/cew/data/api/{year}/{quarter}/industry/{industry_code}.csv"
     try:
         df = pd.read_csv(url, dtype=str)
@@ -213,16 +199,15 @@ def fetch_qcew_industry_data(year: int, quarter: str, industry_code: str) -> pd.
 
 @st.cache_data(ttl=86400, show_spinner=False)
 def fetch_multi_parish_annual_employment(
-    parishes: list, 
-    fips_map: dict, 
-    start_year: int, 
-    end_year: int, 
+    parishes: list,
+    fips_map: dict,
+    start_year: int,
+    end_year: int,
     industry_code: str = "10",
     ownership_code: str = "0"
 ) -> pd.DataFrame:
     """
     Fetches annual average employment for multiple parishes across a range of years.
-    Returns a tidy DataFrame with columns: Year, Parish, Annual_Avg_Employment, Annual_Avg_Weekly_Wage, Total_Annual_Wages
     """
     records = []
     for year in range(start_year, end_year + 1):
@@ -233,19 +218,17 @@ def fetch_multi_parish_annual_employment(
             url = f"https://data.bls.gov/cew/data/api/{year}/a/area/{fips}.csv"
             try:
                 df = pd.read_csv(url, dtype=str)
-                # Filter by ownership and industry
                 mask = (df['industry_code'] == industry_code)
                 if ownership_code != "0":
                     mask = mask & (df['own_code'] == ownership_code)
                 else:
-                    # Use own_code 0 (total) if available, otherwise 5 (private)
                     if '0' in df['own_code'].values:
                         mask = mask & (df['own_code'] == '0')
                     else:
                         mask = mask & (df['own_code'] == '5')
-                
+
                 filtered = df[mask]
-                
+
                 if not filtered.empty:
                     row = filtered.iloc[0]
                     emp = pd.to_numeric(str(row.get('annual_avg_emplvl', '0')).replace(',', ''), errors='coerce')
@@ -253,7 +236,7 @@ def fetch_multi_parish_annual_employment(
                     total_wages = pd.to_numeric(str(row.get('total_annual_wages', '0')).replace(',', ''), errors='coerce')
                     avg_annual_pay = pd.to_numeric(str(row.get('avg_annual_pay', '0')).replace(',', ''), errors='coerce')
                     estabs = pd.to_numeric(str(row.get('annual_avg_estabs', '0')).replace(',', ''), errors='coerce')
-                    
+
                     records.append({
                         'Year': year,
                         'Parish': parish_name,
@@ -266,7 +249,66 @@ def fetch_multi_parish_annual_employment(
                     })
             except Exception:
                 continue
-    
+
+    return pd.DataFrame(records)
+
+
+@st.cache_data(ttl=86400, show_spinner=False)
+def fetch_multi_parish_quarterly_employment(
+    parishes: list,
+    fips_map: dict,
+    start_year: int,
+    end_year: int,
+    quarters: list = None,
+    industry_code: str = "10",
+    ownership_code: str = "0"
+) -> pd.DataFrame:
+    """
+    Fetches quarterly employment (Month 3) for multiple parishes across a range of years/quarters.
+    """
+    if quarters is None:
+        quarters = ["1", "2", "3", "4"]
+    records = []
+    for year in range(start_year, end_year + 1):
+        for qtr in quarters:
+            for parish_name in parishes:
+                fips = fips_map.get(parish_name)
+                if not fips:
+                    continue
+                url = f"https://data.bls.gov/cew/data/api/{year}/{qtr}/area/{fips}.csv"
+                try:
+                    df = pd.read_csv(url, dtype=str)
+                    mask = (df['industry_code'] == industry_code)
+                    if ownership_code != "0":
+                        mask = mask & (df['own_code'] == ownership_code)
+                    else:
+                        if '0' in df['own_code'].values:
+                            mask = mask & (df['own_code'] == '0')
+                        else:
+                            mask = mask & (df['own_code'] == '5')
+
+                    filtered = df[mask]
+
+                    if not filtered.empty:
+                        row = filtered.iloc[0]
+                        emp = pd.to_numeric(str(row.get('month3_emplvl', '0')).replace(',', ''), errors='coerce')
+                        wages = pd.to_numeric(str(row.get('total_qtrly_wages', '0')).replace(',', ''), errors='coerce')
+                        avg_wkly = pd.to_numeric(str(row.get('avg_wkly_wage', '0')).replace(',', ''), errors='coerce')
+                        estabs = pd.to_numeric(str(row.get('qtrly_estabs', '0')).replace(',', ''), errors='coerce')
+
+                        records.append({
+                            'Year': year,
+                            'Quarter': qtr,
+                            'Parish': parish_name,
+                            'FIPS': fips,
+                            'Month3_Employment': emp if not pd.isna(emp) else 0,
+                            'Total_Qtrly_Wages': wages if not pd.isna(wages) else 0,
+                            'Avg_Weekly_Wage': avg_wkly if not pd.isna(avg_wkly) else 0,
+                            'Qtrly_Establishments': estabs if not pd.isna(estabs) else 0
+                        })
+                except Exception:
+                    continue
+
     return pd.DataFrame(records)
 
 
@@ -276,12 +318,10 @@ def fetch_multi_parish_annual_employment(
 
 st.sidebar.title("🔍 Explorer Controls")
 
-# Year & Quarter Selection
 current_year = datetime.now().year
 selected_year = st.sidebar.selectbox("Select Year", list(range(current_year - 1, 2014, -1)), index=1)
 selected_quarter = st.sidebar.selectbox("Select Quarter", ["1", "2", "3", "4"], index=0)
 
-# Parish Selection
 selected_parish_name = st.sidebar.selectbox(
     "Select Location",
     options=list(LA_PARISH_FIPS.keys()),
@@ -289,7 +329,6 @@ selected_parish_name = st.sidebar.selectbox(
 )
 selected_fips = LA_PARISH_FIPS[selected_parish_name]
 
-# NAICS Selection / Search
 industry_option_type = st.sidebar.radio("Industry Selection Mode", ["Standard Sectors (2-Digit)", "Detailed Hierarchy (2-6 Digit)"])
 
 if industry_option_type == "Standard Sectors (2-Digit)":
@@ -302,7 +341,6 @@ else:
     custom_naics = st.sidebar.text_input("Enter NAICS Code (e.g., 21112, 324110)", value="211")
     selected_naics = custom_naics.strip()
 
-# Ownership Selection
 selected_own = st.sidebar.selectbox(
     "Ownership Type",
     options=list(QCEW_OWNERSHIP_MAP.keys()),
@@ -325,13 +363,11 @@ if df_area.empty:
     st.warning("⚠️ No data available for the selected parameters. QCEW data is typically released with a 5-6 month lag.")
     st.stop()
 
-# Filter area dataframe by ownership if specified
 if selected_own != "0":
     df_filtered_own = df_area[df_area['own_code'] == selected_own]
 else:
     df_filtered_own = df_area.copy()
 
-# Calculate Aggregate Metrics (Total across area)
 total_row = df_filtered_own[df_filtered_own['industry_code'] == '10']
 
 if not total_row.empty:
@@ -363,7 +399,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "📊 Industry Breakdown",
     "🗺️ Geographic Explorer",
     "📈 Comparative Analysis",
-    "🏗️ Custom Multi-Parish Annual Trends"
+    "🏗️ Custom Multi-Parish Trends"
 ])
 
 # ------------------------------------------------------------------------------
@@ -518,22 +554,29 @@ with tab3:
     st.table(comp_df)
 
 # ------------------------------------------------------------------------------
-# TAB 4: CUSTOM MULTI-PARISH ANNUAL TRENDS
+# TAB 4: CUSTOM MULTI-PARISH TRENDS (ANNUAL OR QUARTERLY)
 # ------------------------------------------------------------------------------
 with tab4:
-    st.subheader("🏗️ Custom Geography: Multi-Parish Annual Employment Trends")
-    st.markdown("Select multiple parishes to create a custom region and view annual QCEW employment from 2001 to the latest available year.")
+    st.subheader("🏗️ Custom Geography: Multi-Parish Employment Trends")
+    st.markdown("Select multiple parishes to create a custom region and view QCEW employment data from 2001 to the latest available year.")
+
+    # --- Data Frequency Toggle ---
+    data_frequency = st.radio(
+        "Data Frequency",
+        ["Annual Average", "Quarterly"],
+        index=0,
+        horizontal=True,
+        help="Annual Average uses QCEW annual averages. Quarterly pulls individual quarter data (Month 3 employment)."
+    )
 
     # Parish multi-select (exclude statewide)
     parish_options = [k for k in LA_PARISH_FIPS.keys() if k != "Statewide (Louisiana Total)"]
-    
-    # Default parishes (common economic regions)
+
     default_parishes = [
         "East Baton Rouge Parish", "Ascension Parish", "Livingston Parish",
         "West Baton Rouge Parish", "Iberville Parish", "Pointe Coupee Parish",
         "East Feliciana Parish", "West Feliciana Parish"
     ]
-    # Ensure defaults exist in options
     default_parishes = [p for p in default_parishes if p in parish_options]
 
     selected_parishes = st.multiselect(
@@ -543,27 +586,59 @@ with tab4:
         help="Choose parishes to aggregate into a custom region"
     )
 
-    col_yr1, col_yr2, col_ind, col_own = st.columns(4)
-    with col_yr1:
-        annual_start_year = st.number_input("Start Year", min_value=2001, max_value=2025, value=2001, step=1)
-    with col_yr2:
-        annual_end_year = st.number_input("End Year", min_value=2001, max_value=2025, value=2024, step=1)
-    with col_ind:
-        annual_naics = st.selectbox(
-            "Industry (NAICS)",
-            options=list(NAICS_2DIGIT.keys()),
-            format_func=lambda x: f"{x} - {NAICS_2DIGIT[x]}",
-            index=0,
-            key="tab4_naics"
-        )
-    with col_own:
-        annual_own = st.selectbox(
-            "Ownership",
-            options=list(QCEW_OWNERSHIP_MAP.keys()),
-            format_func=lambda x: f"{x} - {QCEW_OWNERSHIP_MAP[x]}",
-            index=0,
-            key="tab4_own"
-        )
+    # Controls row — adapts based on frequency selection
+    if data_frequency == "Annual Average":
+        col_yr1, col_yr2, col_ind, col_own = st.columns(4)
+        with col_yr1:
+            annual_start_year = st.number_input("Start Year", min_value=2001, max_value=2025, value=2001, step=1)
+        with col_yr2:
+            annual_end_year = st.number_input("End Year", min_value=2001, max_value=2025, value=2024, step=1)
+        with col_ind:
+            annual_naics = st.selectbox(
+                "Industry (NAICS)",
+                options=list(NAICS_2DIGIT.keys()),
+                format_func=lambda x: f"{x} - {NAICS_2DIGIT[x]}",
+                index=0,
+                key="tab4_naics"
+            )
+        with col_own:
+            annual_own = st.selectbox(
+                "Ownership",
+                options=list(QCEW_OWNERSHIP_MAP.keys()),
+                format_func=lambda x: f"{x} - {QCEW_OWNERSHIP_MAP[x]}",
+                index=0,
+                key="tab4_own"
+            )
+        selected_quarters = None  # Not used for annual
+    else:
+        col_yr1, col_yr2, col_qtrs, col_ind, col_own = st.columns(5)
+        with col_yr1:
+            annual_start_year = st.number_input("Start Year", min_value=2001, max_value=2025, value=2001, step=1, key="tab4_qtr_start")
+        with col_yr2:
+            annual_end_year = st.number_input("End Year", min_value=2001, max_value=2025, value=2024, step=1, key="tab4_qtr_end")
+        with col_qtrs:
+            selected_quarters = st.multiselect(
+                "Quarters",
+                options=["1", "2", "3", "4"],
+                default=["1", "2", "3", "4"],
+                help="Select which quarters to include"
+            )
+        with col_ind:
+            annual_naics = st.selectbox(
+                "Industry (NAICS)",
+                options=list(NAICS_2DIGIT.keys()),
+                format_func=lambda x: f"{x} - {NAICS_2DIGIT[x]}",
+                index=0,
+                key="tab4_naics_qtr"
+            )
+        with col_own:
+            annual_own = st.selectbox(
+                "Ownership",
+                options=list(QCEW_OWNERSHIP_MAP.keys()),
+                format_func=lambda x: f"{x} - {QCEW_OWNERSHIP_MAP[x]}",
+                index=0,
+                key="tab4_own_qtr"
+            )
 
     # Display mode
     display_mode = st.radio(
@@ -574,108 +649,177 @@ with tab4:
     )
 
     if selected_parishes and annual_start_year <= annual_end_year:
-        fetch_button = st.button("📥 Fetch Annual Data", type="primary")
-        
-        if fetch_button:
-            with st.spinner(f"Fetching annual data for {len(selected_parishes)} parishes across {annual_end_year - annual_start_year + 1} years... This may take a moment."):
-                df_annual = fetch_multi_parish_annual_employment(
-                    parishes=selected_parishes,
-                    fips_map=LA_PARISH_FIPS,
-                    start_year=int(annual_start_year),
-                    end_year=int(annual_end_year),
-                    industry_code=annual_naics,
-                    ownership_code=annual_own
-                )
-            
-            if not df_annual.empty:
-                st.success(f"✅ Retrieved {len(df_annual):,} records across {df_annual['Year'].nunique()} years and {df_annual['Parish'].nunique()} parishes.")
-                
-                # Store in session state for persistence
-                st.session_state['df_annual_custom'] = df_annual
-            else:
-                st.warning("No data returned. The QCEW annual data may not yet be available for recent years.")
-        
-        # Display results from session state
-        if 'df_annual_custom' in st.session_state and not st.session_state['df_annual_custom'].empty:
-            df_annual = st.session_state['df_annual_custom']
-            
-            # --- AGGREGATED REGION TOTAL ---
-            df_agg = df_annual.groupby('Year').agg(
-                Total_Employment=('Annual_Avg_Employment', 'sum'),
-                Total_Annual_Wages=('Total_Annual_Wages', 'sum'),
-                Total_Establishments=('Annual_Avg_Establishments', 'sum')
-            ).reset_index()
-            # Weighted average weekly wage
-            df_agg['Avg_Weekly_Wage'] = (df_annual.groupby('Year')
-                .apply(lambda g: (g['Annual_Avg_Weekly_Wage'] * g['Annual_Avg_Employment']).sum() / g['Annual_Avg_Employment'].sum() if g['Annual_Avg_Employment'].sum() > 0 else 0)
-                .values)
+        fetch_button = st.button("📥 Fetch Data", type="primary", key="tab4_fetch")
 
+        if fetch_button:
+            if data_frequency == "Annual Average":
+                with st.spinner(f"Fetching annual data for {len(selected_parishes)} parishes across {annual_end_year - annual_start_year + 1} years..."):
+                    df_result = fetch_multi_parish_annual_employment(
+                        parishes=selected_parishes,
+                        fips_map=LA_PARISH_FIPS,
+                        start_year=int(annual_start_year),
+                        end_year=int(annual_end_year),
+                        industry_code=annual_naics,
+                        ownership_code=annual_own
+                    )
+                st.session_state['df_tab4_result'] = df_result
+                st.session_state['tab4_frequency'] = 'annual'
+            else:
+                if not selected_quarters:
+                    st.warning("Please select at least one quarter.")
+                    st.stop()
+                total_calls = len(selected_parishes) * (annual_end_year - annual_start_year + 1) * len(selected_quarters)
+                with st.spinner(f"Fetching quarterly data ({total_calls:,} API calls)... This may take a few minutes."):
+                    df_result = fetch_multi_parish_quarterly_employment(
+                        parishes=selected_parishes,
+                        fips_map=LA_PARISH_FIPS,
+                        start_year=int(annual_start_year),
+                        end_year=int(annual_end_year),
+                        quarters=selected_quarters,
+                        industry_code=annual_naics,
+                        ownership_code=annual_own
+                    )
+                st.session_state['df_tab4_result'] = df_result
+                st.session_state['tab4_frequency'] = 'quarterly'
+
+            if not df_result.empty:
+                st.success(f"✅ Retrieved {len(df_result):,} records.")
+            else:
+                st.warning("No data returned. Data may not yet be available for the most recent periods.")
+
+        # Display results from session state
+        if 'df_tab4_result' in st.session_state and not st.session_state['df_tab4_result'].empty:
+            df_result = st.session_state['df_tab4_result']
+            freq = st.session_state.get('tab4_frequency', 'annual')
+
+            if freq == 'annual':
+                # --- ANNUAL DISPLAY ---
+                emp_col = 'Annual_Avg_Employment'
+                wages_col = 'Total_Annual_Wages'
+                wage_rate_col = 'Annual_Avg_Weekly_Wage'
+                estab_col = 'Annual_Avg_Establishments'
+                x_axis_label = 'Year'
+                time_title = 'Annual Avg'
+
+                df_agg = df_result.groupby('Year').agg(
+                    Total_Employment=(emp_col, 'sum'),
+                    Total_Wages=(wages_col, 'sum'),
+                    Total_Establishments=(estab_col, 'sum')
+                ).reset_index()
+                df_agg['Avg_Weekly_Wage'] = (df_result.groupby('Year')
+                    .apply(lambda g: (g[wage_rate_col] * g[emp_col]).sum() / g[emp_col].sum() if g[emp_col].sum() > 0 else 0)
+                    .values)
+
+            else:
+                # --- QUARTERLY DISPLAY ---
+                emp_col = 'Month3_Employment'
+                wages_col = 'Total_Qtrly_Wages'
+                wage_rate_col = 'Avg_Weekly_Wage'
+                estab_col = 'Qtrly_Establishments'
+                x_axis_label = 'Period'
+                time_title = 'Quarterly'
+
+                # Create period label for charting (e.g., "2020-Q1")
+                df_result['Period'] = df_result['Year'].astype(str) + "-Q" + df_result['Quarter'].astype(str)
+                df_result['Period_Sort'] = df_result['Year'] * 10 + df_result['Quarter'].astype(int)
+                df_result = df_result.sort_values('Period_Sort')
+
+                df_agg = df_result.groupby(['Period', 'Period_Sort']).agg(
+                    Total_Employment=(emp_col, 'sum'),
+                    Total_Wages=(wages_col, 'sum'),
+                    Total_Establishments=(estab_col, 'sum')
+                ).reset_index().sort_values('Period_Sort')
+                df_agg['Avg_Weekly_Wage'] = (df_result.groupby('Period')
+                    .apply(lambda g: (g[wage_rate_col] * g[emp_col]).sum() / g[emp_col].sum() if g[emp_col].sum() > 0 else 0)
+                    .values)
+
+            # --- AGGREGATED VIEW ---
             if display_mode in ["Aggregated Custom Region Total", "Both"]:
                 st.markdown("---")
-                st.markdown("#### 📊 Aggregated Custom Region Total")
-                
-                # Summary metrics for latest year
-                latest = df_agg[df_agg['Year'] == df_agg['Year'].max()].iloc[0]
+                st.markdown(f"#### 📊 Aggregated Custom Region Total ({time_title})")
+
+                latest = df_agg.iloc[-1]
                 m1, m2, m3 = st.columns(3)
                 with m1:
-                    st.metric("Total Employment (Latest Year)", f"{latest['Total_Employment']:,.0f}")
+                    st.metric("Total Employment (Latest Period)", f"{latest['Total_Employment']:,.0f}")
                 with m2:
-                    st.metric("Total Annual Wages (Latest Year)", f"${latest['Total_Annual_Wages'] / 1e9:,.2f}B")
+                    wages_display = latest['Total_Wages']
+                    if wages_display > 1e9:
+                        st.metric("Total Wages (Latest Period)", f"${wages_display / 1e9:,.2f}B")
+                    else:
+                        st.metric("Total Wages (Latest Period)", f"${wages_display / 1e6:,.1f}M")
                 with m3:
-                    st.metric("Avg Weekly Wage (Latest Year)", f"${latest['Avg_Weekly_Wage']:,.0f}")
+                    st.metric("Avg Weekly Wage (Latest Period)", f"${latest['Avg_Weekly_Wage']:,.0f}")
 
                 fig_agg = px.line(
                     df_agg,
-                    x='Year',
+                    x=x_axis_label,
                     y='Total_Employment',
-                    title=f"Total Annual Avg Employment — Custom Region ({len(selected_parishes)} Parishes)",
-                    labels={'Total_Employment': 'Annual Avg Employment', 'Year': 'Year'},
+                    title=f"Total {time_title} Employment — Custom Region ({len(selected_parishes)} Parishes)",
+                    labels={'Total_Employment': f'{time_title} Employment', x_axis_label: x_axis_label},
                     markers=True
                 )
                 fig_agg.update_layout(height=400)
                 st.plotly_chart(fig_agg, use_container_width=True)
 
                 st.markdown("#### Aggregated Data Table")
-                st.dataframe(df_agg.style.format({
+                agg_display_cols = [x_axis_label, 'Total_Employment', 'Total_Wages', 'Total_Establishments', 'Avg_Weekly_Wage']
+                agg_display_cols = [c for c in agg_display_cols if c in df_agg.columns]
+                st.dataframe(df_agg[agg_display_cols].style.format({
                     'Total_Employment': '{:,.0f}',
-                    'Total_Annual_Wages': '${:,.0f}',
+                    'Total_Wages': '${:,.0f}',
                     'Total_Establishments': '{:,.0f}',
                     'Avg_Weekly_Wage': '${:,.0f}'
                 }), use_container_width=True)
 
+            # --- INDIVIDUAL PARISH VIEW ---
             if display_mode in ["Individual Parishes", "Both"]:
                 st.markdown("---")
-                st.markdown("#### 📍 Individual Parish Trends")
-                
-                fig_ind = px.line(
-                    df_annual,
-                    x='Year',
-                    y='Annual_Avg_Employment',
-                    color='Parish',
-                    title="Annual Avg Employment by Parish",
-                    labels={'Annual_Avg_Employment': 'Annual Avg Employment', 'Year': 'Year'},
-                    markers=True
-                )
+                st.markdown(f"#### 📍 Individual Parish Trends ({time_title})")
+
+                if freq == 'annual':
+                    fig_ind = px.line(
+                        df_result,
+                        x='Year',
+                        y=emp_col,
+                        color='Parish',
+                        title=f"{time_title} Employment by Parish",
+                        labels={emp_col: f'{time_title} Employment', 'Year': 'Year'},
+                        markers=True
+                    )
+                else:
+                    fig_ind = px.line(
+                        df_result,
+                        x='Period',
+                        y=emp_col,
+                        color='Parish',
+                        title=f"{time_title} Employment by Parish",
+                        labels={emp_col: f'{time_title} Employment', 'Period': 'Period'},
+                        markers=True
+                    )
                 fig_ind.update_layout(height=500)
                 st.plotly_chart(fig_ind, use_container_width=True)
 
-                # Pivot table for easy viewing
-                st.markdown("#### Parish-by-Year Employment Table")
-                pivot_df = df_annual.pivot_table(
-                    index='Parish', 
-                    columns='Year', 
-                    values='Annual_Avg_Employment', 
-                    aggfunc='sum'
-                ).fillna(0).astype(int)
+                # Pivot table
+                st.markdown("#### Parish-by-Period Employment Table")
+                if freq == 'annual':
+                    pivot_df = df_result.pivot_table(
+                        index='Parish', columns='Year', values=emp_col, aggfunc='sum'
+                    ).fillna(0).astype(int)
+                else:
+                    pivot_df = df_result.pivot_table(
+                        index='Parish', columns='Period', values=emp_col, aggfunc='sum'
+                    ).fillna(0).astype(int)
                 st.dataframe(pivot_df, use_container_width=True)
 
             # Download button
             st.markdown("---")
-            csv_data = df_annual.to_csv(index=False)
+            csv_data = df_result.to_csv(index=False)
+            file_suffix = "Annual" if freq == 'annual' else "Quarterly"
             st.download_button(
                 label="⬇️ Download Full Dataset (CSV)",
                 data=csv_data,
-                file_name=f"LA_Custom_Region_Annual_Employment_{annual_start_year}_{annual_end_year}.csv",
+                file_name=f"LA_Custom_Region_{file_suffix}_Employment_{int(annual_start_year)}_{int(annual_end_year)}.csv",
                 mime="text/csv"
             )
     else:
@@ -689,6 +833,8 @@ with tab4:
 # ==============================================================================
 st.markdown("---")
 st.markdown("💡 **Data Source:** U.S. Bureau of Labor Statistics (BLS) Quarterly Census of Employment and Wages (QCEW) Open API.")
+
+
 
 
 
