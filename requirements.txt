@@ -1,3 +1,4 @@
 streamlit
+starlette<0.36.0
 requests
 pandas
