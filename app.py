@@ -9,6 +9,9 @@ st.title("📈 Louisiana Economic & Occupational Explorer (BLS)")
 
 BLS_API_KEY = st.secrets.get("BLS_API_KEY", "")
 
+# Header configuration for BLS Open Data requests to prevent HTTP 403/503 blocks
+HTTP_HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
+
 # -----------------------------------------------------------------------------
 # REFERENCE DICTIONARIES & ORGANIZED TAXONOMIES
 # -----------------------------------------------------------------------------
@@ -101,7 +104,7 @@ QCEW_AREAS = {
     "Shreveport-Bossier City MSA": "C4334"
 }
 
-# HIGHLY ORGANIZED QCEW TAXONOMY (Grouped by Granularity)
+# QCEW INDUSTRY TAXONOMY
 QCEW_AGGREGATES = {
     "10 - Total, All Industries": "10",
     "101 - Goods-Producing Domain": "101",
@@ -204,18 +207,21 @@ def fetch_bls_batch(series_dict, start_year, end_year, api_key):
             "registrationkey": api_key
         }
         
-        response = requests.post(url, json=payload)
-        res_data = response.json()
-        
-        if res_data.get("status") == "REQUEST_SUCCEEDED":
-            for series_item in res_data.get("Results", {}).get("series", []):
-                s_id = series_item.get("seriesID")
-                meta = series_dict.get(s_id, {})
-                for record in series_item.get("data", []):
-                    record_copy = record.copy()
-                    record_copy.update(meta)
-                    record_copy['seriesID'] = s_id
-                    all_records.append(record_copy)
+        try:
+            response = requests.post(url, json=payload, headers=HTTP_HEADERS, timeout=15)
+            res_data = response.json()
+            
+            if res_data.get("status") == "REQUEST_SUCCEEDED":
+                for series_item in res_data.get("Results", {}).get("series", []):
+                    s_id = series_item.get("seriesID")
+                    meta = series_dict.get(s_id, {})
+                    for record in series_item.get("data", []):
+                        record_copy = record.copy()
+                        record_copy.update(meta)
+                        record_copy['seriesID'] = s_id
+                        all_records.append(record_copy)
+        except Exception:
+            pass
                     
     if not all_records:
         return pd.DataFrame()
@@ -226,15 +232,32 @@ def fetch_bls_batch(series_dict, start_year, end_year, api_key):
 
 @st.cache_data(ttl=3600)
 def fetch_qcew_area_slice(year, quarter, area_fips):
-    q_str = str(quarter).lower()
-    url = f"https://data.bls.gov/cew/data/api/{year}/{q_str}/area/{area_fips}.csv"
+    """
+    Fetches QCEW Area Slice CSV and strips quotes from headers and values.
+    Ensures MSA codes are uppercase and handles BLS API layout variances.
+    """
+    q_str = str(quarter).strip().lower()
+    area_clean = str(area_fips).strip().upper()
+    url = f"https://data.bls.gov/cew/data/api/{year}/{q_str}/area/{area_clean}.csv"
+    
     try:
-        res = requests.get(url, timeout=10)
+        res = requests.get(url, headers=HTTP_HEADERS, timeout=15)
         if res.status_code == 200:
-            return pd.read_csv(io.StringIO(res.text), dtype={'area_fips': str, 'industry_code': str, 'own_code': str})
+            # Read all columns as string first to prevent numeric parsing errors
+            df = pd.read_csv(io.StringIO(res.text), dtype=str)
+            
+            # 1. Clean quote marks and whitespace from headers
+            df.columns = [c.replace('"', '').replace("'", '').strip() for c in df.columns]
+            
+            # 2. Clean quote marks and whitespace from cell values across all text columns
+            for col in df.columns:
+                df[col] = df[col].astype(str).str.replace('"', '').str.replace("'", '').str.strip()
+                
+            return df
+        else:
+            return pd.DataFrame()
     except Exception:
-        pass
-    return pd.DataFrame()
+        return pd.DataFrame()
 
 # -----------------------------------------------------------------------------
 # NAVIGATION TABS
@@ -281,7 +304,7 @@ with tab1:
             ], index=4)
         else:
             sae_start = st.number_input("Start Year", min_value=2010, max_value=cur_yr, value=2020, key="sae_s")
-            sae_end = st.number_input("End Year", min_value=2010, max_value=cur_yr, value=2024, key="sae_e")
+            sae_end = st.number_input("End Year", min_value=2010, max_value=cur_yr, value=2025, key="sae_e")
 
         run_sae = st.button("Extract SAE Data", type="primary")
 
@@ -413,7 +436,7 @@ with tab2:
                         st.dataframe(occ_trend[['year', 'Area', 'Occupation', 'Value_Formatted']].rename(columns={'year': 'Year', 'Value_Formatted': 'Value'}), use_container_width=True)
 
 # =============================================================================
-# TAB 3: REDESIGNED USER-FRIENDLY QCEW INTERFACE
+# TAB 3: ROBUST & FLEXIBLE QCEW INTERFACE
 # =============================================================================
 with tab3:
     st.header("🏢 Quarterly Census of Employment & Wages (QCEW)")
@@ -444,7 +467,6 @@ with tab3:
             index=2
         )
 
-        # Dynamic Dropdown Population Based on User Choice
         if taxonomy_level == "Broad Supersectors & Aggregates":
             active_dict = QCEW_AGGREGATES
             default_sel = ["10 - Total, All Industries", "1013 - Manufacturing"]
@@ -473,10 +495,11 @@ with tab3:
             metric_col = QCEW_METRICS[selected_qcew_metric]
 
         c_yr1, c_yr2 = st.columns(2)
+        cur_year = datetime.now().year
         with c_yr1:
-            start_yr_qcew = st.number_input("Start Year", min_value=2015, max_value=2025, value=2020)
+            start_yr_qcew = st.number_input("Start Year", min_value=2012, max_value=cur_year, value=2018)
         with c_yr2:
-            end_yr_qcew = st.number_input("End Year", min_value=2015, max_value=2025, value=2023)
+            end_yr_qcew = st.number_input("End Year", min_value=2012, max_value=cur_year, value=2024)
 
         with st.expander("⚙️ Advanced Settings (Ownership Sector)"):
             ownership_map = {
@@ -498,7 +521,7 @@ with tab3:
             with st.spinner("Fetching QCEW data slices from BLS Open Data..."):
                 years_to_fetch = list(range(int(start_yr_qcew), int(end_yr_qcew) + 1))
                 periods_to_fetch = ["a"] if time_freq == "Annual Averages (Full Year)" else ["1", "2", "3", "4"]
-                ind_codes = [active_dict[i] for i in selected_qcew_industries]
+                ind_codes = [str(active_dict[i]).strip() for i in selected_qcew_industries]
 
                 for area_name in selected_qcew_areas:
                     fips = QCEW_AREAS[area_name]
@@ -506,13 +529,10 @@ with tab3:
                         for p_code in periods_to_fetch:
                             df_slice = fetch_qcew_area_slice(yr, p_code, fips)
                             if not df_slice.empty:
-                                # Clean column strings
-                                df_slice.columns = [c.replace('"', '').strip() for c in df_slice.columns]
-                                
-                                # Filter slice
+                                # Ensure strict string comparison on own_code and industry_code
                                 filtered_slice = df_slice[
-                                    (df_slice['own_code'].astype(str) == ownership_type) & 
-                                    (df_slice['industry_code'].astype(str).isin(ind_codes))
+                                    (df_slice['own_code'] == str(ownership_type)) & 
+                                    (df_slice['industry_code'].isin(ind_codes))
                                 ].copy()
                                 
                                 if not filtered_slice.empty:
@@ -526,13 +546,11 @@ with tab3:
                 if metric_col in qcew_df.columns:
                     qcew_df[metric_col] = pd.to_numeric(qcew_df[metric_col], errors='coerce')
 
-                    # Map Code back to user label
                     inv_ind_map = {v: k for k, v in active_dict.items()}
                     qcew_df['Industry_Label'] = qcew_df['industry_code'].map(inv_ind_map).fillna(qcew_df['industry_code'])
 
                     st.subheader(f"Results: {selected_qcew_metric}")
                     
-                    # Single Industry Filter for clean Line Charts
                     focus_q_ind = st.selectbox("Filter Chart/Table by Industry:", selected_qcew_industries)
                     sub_df = qcew_df[qcew_df['Industry_Label'] == focus_q_ind]
 
@@ -545,9 +563,10 @@ with tab3:
                         st.subheader(f"Data Table: {focus_q_ind}")
                         st.dataframe(piv_table.style.format(fmt_str, na_rep="N/A"), use_container_width=True)
                     else:
-                        st.warning("No data found for the selected combinations.")
+                        st.warning("No data returned for the specified industry/year selection.")
                 else:
-                    st.error(f"Selected metric '{selected_qcew_metric}' is not present in the returned BLS dataset.")
+                    st.error(f"Selected metric '{selected_qcew_metric}' is missing from the retrieved dataset.")
             else:
-                st.error("No QCEW data retrieved. Verify selected regions, years, or industry codes.")
+                st.error("No QCEW data retrieved. Verify that data for the requested years has been published by BLS for these regions.")
+
 
