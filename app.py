@@ -16,14 +16,14 @@ BLS_API_KEY = st.secrets.get("BLS_API_KEY", "")
 LA_AREAS = {
     "Louisiana (Statewide)": "00000",
     "Alexandria MSA": "10780",
-    "Baton Rouge MSA": "12900",
+    "Baton Rouge MSA": "12940",
     "Hammond MSA": "25220",
     "Houma-Thibodaux MSA": "26380",
     "Lafayette MSA": "29180",
     "Lake Charles MSA": "29340",
     "Monroe MSA": "33740",
     "New Orleans-Metairie MSA": "35380",
-    "Shreveport-Bossier City MSA": "38200"
+    "Shreveport-Bossier City MSA": "43340"
 }
 
 SAE_DATA_TYPES = {
