@@ -90,7 +90,7 @@ LOUISIANA_PARISHES = {
 
     }    
     
-    Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
+Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
 
 It incorporates all 64 Louisiana parish FIPS codes, complete 6-digit NAICS industry hierarchy support, corrected QCEW ownership mapping, and the updated multi-tab analytical layout.
 
