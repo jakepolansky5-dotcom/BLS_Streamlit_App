@@ -87,6 +87,8 @@ LOUISIANA_PARISHES = {
     "22123": "West Carroll Parish",
     "22125": "West Feliciana Parish",
     "22127": "Winn Parish"
+
+    }    
     
     Here is the complete, regenerated Python code for the **Louisiana Economic Data Explorer** Streamlit application.
 
