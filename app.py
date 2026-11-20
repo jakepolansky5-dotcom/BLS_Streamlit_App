@@ -10,12 +10,13 @@ st.set_page_config(page_title="Louisiana BLS Data Explorer", page_icon="📈", l
                    initial_sidebar_state="expanded")
 
 from bls_explorer import blsapi, config as C, qcew  # noqa: E402
-from bls_explorer.views import (compare, industry, labor, notes, overview, release, trends,  # noqa: E402
-                                watch)
+from bls_explorer.views import (compare, industry, labor, monthly, notes, overview, release,  # noqa: E402
+                                trends, watch)
 
 pages = {
     "Explore": [
-        st.Page(release.render, title="Latest Release", icon="🆕", url_path="release", default=True),
+        st.Page(release.render, title="Latest QCEW Release", icon="🆕", url_path="release", default=True),
+        st.Page(monthly.render, title="Monthly Snapshot", icon="🗓️", url_path="monthly"),
         st.Page(overview.render, title="Region Overview", icon="🏙️", url_path="region"),
         st.Page(industry.render, title="Industry Snapshot", icon="🏭", url_path="industry"),
         st.Page(compare.render, title="Compare Regions", icon="⚖️", url_path="compare"),
