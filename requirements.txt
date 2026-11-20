@@ -1,6 +1,6 @@
-streamlit
-starlette<0.36.0
-requests
-pandas
+streamlit>=1.50
+pandas>=2.0
 numpy
-plotly
+requests
+plotly>=5.20
+pyarrow
