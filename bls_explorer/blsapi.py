@@ -7,7 +7,10 @@ BLS_API_KEY = "..." or in the BLS_API_KEY environment variable.
 """
 from __future__ import annotations
 
+import hashlib
 import os
+import time
+from pathlib import Path
 
 import pandas as pd
 import requests
@@ -86,53 +89,90 @@ def ces_id(geo, industry: str = "00000000", seasonal: bool = True) -> str | None
 # ---------------------------------------------------------------------------
 # Fetching
 # ---------------------------------------------------------------------------
-@st.cache_data(ttl=12 * 3600, show_spinner=False)
+CACHE_DIR = Path(os.environ.get("BLS_EXPLORER_CACHE", Path.home() / ".cache" / "bls_explorer")) / "api"
+CACHE_TTL = 12 * 3600
+
+
+def _parse(body: dict) -> pd.DataFrame:
+    rows = []
+    for s in body.get("Results", {}).get("series", []):
+        for d in s.get("data", []):
+            per = d.get("period", "")
+            if not per.startswith("M") or per == "M13":
+                continue
+            try:
+                val = float(d["value"])
+            except (ValueError, KeyError):
+                continue
+            notes = ",".join(f.get("code", "") for f in d.get("footnotes", []) if f and f.get("code"))
+            rows.append({"series_id": s["seriesID"], "date": pd.Timestamp(int(d["year"]), int(per[1:]), 1),
+                         "value": val, "footnotes": notes})
+    return pd.DataFrame(rows, columns=["series_id", "date", "value", "footnotes"])
+
+
+def _fetch_chunk(chunk: list, y0: int, y1: int, key: str | None) -> tuple[pd.DataFrame | None, list]:
+    """One API request, cached on disk. Falls back to stale cache if BLS refuses."""
+    tag = hashlib.sha1(f"{','.join(sorted(chunk))}|{y0}|{y1}".encode()).hexdigest()[:20]
+    path = CACHE_DIR / f"{tag}.parquet"
+    stale = None
+    if path.exists():
+        age = time.time() - path.stat().st_mtime
+        cached = pd.read_parquet(path)
+        if age < CACHE_TTL:
+            return cached, []
+        stale = (cached, age)
+    payload = {"seriesid": chunk, "startyear": str(y0), "endyear": str(y1)}
+    if key:
+        payload["registrationkey"] = key
+    problem = None
+    try:
+        r = requests.post(API_URL, json=payload, timeout=60)
+        r.raise_for_status()
+        body = r.json()
+        if body.get("status") == "REQUEST_SUCCEEDED":
+            df = _parse(body)
+            msgs = [m for m in body.get("message", []) if m]
+            try:
+                CACHE_DIR.mkdir(parents=True, exist_ok=True)
+                df.to_parquet(path, index=False)
+            except OSError:
+                pass
+            return df, msgs
+        problem = "; ".join(body.get("message") or [body.get("status", "Unknown error")])
+    except (requests.RequestException, ValueError) as exc:
+        problem = f"Request failed: {exc}"
+    if stale is not None:
+        hours = stale[1] / 3600
+        return stale[0], [f"BLS API unavailable ({problem}). Showing saved data from {hours:.0f} hours ago."]
+    return None, [problem]
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
 def fetch_series(series_ids: tuple, start_year: int, end_year: int) -> tuple[pd.DataFrame, list]:
     """Return (long dataframe, messages). Splits requests to respect API limits."""
     key = api_key()
     max_series = 50 if key else 25
     max_years = 20 if key else 10
-    frames, messages = [], []
-    ids = [s for s in dict.fromkeys(series_ids) if s]
-    spans = []
-    y = start_year
+    ids = sorted(s for s in dict.fromkeys(series_ids) if s)
+    spans, y = [], start_year
     while y <= end_year:
         spans.append((y, min(end_year, y + max_years - 1)))
         y += max_years
+    frames, messages = [], []
     for i in range(0, len(ids), max_series):
-        chunk = ids[i:i + max_series]
         for y0, y1 in spans:
-            payload = {"seriesid": chunk, "startyear": str(y0), "endyear": str(y1)}
-            if key:
-                payload["registrationkey"] = key
-            try:
-                r = requests.post(API_URL, json=payload, timeout=60)
-                r.raise_for_status()
-                body = r.json()
-            except (requests.RequestException, ValueError) as exc:
-                messages.append(f"Request failed: {exc}")
-                continue
-            if body.get("status") != "REQUEST_SUCCEEDED":
-                messages.extend(body.get("message") or [body.get("status", "Unknown error")])
-                continue
-            messages.extend(m for m in body.get("message", []) if m)
-            for s in body.get("Results", {}).get("series", []):
-                rows = []
-                for d in s.get("data", []):
-                    per = d.get("period", "")
-                    if not per.startswith("M") or per == "M13":
-                        continue
-                    try:
-                        val = float(d["value"])
-                    except (ValueError, KeyError):
-                        continue
-                    notes = ",".join(f.get("code", "") for f in d.get("footnotes", []) if f and f.get("code"))
-                    rows.append({"series_id": s["seriesID"],
-                                 "date": pd.Timestamp(int(d["year"]), int(per[1:]), 1),
-                                 "value": val, "footnotes": notes})
-                if rows:
-                    frames.append(pd.DataFrame(rows))
-    df = pd.concat(frames, ignore_index=True).sort_values(["series_id", "date"]) if frames else \
+            df, msgs = _fetch_chunk(ids[i:i + max_series], y0, y1, key)
+            messages += msgs
+            if df is not None:
+                frames.append(df)
+    frames = [f for f in frames if not f.empty]
+    df = pd.concat(frames, ignore_index=True) if frames else \
         pd.DataFrame(columns=["series_id", "date", "value", "footnotes"])
-    df = df.drop_duplicates(["series_id", "date"])
-    return df, messages
+    df = df.drop_duplicates(["series_id", "date"]).sort_values(["series_id", "date"]).reset_index(drop=True)
+    return df, list(dict.fromkeys(messages))
+
+
+def requests_needed(n_series: int, n_years: int = 3) -> int:
+    per = 50 if api_key() else 25
+    span = 20 if api_key() else 10
+    return -(-n_series // per) * -(-n_years // span)

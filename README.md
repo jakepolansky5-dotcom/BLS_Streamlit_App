@@ -13,6 +13,7 @@ streamlit run app.py
 | Page | What it does |
 |---|---|
 | **Latest Release** (home) | The newest QCEW quarter: Louisiana KPIs, parish map, metro growth, statewide industry movers, state ranking, and your watchlists. Detects new BLS releases automatically. |
+| **Monthly Snapshot** | Latest monthly LAUS + CES: LA unemployment rate vs. U.S., nonfarm jobs by sector, parish unemployment map, metro jobs and unemployment, all-state rankings, watchlist parishes. Uses ~5 BLS API requests per load (cached 12 h). |
 | **Region Overview** | Lightcast-style economy overview for any geography: KPIs, monthly trend, industry table at any NAICS level (with LQ, YoY, wages), growth/decline, specialization bubble chart, shift-share, and a parish map. |
 | **Industry Snapshot** | One industry (any NAICS code) across Louisiana parishes, metros, all states and the U.S., with maps, rankings, trend and drill-down. |
 | **Compare Regions** | Louisiana vs. neighbors/peers, or any mix of parishes, metros, regions and states. Headline table, industry-mix heatmap (share/LQ/growth/wages), one-industry comparison, trends. |
