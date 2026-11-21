@@ -98,8 +98,11 @@ def render():
               "The latest monthly unemployment (LAUS) and payroll jobs (CES) data for Louisiana, its parishes and "
               "metros, compared with the U.S. and other states. More current than QCEW, less industry detail.")
     if not blsapi.api_key():
-        st.caption("No BLS API key: this page uses about 5 of the 25 daily API requests on first load "
-                   "(10 with state rankings). Results are saved for 12 hours. A free key removes the limit; see Data Notes.")
+        st.info("**Add a free BLS API key for this page.** Without one, BLS allows 25 requests a day per "
+                "network address, and hosted apps (including Streamlit Community Cloud) share addresses with other "
+                "users, so the limit can run out before you visit. Register at data.bls.gov/registrationEngine, then "
+                "add `BLS_API_KEY = \"your-key\"` under your Streamlit app's **Settings → Secrets**. Results are "
+                "saved for 12 hours, and saved data is shown if BLS refuses a request.", icon="🔑")
 
     core = _get(core_ids(), "statewide series")
     if core.empty:
@@ -125,21 +128,21 @@ def render():
 
     k = st.columns(5)
     if rate is not None:
-        k[0].metric("LA unemployment rate", f"{rate['value']:.1f}%",
-                    delta=f"{rate['mom']:+.1f} pts vs prior month" if pd.notna(rate["mom"]) else None,
+        k[0].metric("LA unemployment", f"{rate['value']:.1f}%",
+                    delta=f"{rate['mom']:+.1f} pts m/m" if pd.notna(rate["mom"]) else None,
                     delta_color="inverse", border=True, help="Seasonally adjusted.")
     if us_rate is not None and rate is not None:
-        k[1].metric("U.S. unemployment rate", f"{us_rate['value']:.1f}%",
-                    delta=f"LA {rate['value'] - us_rate['value']:+.1f} pts vs U.S.", delta_color="off", border=True)
+        k[1].metric("U.S. unemployment", f"{us_rate['value']:.1f}%",
+                    delta=f"LA {rate['value'] - us_rate['value']:+.1f} pts", delta_color="off", border=True)
     if nf is not None:
         k[2].metric("LA nonfarm jobs", f"{nf['value'] * 1000:,.0f}",
-                    delta=f"{nf['mom'] * 1000:+,.0f} vs prior month" if pd.notna(nf["mom"]) else None, border=True,
+                    delta=f"{nf['mom'] * 1000:+,.0f} m/m" if pd.notna(nf["mom"]) else None, border=True,
                     help="Seasonally adjusted, CES.")
-        k[3].metric("LA jobs, year over year", f"{nf['yoy'] * 1000:+,.0f}" if pd.notna(nf["yoy"]) else "—",
-                    delta=f"{nf['yoy_pct']:+.2f}% (U.S. {us_nf['yoy_pct']:+.2f}%)" if us_nf is not None and pd.notna(nf["yoy_pct"]) else None,
+        k[3].metric("LA jobs YoY", f"{nf['yoy'] * 1000:+,.0f}" if pd.notna(nf["yoy"]) else "—",
+                    delta=f"{nf['yoy_pct']:+.1f}% · U.S. {us_nf['yoy_pct']:+.1f}%" if us_nf is not None and pd.notna(nf["yoy_pct"]) else None,
                     delta_color="normal", border=True)
     if lf is not None:
-        k[4].metric("LA labor force", f"{lf['value']:,.0f}",
+        k[4].metric("LA labor force", f"{lf['value']:,.0f}", help="Year-over-year change is blank when BLS has no value for the same month last year.",
                     delta=f"{lf['yoy']:+,.0f} YoY" if pd.notna(lf["yoy"]) else None, border=True)
 
     tabs = st.tabs(["🏭 Jobs by sector", "📉 Unemployment", "🗺️ Parishes", "🏙️ Metros", "🇺🇸 States", "🎯 Watchlists"])
@@ -167,14 +170,15 @@ def _sectors(core, s, names):
         if sid in s.index:
             r = s.loc[sid]
             rows.append({"Sector": blsapi.CES_INDUSTRIES[ind], "Jobs": round(r["value"] * 1000),
-                         "Month change": round(r["mom"] * 1000) if pd.notna(r["mom"]) else np.nan,
                          "YoY change": round(r["yoy"] * 1000) if pd.notna(r["yoy"]) else np.nan,
-                         "YoY %": r["yoy_pct"], "code": ind})
+                         "YoY %": r["yoy_pct"],
+                         "Month change": round(r["mom"] * 1000) if pd.notna(r["mom"]) else np.nan,
+                         "code": ind})
     t = pd.DataFrame(rows)
     if t.empty:
         st.info("No sector data.")
         return
-    a, b = st.columns([3, 2])
+    a, b = st.columns([1, 1])
     with a:
         sec = t[~t["code"].isin(["00000000", "05000000"])].sort_values("YoY change")
         fig = go.Figure(go.Bar(x=sec["YoY change"], y=sec["Sector"], orientation="h",
