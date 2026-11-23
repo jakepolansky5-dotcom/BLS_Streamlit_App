@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LA Top Jobs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+/* Layout: one long page; each focus area = big numbered marker + summary list + a job-by-row grid (columns = jobs, rows = what / video / training), collapsing to one card per job on phones. */
+:root {
+  --bg: #f6f8fc;
+  --surface: #ffffff;
+  --ink: #0f1f3d;
+  --muted: #4d5b74;
+  --line: #d8dfeb;
+  --brand: #14407f;      /* Louisiana flag blue */
+  --brand-ink: #ffffff;
+  --gold: #e4a400;       /* Louisiana flag gold */
+  --gold-soft: #fff4d1;
+  --good: #1f7a4d;
+  --good-soft: #e3f4ea;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  --step--1: 0.875rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.3rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 1.4rem + 2.6vw, 3.1rem);
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1425; --surface: #121e35; --ink: #e9eef8; --muted: #a6b3cb; --line: #26365a;
+    --brand: #8db4ff; --brand-ink: #0b1425; --gold: #ffc940; --gold-soft: #3a2f0c;
+    --good: #6fd3a0; --good-soft: #12301f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1425; --surface: #121e35; --ink: #e9eef8; --muted: #a6b3cb; --line: #26365a;
+  --brand: #8db4ff; --brand-ink: #0b1425; --gold: #ffc940; --gold-soft: #3a2f0c;
+  --good: #6fd3a0; --good-soft: #12301f; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--step-0); line-height: 1.55;
+}
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
+a { color: var(--brand); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- header ---------- */
+.hero { padding-block: 3rem 2rem; border-bottom: 1px solid var(--line); background: var(--surface); }
+.hero .wrap { display: grid; gap: 1.25rem; }
+.eyebrow { font-size: var(--step--1); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.hero h1 { font-size: var(--step-3); font-weight: 800; }
+.hero h1 span { color: var(--brand); }
+.hero p.lead { max-width: 62ch; margin: 0; font-size: var(--step-1); line-height: 1.45; }
+.jump { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .5rem; padding: 0; list-style: none; }
+.jump a {
+  display: inline-flex; align-items: center; gap: .55rem; padding: .45rem .9rem .45rem .45rem;
+  border: 1px solid var(--line); border-radius: 999px; text-decoration: none; color: var(--ink);
+  background: var(--bg); font-weight: 700;
+}
+.jump a:hover { border-color: var(--brand); }
+.jump .dot {
+  display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  background: var(--brand); color: var(--brand-ink); font-family: var(--font-display); font-weight: 800;
+}
+.jump .soon { color: var(--muted); font-weight: 400; }
+.jump .soon .dot { background: transparent; color: var(--muted); border: 2px dashed var(--line); }
+
+/* ---------- sector ---------- */
+.sector { padding-block: 3rem; border-bottom: 1px solid var(--line); scroll-margin-top: 1rem; }
+.sector-head { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.75rem; }
+.big-num {
+  flex: none; display: grid; place-items: center; width: 5.5rem; height: 5.5rem; border-radius: 50%;
+  background: var(--brand); color: var(--brand-ink); font-family: var(--font-display); font-weight: 800;
+  font-size: 3rem; box-shadow: 0 0 0 5px var(--bg), 0 0 0 9px var(--gold);
+}
+.sector-head h2 { font-size: var(--step-2); font-weight: 800; }
+.sector-head p { margin: .3rem 0 0; color: var(--muted); max-width: 60ch; }
+
+/* summary list: the "at a glance" rows from the mockup */
+.glance { width: 100%; border-collapse: collapse; margin-bottom: 2.25rem; font-variant-numeric: tabular-nums; }
+.glance-scroll { overflow-x: auto; }
+.glance th { text-align: left; font-size: var(--step--1); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 0 1rem .5rem 0; border-bottom: 2px solid var(--ink); }
+.glance td { padding: .85rem 1rem .85rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.glance td.job { font-weight: 700; font-size: var(--step-1); font-family: var(--font-display); white-space: nowrap; }
+.glance .pay { font-weight: 700; font-size: var(--step-1); white-space: nowrap; }
+.glance .pay small { display: block; font-weight: 400; font-size: var(--step--1); color: var(--muted); }
+
+.demand { display: inline-flex; align-items: center; gap: .5rem; font-weight: 700; white-space: nowrap; }
+.bars { display: inline-flex; align-items: flex-end; gap: 3px; height: 18px; }
+.bars i { display: block; width: 6px; border-radius: 2px; background: var(--line); }
+.bars i:nth-child(1) { height: 8px; } .bars i:nth-child(2) { height: 13px; } .bars i:nth-child(3) { height: 18px; }
+.bars i.on { background: var(--good); }
+.demand-sub { display: block; font-size: var(--step--1); color: var(--muted); font-weight: 400; margin-top: .15rem; }
+.chip { display: inline-block; margin-top: .35rem; padding: .1rem .55rem; border-radius: 999px; background: var(--gold-soft); color: var(--ink); font-size: var(--step--1); font-weight: 700; border: 1px solid var(--gold); }
+
+/* job grid: label column + one column per job, rows aligned with subgrid */
+.track { display: grid; gap: 0 1.1rem; grid-template-rows: repeat(3, auto); }
+.row-labels, .job { display: grid; grid-row: 1 / span 3; grid-template-rows: subgrid; }
+.row-label { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.15; padding-block: 1rem; border-top: 1px solid var(--line); }
+.cell { padding-block: 1rem; border-top: 1px solid var(--line); min-width: 0; }
+.cell-label { display: none; }
+.what b { font-family: var(--font-display); font-size: var(--step-1); display: block; margin-bottom: .2rem; }
+.what p { margin: 0; font-size: .97rem; }
+
+.video {
+  display: grid; gap: .5rem; text-decoration: none; color: var(--ink);
+}
+.video .thumb {
+  position: relative; aspect-ratio: 16 / 9; max-width: 100%; border-radius: var(--radius); overflow: hidden;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(255,255,255,.07) 14px 28px),
+    linear-gradient(160deg, var(--brand), #0a2550);
+  display: grid; place-items: center;
+}
+.video .thumb .play {
+  width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--gold); display: grid; place-items: center;
+  transition: transform .15s ease;
+}
+.video .thumb .play::after { content: ""; margin-left: 4px; border-style: solid; border-width: 9px 0 9px 14px; border-color: transparent transparent transparent #0f1f3d; }
+.video .thumb .tag { position: absolute; left: .6rem; bottom: .5rem; color: #fff; font-size: var(--step--1); font-weight: 700; }
+.video:hover .play { transform: scale(1.08); }
+@media (prefers-reduced-motion: reduce) { .video .thumb .play { transition: none; } }
+.video .cap { font-size: var(--step--1); color: var(--muted); }
+
+.training ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .97rem; }
+
+/* coming-soon sectors */
+.soon-card { display: flex; align-items: center; gap: 1.25rem; padding-block: 1.5rem; border-bottom: 1px solid var(--line); color: var(--muted); }
+.soon-card .big-num { width: 3.6rem; height: 3.6rem; font-size: 1.8rem; background: transparent; color: var(--muted); border: 3px dashed var(--line); box-shadow: none; }
+.soon-card h2 { font-size: var(--step-1); color: var(--muted); }
+
+footer { padding-block: 2.5rem 3rem; color: var(--muted); font-size: var(--step--1); }
+footer .wrap { display: grid; gap: .6rem; max-width: 1180px; }
+footer p { margin: 0; max-width: 85ch; }
+.demo-note { background: var(--gold-soft); border: 1px solid var(--gold); color: var(--ink); border-radius: 10px; padding: .7rem .9rem; }
+
+/* phones and small tablets: one card per job */
+@media (max-width: 860px) {
+  .track { display: grid; grid-template-columns: 1fr !important; gap: 1rem; }
+  .row-labels { display: none; }
+  .job { grid-row: auto; display: grid; grid-template-rows: none; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: .25rem 1rem; }
+  .cell:first-child { border-top: 0; }
+  .cell-label { display: block; font-size: var(--step--1); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+  .video { grid-template-columns: 9rem 1fr; align-items: center; }
+  .big-num { width: 4.2rem; height: 4.2rem; font-size: 2.2rem; }
+  .glance th.how, .glance td.how { display: none; }
+}
+@media (max-width: 600px) {
+  .glance thead { display: none; }
+  .glance, .glance tbody { display: block; }
+  .glance tr { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1.25rem; padding-block: .9rem; border-bottom: 1px solid var(--line); }
+  .glance td { border: 0; padding: 0; }
+  .glance td.job { grid-column: 1 / -1; white-space: normal; }
+  .demand { white-space: normal; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Louisiana · Jobs with a big future</p>
+    <h1>Welcome to <span>LA Top Jobs!</span></h1>
+    <p class="lead">These are jobs Louisiana will need lots of people for over the next 10 years. They pay well, and you can start training for many of them right after high school. Pick one that sounds interesting, watch what the work is really like, and find a training program near you.</p>
+    <ul class="jump" id="jump" aria-label="Jump to a focus area"></ul>
+  </div>
+</header>
+
+<main id="sectors"></main>
+
+<footer>
+  <div class="wrap" id="sources"></div>
+</footer>
+
+<script src="data.js"></script>
+<script>
+(function () {
+  const data = window.TOP_JOBS;
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const k = (n) => n ? "$" + Math.round(n / 1000) + "K" : "n/a";
+  const roughly = (n) => (n >= 1000 ? Math.round(n / 100) * 100 : Math.round(n / 10) * 10).toLocaleString("en-US");
+  const level = { "Very high demand": 3, "High demand": 2, "Steady demand": 1 };
+  const article = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ");
+
+  const bars = (label) => {
+    const n = level[label] || 1;
+    return `<span class="bars" aria-hidden="true">${[1, 2, 3].map((i) => `<i class="${i <= n ? "on" : ""}"></i>`).join("")}</span>`;
+  };
+
+  const demandHtml = (j) => `
+    <span class="demand">${bars(j.demand)}${esc(j.demand)}</span>
+    <span class="demand-sub">About ${roughly(j.openings_per_year)} job openings every year</span>
+    ${j.growing_fast ? '<span class="chip">Growing fast</span>' : ""}`;
+
+  // jump links
+  document.getElementById("jump").innerHTML = data.sectors.map((s, i) => s.status === "live"
+    ? `<li><a href="#${esc(s.id)}"><span class="dot">${i + 1}</span>${esc(s.name)}</a></li>`
+    : `<li class="soon"><a href="#${esc(s.id)}" class="soon"><span class="dot">${i + 1}</span>Coming soon</a></li>`).join("");
+
+  // sectors
+  document.getElementById("sectors").innerHTML = data.sectors.map((s, i) => {
+    if (s.status !== "live") {
+      return `<section id="${esc(s.id)}" class="wrap soon-card" aria-label="Focus area ${i + 1}, coming soon">
+        <div class="big-num" aria-hidden="true">${i + 1}</div>
+        <div><h2>${esc(s.name)}</h2><p style="margin:.2rem 0 0">Coming soon</p></div></section>`;
+    }
+    const glance = `
+      <div class="glance-scroll"><table class="glance">
+        <thead><tr><th scope="col">Job</th><th scope="col">Starting pay</th><th scope="col">Demand in Louisiana</th><th scope="col" class="how">How to get there</th></tr></thead>
+        <tbody>${s.jobs.map((j) => `
+          <tr>
+            <td class="job">${esc(j.plural)}</td>
+            <td class="pay">${k(j.pay_start)}<small>a year to start · ${k(j.pay_typical)} typical</small></td>
+            <td>${demandHtml(j)}</td>
+            <td class="how">${esc(j.path_short)}</td>
+          </tr>`).join("")}
+        </tbody></table></div>`;
+
+    const cols = s.jobs.length;
+    const track = `
+      <div class="track" style="grid-template-columns: minmax(7rem, 9rem) repeat(${cols}, minmax(0, 1fr));">
+        <div class="row-labels" aria-hidden="true">
+          <div class="row-label">What is a…</div>
+          <div class="row-label">What's it like to be a…</div>
+          <div class="row-label">Training near you</div>
+        </div>
+        ${s.jobs.map((j) => `
+        <article class="job" aria-label="${esc(j.name)}">
+          <div class="cell what">
+            <span class="cell-label">What is ${article(j.name)}${esc(j.name.toLowerCase())}?</span>
+            <b>${esc(j.plural)}</b><p>${esc(j.what)}</p>
+            <p style="margin-top:.5rem;color:var(--muted);font-size:var(--step--1)"><strong style="color:var(--ink)">How to get there:</strong> ${esc(j.path)}</p>
+          </div>
+          <div class="cell">
+            <span class="cell-label">What's it like?</span>
+            <a class="video" href="${esc(j.video)}" target="_blank" rel="noopener">
+              <span class="thumb"><span class="play" aria-hidden="true"></span><span class="tag">${esc(j.name)}</span></span>
+              <span class="cap">Watch a day on the job ↗</span>
+            </a>
+          </div>
+          <div class="cell training">
+            <span class="cell-label">Training near you</span>
+            <ul>${j.training.map((t) => `<li><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.label)}</a></li>`).join("")}</ul>
+          </div>
+        </article>`).join("")}
+      </div>`;
+
+    return `<section id="${esc(s.id)}" class="sector">
+      <div class="wrap">
+        <div class="sector-head">
+          <div class="big-num" aria-hidden="true">${i + 1}</div>
+          <div><h2>${esc(s.name)}</h2><p>${esc(s.tagline)}</p></div>
+        </div>
+        ${glance}
+        ${track}
+      </div></section>`;
+  }).join("");
+
+  const src = data.sources;
+  document.getElementById("sources").innerHTML = `
+    <p class="demo-note"><strong>Demo version.</strong> Training links are examples from the Baton Rouge area. Videos open CareerOneStop's free career videos in a new tab.</p>
+    <p><strong>Where the numbers come from.</strong> Job demand: <a href="${esc(src.projections_url)}" target="_blank" rel="noopener">${esc(src.projections)}</a>. "Very high demand" means at least 1,000 openings a year statewide; "High demand" means at least 400. "Growing fast" means the job is expected to grow 10% or more by 2034.</p>
+    <p>Pay: <a href="${esc(src.wages_url)}" target="_blank" rel="noopener">${esc(src.wages)}</a>. Starting pay is what the lower-paid quarter of workers earn (25th percentile); typical pay is the middle (median).</p>
+    <p>Want to see every job? Explore the full forecasts and <a href="https://www.laworks.net/Stars/default.aspx" target="_blank" rel="noopener">Louisiana Star Jobs</a> on LA Works.</p>`;
+})();
+</script>
+</body>
+</html>

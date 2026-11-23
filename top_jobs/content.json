@@ -1,0 +1,136 @@
+{
+  "_readme": "Kid-friendly copy for LA Top Jobs. Edit words here, then run `python top_jobs/build_data.py` to merge in the latest LA Works forecasts and BLS wages. Numbers are NOT typed here; the build script fills them in from the official files.",
+  "sectors": [
+    {
+      "id": "trades",
+      "name": "Skilled Trades",
+      "tagline": "Build it, fix it, power it. Louisiana needs people who can work with their hands.",
+      "status": "live",
+      "jobs": [
+        {
+          "soc": "47-2031",
+          "name": "Carpenter",
+          "plural": "Carpenters",
+          "what": "build and repair homes, businesses, and other buildings using wood and other materials. They make structures safe and sturdy.",
+          "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
+          "path_short": "Paid apprenticeship",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
+          "training": [
+            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" },
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+          ]
+        },
+        {
+          "soc": "51-4121",
+          "name": "Welder",
+          "plural": "Welders",
+          "what": "use heat and special tools to join metal pieces together. They help build and repair machines, pipes, ships, and buildings.",
+          "path": "Take a welding program at a community or technical college. Many take less than a year.",
+          "path_short": "Technical college certificate",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
+          "training": [
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" },
+            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" }
+          ]
+        },
+        {
+          "soc": "47-2111",
+          "name": "Electrician",
+          "plural": "Electricians",
+          "what": "install and repair the wiring and equipment that bring electricity to homes, schools, and businesses, so the lights stay on safely.",
+          "path": "Finish high school, then join a paid apprenticeship (about 4 years). You earn money while you learn.",
+          "path_short": "Paid apprenticeship",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
+          "training": [
+            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" },
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+          ]
+        },
+        {
+          "soc": "49-9041",
+          "name": "Industrial Mechanic",
+          "plural": "Industrial Mechanics",
+          "what": "keep the big machines in factories and plants running. They find out what is broken and fix it fast.",
+          "path": "Take an industrial maintenance program at a technical college, then keep learning on the job.",
+          "path_short": "Technical college + on-the-job",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
+          "training": [
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+          ]
+        },
+        {
+          "soc": "47-2152",
+          "name": "Plumber",
+          "plural": "Plumbers",
+          "what": "install and fix the pipes that carry water and gas in homes, businesses, and factories.",
+          "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
+          "path_short": "Paid apprenticeship",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
+          "training": [
+            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Healthcare",
+      "tagline": "Help people feel better. Hospitals and clinics across Louisiana are hiring.",
+      "status": "live",
+      "jobs": [
+        {
+          "soc": "29-1141",
+          "name": "Registered Nurse",
+          "plural": "Registered Nurses",
+          "what": "care for patients in hospitals, clinics, and schools. They give medicine, check on patients, and work with doctors.",
+          "path": "Earn a nursing degree (2 or 4 years) and pass the state nursing exam.",
+          "path_short": "Nursing degree (2 or 4 years)",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
+          "training": [
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" },
+            { "label": "LSU Health New Orleans School of Nursing", "url": "https://nursing.lsuhsc.edu/" }
+          ]
+        },
+        {
+          "soc": "29-1171",
+          "name": "Nurse Practitioner",
+          "plural": "Nurse Practitioners",
+          "what": "are nurses with extra training. They can examine patients, figure out what is wrong, and prescribe medicine.",
+          "path": "Become a registered nurse first, then earn a graduate degree in nursing.",
+          "path_short": "Nursing degree + graduate degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
+          "training": [
+            { "label": "LSU Health New Orleans School of Nursing", "url": "https://nursing.lsuhsc.edu/" }
+          ]
+        },
+        {
+          "soc": "31-1131",
+          "name": "Nursing Assistant",
+          "plural": "Certified Nursing Assistants",
+          "what": "help patients with everyday needs like eating, bathing, and moving around. They are often the first step into a nursing career.",
+          "path": "Finish a short, state-approved training program (a few weeks) and pass a skills test.",
+          "path_short": "Short training program",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
+          "training": [
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+          ]
+        },
+        {
+          "soc": "31-9092",
+          "name": "Medical Assistant",
+          "plural": "Medical Assistants",
+          "what": "keep doctors' offices running. They check patients in, take vital signs, and help doctors during exams.",
+          "path": "Earn a certificate from a community or technical college. It usually takes about a year.",
+          "path_short": "College certificate (about 1 year)",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
+          "training": [
+            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+          ]
+        }
+      ]
+    },
+    { "id": "tbd3", "name": "Focus area 3", "tagline": "Coming soon", "status": "soon", "jobs": [] },
+    { "id": "tbd4", "name": "Focus area 4", "tagline": "Coming soon", "status": "soon", "jobs": [] },
+    { "id": "tbd5", "name": "Focus area 5", "tagline": "Coming soon", "status": "soon", "jobs": [] }
+  ]
+}
