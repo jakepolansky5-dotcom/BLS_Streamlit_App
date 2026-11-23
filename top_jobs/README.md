@@ -34,9 +34,20 @@ median wage (BLS May release, falling back to the LA Works median where BLS has 
 
 When LA Works publishes a new projection cycle, change `PROJ_YEARS` in `build_data.py`. Regional files (RLMA 1–8) use the same layout if you want regional versions later.
 
-## Adding a focus area
+## Focus areas
 
-In `content.json`, replace one of the `"status": "soon"` placeholders with `"status": "live"`, a name and a tagline, and add jobs by SOC code. Then rerun the build.
+Six focus areas, in this order: Skilled Trades, Healthcare, Tech & Engineering, Business, Transportation,
+Teaching & Public Service. Each is a `sector` in `content.json` with a `group` that names its group in
+`occupations.csv` (this also sets the order of "Browse all in-demand careers"). Spotlight jobs are listed by SOC
+code; a job can list several codes (`"25-2012, 25-2021"`), which are combined: openings add up and pay is an
+openings-weighted average. To add a focus area, add a sector with `"status": "live"` and rerun the build.
+
+## When BLS is unavailable
+
+The free BLS API allows a limited number of requests per day without a key. The build tries v2, then v1, and saves
+what it gets to `wages_cache.json`, so later builds only ask for codes it hasn't seen (delete the cache to refresh).
+If BLS refuses entirely, the build keeps the pay from the previous `data.js` and prints which spotlight jobs have no
+starting pay yet; the page then shows typical pay for those. Rerun when BLS is reachable.
 
 ## Still to verify
 

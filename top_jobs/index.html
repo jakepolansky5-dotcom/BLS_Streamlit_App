@@ -261,8 +261,9 @@ footer p { margin: 0; max-width: 85ch; }
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const k = (n) => n ? "$" + Math.round(n / 1000) + "K" : "n/a";
   const roughly = (n) => (n >= 1000 ? Math.round(n / 100) * 100 : Math.round(n / 10) * 10).toLocaleString("en-US");
-  const level = { "Very high demand": 3, "High demand": 2, "Steady demand": 1 };
-  const article = (w) => (/^[aeiou]/i.test(w) ? "an " : "a ");
+  const level = { "Very high demand": 3, "High demand": 2, "In demand": 1 };
+  const article = (w) => (/^(HR\b|[aeiou])/i.test(w) ? "an " : "a ");
+  const lower = (w) => w.split(" ").map((x) => (/^[A-Z][a-z]/.test(x) ? x.toLowerCase() : x)).join(" ");
 
   const bars = (label) => {
     const n = level[label] || 1;
@@ -289,11 +290,11 @@ footer p { margin: 0; max-width: 85ch; }
     }
     const glance = `
       <div class="glance-scroll"><table class="glance">
-        <thead><tr><th scope="col">Job</th><th scope="col">Starting pay</th><th scope="col">Demand in Louisiana</th><th scope="col" class="how">How to get there</th></tr></thead>
+        <thead><tr><th scope="col">Job</th><th scope="col">Pay</th><th scope="col">Demand in Louisiana</th><th scope="col" class="how">How to get there</th></tr></thead>
         <tbody>${s.jobs.map((j) => `
           <tr>
             <td class="job">${esc(j.plural)}</td>
-            <td class="pay">${k(j.pay_start)}<small>a year to start · ${k(j.pay_typical)} typical</small></td>
+            <td class="pay">${j.pay_start ? `${k(j.pay_start)}<small>a year to start · ${k(j.pay_typical)} typical</small>` : `${k(j.pay_typical)}<small>typical pay a year</small>`}</td>
             <td>${demandHtml(j)}</td>
             <td class="how">${esc(j.path_short)}</td>
           </tr>`).join("")}
@@ -308,9 +309,9 @@ footer p { margin: 0; max-width: 85ch; }
           <div class="row-label">Training near you</div>
         </div>
         ${s.jobs.map((j) => `
-        <article class="job" id="job-${esc(j.soc)}" aria-label="${esc(j.name)}">
+        <article class="job" id="${esc(j.anchor)}" aria-label="${esc(j.name)}">
           <div class="cell what">
-            <span class="cell-label">What is ${article(j.name)}${esc(j.name.toLowerCase())}?</span>
+            <span class="cell-label">What is ${article(j.name)}${esc(lower(j.name))}?</span>
             <b>${esc(j.plural)}</b><p>${esc(j.what)}</p>
             <p style="margin-top:.5rem;color:var(--muted);font-size:var(--step--1)"><strong style="color:var(--ink)">How to get there:</strong> ${esc(j.path)}</p>
           </div>
@@ -349,7 +350,7 @@ footer p { margin: 0; max-width: 85ch; }
     { id: "training", label: "Fastest training", fn: (a, b) => a.education - b.education || b.openings - a.openings },
   ];
   const spotlight = {};
-  data.sectors.forEach((s) => s.jobs.forEach((j) => { spotlight[j.soc] = j; }));
+  data.sectors.forEach((s) => s.jobs.forEach((j) => (j.codes || [j.soc]).forEach((code) => { spotlight[code] = j; })));
   const state = data.groups.map(() => ({ open: false, sort: "openings", edu: null }));
   const groupsEl = document.getElementById("groups");
 
@@ -359,7 +360,7 @@ footer p { margin: 0; max-width: 85ch; }
       <div class="nm">${esc(c.name)}
         <div class="meta"><span class="school">${esc(SCHOOL_LONG[c.education])}</span>
           <span class="paym">${k(c.pay)} typical pay</span>
-          ${spot ? `<a class="spot" href="#job-${esc(spot.soc)}">Watch the video ↑</a>` : ""}</div>
+          ${spot ? `<a class="spot" href="#${esc(spot.anchor)}">Watch the video ↑</a>` : ""}</div>
       </div>
       <div class="opn"><b>${roughly(c.openings)}</b> a year<span class="meter" aria-hidden="true"><i style="width:${Math.max(4, Math.round(100 * c.openings / max))}%"></i></span></div>
       <div class="pay2">${k(c.pay)}<small>typical pay</small></div>
@@ -422,7 +423,7 @@ footer p { margin: 0; max-width: 85ch; }
   const src = data.sources;
   document.getElementById("sources").innerHTML = `
     <p class="demo-note"><strong>Demo version.</strong> Training links are examples from the Baton Rouge area. Videos open CareerOneStop's free career videos in a new tab.</p>
-    <p><strong>Where the numbers come from.</strong> Job demand: <a href="${esc(src.projections_url)}" target="_blank" rel="noopener">${esc(src.projections)}</a>. "Very high demand" means at least 1,000 openings a year statewide; "High demand" means at least 400. "Growing fast" means the job is expected to grow 10% or more by 2034.</p>
+    <p><strong>Where the numbers come from.</strong> Job demand: <a href="${esc(src.projections_url)}" target="_blank" rel="noopener">${esc(src.projections)}</a>. "Very high demand" means at least 1,000 openings a year statewide, "High demand" at least 400, and every other job here is marked "In demand." "Growing fast" means the job is expected to grow 10% or more by 2034.</p>
     <p>Pay: <a href="${esc(src.wages_url)}" target="_blank" rel="noopener">${esc(src.wages)}</a>. Starting pay is what the lower-paid quarter of workers earn (25th percentile); typical pay is the middle (median).</p>
     <p>In "Browse all in-demand careers," careers that combine several job codes (like K–12 teachers) add up the openings of every code, and their pay is an average weighted by openings. Each career shows the least school you need to start.</p>
     <p>Want to see every job? Explore the full forecasts and <a href="https://www.laworks.net/Stars/default.aspx" target="_blank" rel="noopener">Louisiana Star Jobs</a> on LA Works.</p>`;

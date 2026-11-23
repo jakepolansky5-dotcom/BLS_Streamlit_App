@@ -25,13 +25,19 @@ window.TOP_JOBS = {
               "url": "https://www.mybrcc.edu/"
             }
           ],
+          "codes": [
+            "47-2031"
+          ],
+          "anchor": "job-47-2031",
           "openings_per_year": 970,
           "demand": "High demand",
           "growing_fast": false,
           "pay_start": 43730,
-          "pay_typical": 49920,
+          "pay_typical": 49900,
           "_lmi": {
-            "title": "Carpenters",
+            "titles": [
+              "Carpenters"
+            ],
             "emp_2024": 12298,
             "emp_2034": 12974,
             "growth_pct": 5.5
@@ -55,13 +61,19 @@ window.TOP_JOBS = {
               "url": "https://www.abcpelican.com/"
             }
           ],
+          "codes": [
+            "51-4121"
+          ],
+          "anchor": "job-51-4121",
           "openings_per_year": 1410,
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 50680,
-          "pay_typical": 62250,
+          "pay_typical": 62200,
           "_lmi": {
-            "title": "Welders, Cutters, Solderers, and Brazers",
+            "titles": [
+              "Welders, Cutters, Solderers, and Brazers"
+            ],
             "emp_2024": 13321,
             "emp_2034": 14145,
             "growth_pct": 6.2
@@ -85,13 +97,19 @@ window.TOP_JOBS = {
               "url": "https://www.mybrcc.edu/"
             }
           ],
+          "codes": [
+            "47-2111"
+          ],
+          "anchor": "job-47-2111",
           "openings_per_year": 1200,
           "demand": "Very high demand",
           "growing_fast": true,
           "pay_start": 48910,
-          "pay_typical": 61540,
+          "pay_typical": 61500,
           "_lmi": {
-            "title": "Electricians",
+            "titles": [
+              "Electricians"
+            ],
             "emp_2024": 11917,
             "emp_2034": 13200,
             "growth_pct": 10.8
@@ -111,13 +129,19 @@ window.TOP_JOBS = {
               "url": "https://www.mybrcc.edu/"
             }
           ],
+          "codes": [
+            "49-9041"
+          ],
+          "anchor": "job-49-9041",
           "openings_per_year": 620,
           "demand": "High demand",
           "growing_fast": true,
           "pay_start": 47470,
-          "pay_typical": 60260,
+          "pay_typical": 60300,
           "_lmi": {
-            "title": "Industrial Machinery Mechanics",
+            "titles": [
+              "Industrial Machinery Mechanics"
+            ],
             "emp_2024": 6023,
             "emp_2034": 6914,
             "growth_pct": 14.8
@@ -137,19 +161,26 @@ window.TOP_JOBS = {
               "url": "https://www.abcpelican.com/"
             }
           ],
+          "codes": [
+            "47-2152"
+          ],
+          "anchor": "job-47-2152",
           "openings_per_year": 900,
           "demand": "High demand",
           "growing_fast": false,
           "pay_start": 50750,
-          "pay_typical": 63680,
+          "pay_typical": 63700,
           "_lmi": {
-            "title": "Plumbers, Pipefitters, and Steamfitters",
+            "titles": [
+              "Plumbers, Pipefitters, and Steamfitters"
+            ],
             "emp_2024": 10049,
             "emp_2034": 10679,
             "growth_pct": 6.3
           }
         }
-      ]
+      ],
+      "group": "Skilled Trades & Related"
     },
     {
       "id": "health",
@@ -175,13 +206,19 @@ window.TOP_JOBS = {
               "url": "https://nursing.lsuhsc.edu/"
             }
           ],
+          "codes": [
+            "29-1141"
+          ],
+          "anchor": "job-29-1141",
           "openings_per_year": 2780,
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 69040,
-          "pay_typical": 80230,
+          "pay_typical": 80200,
           "_lmi": {
-            "title": "Registered Nurses",
+            "titles": [
+              "Registered Nurses"
+            ],
             "emp_2024": 49294,
             "emp_2034": 51930,
             "growth_pct": 5.3
@@ -201,13 +238,19 @@ window.TOP_JOBS = {
               "url": "https://nursing.lsuhsc.edu/"
             }
           ],
+          "codes": [
+            "29-1171"
+          ],
+          "anchor": "job-29-1171",
           "openings_per_year": 400,
           "demand": "High demand",
           "growing_fast": true,
           "pay_start": 109850,
           "pay_typical": 125600,
           "_lmi": {
-            "title": "Nurse Practitioners",
+            "titles": [
+              "Nurse Practitioners"
+            ],
             "emp_2024": 4629,
             "emp_2034": 6296,
             "growth_pct": 36.0
@@ -227,13 +270,19 @@ window.TOP_JOBS = {
               "url": "https://www.mybrcc.edu/"
             }
           ],
+          "codes": [
+            "31-1131"
+          ],
+          "anchor": "job-31-1131",
           "openings_per_year": 3010,
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 29070,
-          "pay_typical": 30510,
+          "pay_typical": 30500,
           "_lmi": {
-            "title": "Nursing Assistants",
+            "titles": [
+              "Nursing Assistants"
+            ],
             "emp_2024": 21481,
             "emp_2034": 21813,
             "growth_pct": 1.5
@@ -253,40 +302,766 @@ window.TOP_JOBS = {
               "url": "https://www.mybrcc.edu/"
             }
           ],
+          "codes": [
+            "31-9092"
+          ],
+          "anchor": "job-31-9092",
           "openings_per_year": 1910,
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 32020,
-          "pay_typical": 36320,
+          "pay_typical": 36300,
           "_lmi": {
-            "title": "Medical Assistants",
+            "titles": [
+              "Medical Assistants"
+            ],
             "emp_2024": 14368,
             "emp_2034": 15690,
             "growth_pct": 9.2
           }
         }
+      ],
+      "group": "Healthcare"
+    },
+    {
+      "id": "tech",
+      "group": "Tech & Engineering",
+      "name": "Tech & Engineering",
+      "status": "live",
+      "tagline": "Code it, design it, engineer it. Louisiana needs problem-solvers.",
+      "jobs": [
+        {
+          "soc": "15-1252",
+          "name": "Software Developer",
+          "plural": "Software Developers",
+          "what": "write the code behind apps, websites, and games. They plan how a program should work, then build and test it.",
+          "path": "Earn a 4-year degree in computer science or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "15-1252"
+          ],
+          "anchor": "job-15-1252",
+          "openings_per_year": 280,
+          "demand": "In demand",
+          "growing_fast": true,
+          "pay_start": null,
+          "pay_typical": 102800,
+          "_lmi": {
+            "titles": [
+              "Software Developers"
+            ],
+            "emp_2024": 3953,
+            "emp_2034": 4706,
+            "growth_pct": 19.0
+          }
+        },
+        {
+          "soc": "15-1232",
+          "name": "Computer Support Specialist",
+          "plural": "Computer Support Specialists",
+          "what": "help people when their computers, phones, or networks stop working. They find the problem and fix it.",
+          "path": "Earn a certificate or 2-year degree in information technology. Industry certifications help you get hired.",
+          "path_short": "Certificate or 2-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
+          "training": [
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
+          ],
+          "codes": [
+            "15-1232"
+          ],
+          "anchor": "job-15-1232",
+          "openings_per_year": 250,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 52400,
+          "_lmi": {
+            "titles": [
+              "Computer User Support Specialists"
+            ],
+            "emp_2024": 4089,
+            "emp_2034": 4105,
+            "growth_pct": 0.4
+          }
+        },
+        {
+          "soc": "17-2051",
+          "name": "Civil Engineer",
+          "plural": "Civil Engineers",
+          "what": "design roads, bridges, levees, and water systems, and make sure they are built safely.",
+          "path": "Earn a 4-year engineering degree. Many go on to earn a state engineering license.",
+          "path_short": "4-year engineering degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "17-2051"
+          ],
+          "anchor": "job-17-2051",
+          "openings_per_year": 220,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 105400,
+          "_lmi": {
+            "titles": [
+              "Civil Engineers"
+            ],
+            "emp_2024": 3323,
+            "emp_2034": 3574,
+            "growth_pct": 7.6
+          }
+        },
+        {
+          "soc": "15-1211",
+          "name": "Computer Systems Analyst",
+          "plural": "Computer Systems Analysts",
+          "what": "study how a business uses computers and find ways to make its systems work better.",
+          "path": "Earn a 4-year degree in computer science or information systems.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "15-1211"
+          ],
+          "anchor": "job-15-1211",
+          "openings_per_year": 170,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 95700,
+          "_lmi": {
+            "titles": [
+              "Computer Systems Analysts"
+            ],
+            "emp_2024": 2561,
+            "emp_2034": 2768,
+            "growth_pct": 8.1
+          }
+        },
+        {
+          "soc": "19-2041",
+          "name": "Environmental Scientist",
+          "plural": "Environmental Scientists",
+          "what": "protect people and nature. They test air, water, and soil for pollution and find ways to clean it up.",
+          "path": "Earn a 4-year degree in environmental science, biology, or chemistry.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "19-2041"
+          ],
+          "anchor": "job-19-2041",
+          "openings_per_year": 150,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 69800,
+          "_lmi": {
+            "titles": [
+              "Environmental Scientists and Specialists, Including Health"
+            ],
+            "emp_2024": 1664,
+            "emp_2034": 1715,
+            "growth_pct": 3.1
+          }
+        }
       ]
     },
     {
-      "id": "tbd3",
-      "name": "Focus area 3",
-      "tagline": "Coming soon",
-      "status": "soon",
-      "jobs": []
+      "id": "business",
+      "group": "Business",
+      "name": "Business",
+      "status": "live",
+      "tagline": "Every company needs people who can manage money, people, and plans.",
+      "jobs": [
+        {
+          "soc": "13-2011",
+          "name": "Accountant",
+          "plural": "Accountants",
+          "what": "keep track of money for businesses and families. They check records, prepare taxes, and help leaders make smart choices.",
+          "path": "Earn a 4-year degree in accounting. Many become Certified Public Accountants (CPAs).",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "13-2011"
+          ],
+          "anchor": "job-13-2011",
+          "openings_per_year": 1150,
+          "demand": "Very high demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 73800,
+          "_lmi": {
+            "titles": [
+              "Accountants and Auditors"
+            ],
+            "emp_2024": 14375,
+            "emp_2034": 15205,
+            "growth_pct": 5.8
+          }
+        },
+        {
+          "soc": "13-1071, 13-1151",
+          "name": "HR & Training Specialist",
+          "plural": "HR & Training Specialists",
+          "what": "hire new workers, help employees with pay and benefits, and teach training classes.",
+          "path": "Earn a 4-year degree in business, human resources, or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "13-1071",
+            "13-1151"
+          ],
+          "anchor": "job-13-1071",
+          "openings_per_year": 840,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 60300,
+          "_lmi": {
+            "titles": [
+              "Human Resources Specialists",
+              "Training and Development Specialists"
+            ],
+            "emp_2024": 9538,
+            "emp_2034": 10155,
+            "growth_pct": 6.5
+          }
+        },
+        {
+          "soc": "13-1161, 27-3031",
+          "name": "Marketing Specialist",
+          "plural": "Marketing & PR Specialists",
+          "what": "help companies tell people about their products and share news with the public.",
+          "path": "Earn a 4-year degree in marketing, communications, or business.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "13-1161",
+            "27-3031"
+          ],
+          "anchor": "job-13-1161",
+          "openings_per_year": 660,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 59800,
+          "_lmi": {
+            "titles": [
+              "Market Research Analysts and Marketing Specialists",
+              "Public Relations Specialists"
+            ],
+            "emp_2024": 7221,
+            "emp_2034": 7636,
+            "growth_pct": 5.7
+          }
+        },
+        {
+          "soc": "13-1082",
+          "name": "Project Manager",
+          "plural": "Project Managers",
+          "what": "keep big projects on schedule and on budget, from building a new plant to launching new software.",
+          "path": "Earn a 4-year degree, then build experience leading projects. Certifications can help.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "13-1082"
+          ],
+          "anchor": "job-13-1082",
+          "openings_per_year": 590,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 84800,
+          "_lmi": {
+            "titles": [
+              "Project Management Specialists"
+            ],
+            "emp_2024": 7554,
+            "emp_2034": 8172,
+            "growth_pct": 8.2
+          }
+        },
+        {
+          "soc": "13-1111",
+          "name": "Management Analyst",
+          "plural": "Management Analysts",
+          "what": "study how a business works and suggest ways to save money and work smarter.",
+          "path": "Earn a 4-year degree in business or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "13-1111"
+          ],
+          "anchor": "job-13-1111",
+          "openings_per_year": 490,
+          "demand": "High demand",
+          "growing_fast": true,
+          "pay_start": null,
+          "pay_typical": 95500,
+          "_lmi": {
+            "titles": [
+              "Management Analysts"
+            ],
+            "emp_2024": 5216,
+            "emp_2034": 5777,
+            "growth_pct": 10.8
+          }
+        }
+      ]
     },
     {
-      "id": "tbd4",
-      "name": "Focus area 4",
-      "tagline": "Coming soon",
-      "status": "soon",
-      "jobs": []
+      "id": "transportation",
+      "group": "Transportation",
+      "name": "Transportation",
+      "status": "live",
+      "tagline": "Louisiana's highways, rivers, and ports need people to keep goods moving.",
+      "jobs": [
+        {
+          "soc": "53-3032, 53-3033",
+          "name": "Truck Driver",
+          "plural": "Truck Drivers",
+          "what": "deliver goods across town or across the country. Long-haul drivers carry big loads in tractor-trailers.",
+          "path": "Finish high school, then earn a commercial driver's license (CDL) in a training program that takes a few weeks.",
+          "path_short": "CDL training (a few weeks)",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ],
+          "codes": [
+            "53-3032",
+            "53-3033"
+          ],
+          "anchor": "job-53-3032",
+          "openings_per_year": 5000,
+          "demand": "Very high demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 45500,
+          "_lmi": {
+            "titles": [
+              "Heavy and Tractor-Trailer Truck Drivers",
+              "Light Truck Drivers"
+            ],
+            "emp_2024": 44352,
+            "emp_2034": 48026,
+            "growth_pct": 8.3
+          }
+        },
+        {
+          "soc": "53-5011",
+          "name": "Deckhand",
+          "plural": "Sailors & Deckhands",
+          "what": "work on boats, barges, and ships. They help steer, keep watch, tie up the boat, and keep the engines running.",
+          "path": "Start after high school with on-the-job training and a U.S. Coast Guard mariner credential.",
+          "path_short": "On-the-job + Coast Guard credential",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
+          "training": [
+            {
+              "label": "Delgado Community College",
+              "url": "https://www.dcc.edu/"
+            }
+          ],
+          "codes": [
+            "53-5011"
+          ],
+          "anchor": "job-53-5011",
+          "openings_per_year": 910,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 46600,
+          "_lmi": {
+            "titles": [
+              "Sailors and Marine Oilers"
+            ],
+            "emp_2024": 7184,
+            "emp_2034": 7611,
+            "growth_pct": 5.9
+          }
+        },
+        {
+          "soc": "53-5021",
+          "name": "Boat Captain",
+          "plural": "Boat Captains & Pilots",
+          "what": "steer and command boats and ships, like tugboats pushing barges up the Mississippi River.",
+          "path": "Work your way up from deckhand, take maritime training, and earn a U.S. Coast Guard license.",
+          "path_short": "Maritime training + license",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
+          "training": [
+            {
+              "label": "Delgado Community College",
+              "url": "https://www.dcc.edu/"
+            }
+          ],
+          "codes": [
+            "53-5021"
+          ],
+          "anchor": "job-53-5021",
+          "openings_per_year": 710,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 117200,
+          "_lmi": {
+            "titles": [
+              "Captains, Mates, and Pilots of Water Vessels"
+            ],
+            "emp_2024": 6395,
+            "emp_2034": 6642,
+            "growth_pct": 3.9
+          }
+        },
+        {
+          "soc": "53-7051",
+          "name": "Forklift Operator",
+          "plural": "Forklift Operators",
+          "what": "drive forklifts and other machines that move heavy materials in warehouses, plants, and ports.",
+          "path": "Start after high school. Most training happens on the job, often with a short safety certification.",
+          "path_short": "On-the-job training",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ],
+          "codes": [
+            "53-7051"
+          ],
+          "anchor": "job-53-7051",
+          "openings_per_year": 630,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 49000,
+          "_lmi": {
+            "titles": [
+              "Industrial Truck and Tractor Operators"
+            ],
+            "emp_2024": 6556,
+            "emp_2034": 6605,
+            "growth_pct": 0.7
+          }
+        },
+        {
+          "soc": "53-7072, 53-7121",
+          "name": "Cargo Loader",
+          "plural": "Cargo Loaders & Pump Operators",
+          "what": "load and unload cargo from trucks, rail cars, and ships, and run pumps that move liquids like oil and chemicals.",
+          "path": "Start after high school and learn on the job.",
+          "path_short": "On-the-job training",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ],
+          "codes": [
+            "53-7072",
+            "53-7121"
+          ],
+          "anchor": "job-53-7072",
+          "openings_per_year": 290,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 61800,
+          "_lmi": {
+            "titles": [
+              "Pump Operators, Except Wellhead Pumpers",
+              "Tank Car, Truck, and Ship Loaders"
+            ],
+            "emp_2024": 2607,
+            "emp_2034": 2628,
+            "growth_pct": 0.8
+          }
+        }
+      ]
     },
     {
-      "id": "tbd5",
-      "name": "Focus area 5",
-      "tagline": "Coming soon",
-      "status": "soon",
-      "jobs": []
+      "id": "service",
+      "group": "Teaching & Public Service",
+      "name": "Teaching & Public Service",
+      "status": "live",
+      "tagline": "Teach, protect, and serve your community.",
+      "jobs": [
+        {
+          "soc": "25-2012, 25-2021, 25-2022, 25-2031",
+          "name": "Teacher",
+          "plural": "Teachers (K\u201312)",
+          "what": "help kids learn reading, math, science, and more, from kindergarten through high school.",
+          "path": "Earn a 4-year degree and a Louisiana teaching certificate.",
+          "path_short": "4-year degree + teaching certificate",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "25-2012",
+            "25-2021",
+            "25-2022",
+            "25-2031"
+          ],
+          "anchor": "job-25-2012",
+          "openings_per_year": 3230,
+          "demand": "Very high demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 58400,
+          "_lmi": {
+            "titles": [
+              "Kindergarten Teachers, Except Special Education",
+              "Elementary School Teachers, Except Special Education",
+              "Middle School Teachers, Except Special and Career/Technical Education",
+              "Secondary School Teachers, Except Special and Career/Technical Education"
+            ],
+            "emp_2024": 45543,
+            "emp_2034": 46339,
+            "growth_pct": 1.7
+          }
+        },
+        {
+          "soc": "33-3051",
+          "name": "Police Officer",
+          "plural": "Police Officers",
+          "what": "protect people and keep communities safe. They answer calls, patrol neighborhoods, and help in emergencies.",
+          "path": "Finish high school, then complete police academy training.",
+          "path_short": "Police academy",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ],
+          "codes": [
+            "33-3051"
+          ],
+          "anchor": "job-33-3051",
+          "openings_per_year": 1160,
+          "demand": "Very high demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 48400,
+          "_lmi": {
+            "titles": [
+              "Police and Sheriff's Patrol Officers"
+            ],
+            "emp_2024": 14920,
+            "emp_2034": 15470,
+            "growth_pct": 3.7
+          }
+        },
+        {
+          "soc": "25-2052, 25-2058",
+          "name": "Special Education Teacher",
+          "plural": "Special Education Teachers",
+          "what": "teach students who learn in different ways, and change lessons so every student can succeed.",
+          "path": "Earn a 4-year degree and a special education teaching certificate.",
+          "path_short": "4-year degree + teaching certificate",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "25-2052",
+            "25-2058"
+          ],
+          "anchor": "job-25-2052",
+          "openings_per_year": 460,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 58900,
+          "_lmi": {
+            "titles": [
+              "Special Education Teachers, Kindergarten and Elementary School",
+              "Special Education Teachers, Secondary School"
+            ],
+            "emp_2024": 6450,
+            "emp_2034": 6566,
+            "growth_pct": 1.8
+          }
+        },
+        {
+          "soc": "21-1012",
+          "name": "School Counselor",
+          "plural": "School & Career Counselors",
+          "what": "help students with schoolwork, plans after graduation, and personal problems.",
+          "path": "Earn a 4-year degree, then a master's degree in counseling.",
+          "path_short": "4-year degree + master's",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ],
+          "codes": [
+            "21-1012"
+          ],
+          "anchor": "job-21-1012",
+          "openings_per_year": 420,
+          "demand": "High demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 61900,
+          "_lmi": {
+            "titles": [
+              "Educational, Guidance, and Career Counselors and Advisors"
+            ],
+            "emp_2024": 4820,
+            "emp_2034": 5179,
+            "growth_pct": 7.4
+          }
+        },
+        {
+          "soc": "33-2011",
+          "name": "Firefighter",
+          "plural": "Firefighters",
+          "what": "put out fires, rescue people, and give emergency medical care.",
+          "path": "Finish high school, complete fire academy training, and earn an EMT certification.",
+          "path_short": "Fire academy + EMT",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ],
+          "codes": [
+            "33-2011"
+          ],
+          "anchor": "job-33-2011",
+          "openings_per_year": 380,
+          "demand": "In demand",
+          "growing_fast": false,
+          "pay_start": null,
+          "pay_typical": 33100,
+          "_lmi": {
+            "titles": [
+              "Firefighters"
+            ],
+            "emp_2024": 4867,
+            "emp_2034": 5054,
+            "growth_pct": 3.8
+          }
+        }
+      ]
     }
   ],
   "groups": [
@@ -784,6 +1559,238 @@ window.TOP_JOBS = {
       ]
     },
     {
+      "name": "Tech & Engineering",
+      "careers": [
+        {
+          "name": "Software Developers",
+          "soc": [
+            "15-1252"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 285,
+          "pay": 102800
+        },
+        {
+          "name": "Computer User Support Specialists",
+          "soc": [
+            "15-1232"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 251,
+          "pay": 52400
+        },
+        {
+          "name": "Civil Engineers",
+          "soc": [
+            "17-2051"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 224,
+          "pay": 105400
+        },
+        {
+          "name": "Computer Systems Analysts",
+          "soc": [
+            "15-1211"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 166,
+          "pay": 95700
+        },
+        {
+          "name": "Environmental Scientists and Specialists, Including Health",
+          "soc": [
+            "19-2041"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 154,
+          "pay": 69800
+        },
+        {
+          "name": "Industrial Engineers",
+          "soc": [
+            "17-2112"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 149,
+          "pay": 122900
+        },
+        {
+          "name": "Architectural and Civil Drafters",
+          "soc": [
+            "17-3011"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 118,
+          "pay": 61000
+        },
+        {
+          "name": "Mechanical Engineers",
+          "soc": [
+            "17-2141"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 114,
+          "pay": 119500
+        },
+        {
+          "name": "Surveyors",
+          "soc": [
+            "17-1022"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 109,
+          "pay": 63100
+        },
+        {
+          "name": "Architects, Except Landscape and Naval",
+          "soc": [
+            "17-1011"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 107,
+          "pay": 79600
+        },
+        {
+          "name": "Data Scientists",
+          "soc": [
+            "15-2051"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 105,
+          "pay": 78800
+        }
+      ]
+    },
+    {
+      "name": "Business",
+      "careers": [
+        {
+          "name": "Accountants and Auditors",
+          "soc": [
+            "13-2011"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 1152,
+          "pay": 73800
+        },
+        {
+          "name": "Human Resources & Training Specialists",
+          "soc": [
+            "13-1071",
+            "13-1151"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 841,
+          "pay": 60300
+        },
+        {
+          "name": "Marketing & Public Relations Specialists",
+          "soc": [
+            "13-1161",
+            "27-3031"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 655,
+          "pay": 59800
+        },
+        {
+          "name": "Project Management Specialists",
+          "soc": [
+            "13-1082"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 591,
+          "pay": 84800
+        },
+        {
+          "name": "Management Analysts",
+          "soc": [
+            "13-1111"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 490,
+          "pay": 95500
+        },
+        {
+          "name": "Compliance Officers",
+          "soc": [
+            "13-1041"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 335,
+          "pay": 70300
+        },
+        {
+          "name": "Buyers and Purchasing Agents",
+          "soc": [
+            "13-1020"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 313,
+          "pay": 66300
+        },
+        {
+          "name": "Court, Municipal, and License Clerks",
+          "soc": [
+            "43-4031"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 239,
+          "pay": 46600
+        },
+        {
+          "name": "Logisticians",
+          "soc": [
+            "13-1081"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 209,
+          "pay": 75200
+        },
+        {
+          "name": "Advertising Sales Agents",
+          "soc": [
+            "41-3011"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 107,
+          "pay": 48800
+        },
+        {
+          "name": "Personal Financial Advisors",
+          "soc": [
+            "13-2052"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 103,
+          "pay": 78200
+        }
+      ]
+    },
+    {
       "name": "Transportation",
       "careers": [
         {
@@ -936,238 +1943,6 @@ window.TOP_JOBS = {
           "education": 2,
           "openings": 185,
           "pay": 60700
-        }
-      ]
-    },
-    {
-      "name": "Business",
-      "careers": [
-        {
-          "name": "Accountants and Auditors",
-          "soc": [
-            "13-2011"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 1152,
-          "pay": 73800
-        },
-        {
-          "name": "Human Resources & Training Specialists",
-          "soc": [
-            "13-1071",
-            "13-1151"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 841,
-          "pay": 60300
-        },
-        {
-          "name": "Marketing & Public Relations Specialists",
-          "soc": [
-            "13-1161",
-            "27-3031"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 655,
-          "pay": 59800
-        },
-        {
-          "name": "Project Management Specialists",
-          "soc": [
-            "13-1082"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 591,
-          "pay": 84800
-        },
-        {
-          "name": "Management Analysts",
-          "soc": [
-            "13-1111"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 490,
-          "pay": 95500
-        },
-        {
-          "name": "Compliance Officers",
-          "soc": [
-            "13-1041"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 335,
-          "pay": 70300
-        },
-        {
-          "name": "Buyers and Purchasing Agents",
-          "soc": [
-            "13-1020"
-          ],
-          "subgroup": null,
-          "education": 0,
-          "openings": 313,
-          "pay": 66300
-        },
-        {
-          "name": "Court, Municipal, and License Clerks",
-          "soc": [
-            "43-4031"
-          ],
-          "subgroup": null,
-          "education": 0,
-          "openings": 239,
-          "pay": 46600
-        },
-        {
-          "name": "Logisticians",
-          "soc": [
-            "13-1081"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 209,
-          "pay": 75200
-        },
-        {
-          "name": "Advertising Sales Agents",
-          "soc": [
-            "41-3011"
-          ],
-          "subgroup": null,
-          "education": 0,
-          "openings": 107,
-          "pay": 48800
-        },
-        {
-          "name": "Personal Financial Advisors",
-          "soc": [
-            "13-2052"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 103,
-          "pay": 78200
-        }
-      ]
-    },
-    {
-      "name": "Tech & Engineering",
-      "careers": [
-        {
-          "name": "Software Developers",
-          "soc": [
-            "15-1252"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 285,
-          "pay": 102800
-        },
-        {
-          "name": "Computer User Support Specialists",
-          "soc": [
-            "15-1232"
-          ],
-          "subgroup": null,
-          "education": 1,
-          "openings": 251,
-          "pay": 52400
-        },
-        {
-          "name": "Civil Engineers",
-          "soc": [
-            "17-2051"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 224,
-          "pay": 105400
-        },
-        {
-          "name": "Computer Systems Analysts",
-          "soc": [
-            "15-1211"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 166,
-          "pay": 95700
-        },
-        {
-          "name": "Environmental Scientists and Specialists, Including Health",
-          "soc": [
-            "19-2041"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 154,
-          "pay": 69800
-        },
-        {
-          "name": "Industrial Engineers",
-          "soc": [
-            "17-2112"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 149,
-          "pay": 122900
-        },
-        {
-          "name": "Architectural and Civil Drafters",
-          "soc": [
-            "17-3011"
-          ],
-          "subgroup": null,
-          "education": 1,
-          "openings": 118,
-          "pay": 61000
-        },
-        {
-          "name": "Mechanical Engineers",
-          "soc": [
-            "17-2141"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 114,
-          "pay": 119500
-        },
-        {
-          "name": "Surveyors",
-          "soc": [
-            "17-1022"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 109,
-          "pay": 63100
-        },
-        {
-          "name": "Architects, Except Landscape and Naval",
-          "soc": [
-            "17-1011"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 107,
-          "pay": 79600
-        },
-        {
-          "name": "Data Scientists",
-          "soc": [
-            "15-2051"
-          ],
-          "subgroup": null,
-          "education": 2,
-          "openings": 105,
-          "pay": 78800
         }
       ]
     },

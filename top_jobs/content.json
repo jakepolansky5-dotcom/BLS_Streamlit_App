@@ -1,5 +1,5 @@
 {
-  "_readme": "Kid-friendly copy for LA Top Jobs. Edit words here, then run `python top_jobs/build_data.py` to merge in the latest LA Works forecasts and BLS wages. Numbers are NOT typed here; the build script fills them in from the official files.",
+  "_readme": "Kid-friendly copy for LA Top Jobs. Edit words here, then run `python top_jobs/build_data.py` to merge in the latest LA Works forecasts and BLS wages. Numbers are NOT typed here; the build script fills them in from the official files. Each focus area's `group` names its group in occupations.csv; `soc` may list several codes (comma-separated), which are combined.",
   "sectors": [
     {
       "id": "trades",
@@ -16,8 +16,14 @@
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
           "training": [
-            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" },
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+            {
+              "label": "ABC Pelican Chapter: craft training",
+              "url": "https://www.abcpelican.com/"
+            },
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
           ]
         },
         {
@@ -29,8 +35,14 @@
           "path_short": "Technical college certificate",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
           "training": [
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" },
-            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" }
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            },
+            {
+              "label": "ABC Pelican Chapter: craft training",
+              "url": "https://www.abcpelican.com/"
+            }
           ]
         },
         {
@@ -42,8 +54,14 @@
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
           "training": [
-            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" },
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+            {
+              "label": "ABC Pelican Chapter: craft training",
+              "url": "https://www.abcpelican.com/"
+            },
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
           ]
         },
         {
@@ -55,7 +73,10 @@
           "path_short": "Technical college + on-the-job",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
           "training": [
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
           ]
         },
         {
@@ -67,10 +88,14 @@
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
           "training": [
-            { "label": "ABC Pelican Chapter: craft training", "url": "https://www.abcpelican.com/" }
+            {
+              "label": "ABC Pelican Chapter: craft training",
+              "url": "https://www.abcpelican.com/"
+            }
           ]
         }
-      ]
+      ],
+      "group": "Skilled Trades & Related"
     },
     {
       "id": "health",
@@ -87,8 +112,14 @@
           "path_short": "Nursing degree (2 or 4 years)",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
           "training": [
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" },
-            { "label": "LSU Health New Orleans School of Nursing", "url": "https://nursing.lsuhsc.edu/" }
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            },
+            {
+              "label": "LSU Health New Orleans School of Nursing",
+              "url": "https://nursing.lsuhsc.edu/"
+            }
           ]
         },
         {
@@ -100,7 +131,10 @@
           "path_short": "Nursing degree + graduate degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
           "training": [
-            { "label": "LSU Health New Orleans School of Nursing", "url": "https://nursing.lsuhsc.edu/" }
+            {
+              "label": "LSU Health New Orleans School of Nursing",
+              "url": "https://nursing.lsuhsc.edu/"
+            }
           ]
         },
         {
@@ -112,7 +146,10 @@
           "path_short": "Short training program",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
           "training": [
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
           ]
         },
         {
@@ -124,13 +161,398 @@
           "path_short": "College certificate (about 1 year)",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
           "training": [
-            { "label": "Baton Rouge Community College", "url": "https://www.mybrcc.edu/" }
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
+          ]
+        }
+      ],
+      "group": "Healthcare"
+    },
+    {
+      "id": "tech",
+      "group": "Tech & Engineering",
+      "name": "Tech & Engineering",
+      "status": "live",
+      "tagline": "Code it, design it, engineer it. Louisiana needs problem-solvers.",
+      "jobs": [
+        {
+          "soc": "15-1252",
+          "name": "Software Developer",
+          "plural": "Software Developers",
+          "what": "write the code behind apps, websites, and games. They plan how a program should work, then build and test it.",
+          "path": "Earn a 4-year degree in computer science or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "15-1232",
+          "name": "Computer Support Specialist",
+          "plural": "Computer Support Specialists",
+          "what": "help people when their computers, phones, or networks stop working. They find the problem and fix it.",
+          "path": "Earn a certificate or 2-year degree in information technology. Industry certifications help you get hired.",
+          "path_short": "Certificate or 2-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
+          "training": [
+            {
+              "label": "Baton Rouge Community College",
+              "url": "https://www.mybrcc.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "17-2051",
+          "name": "Civil Engineer",
+          "plural": "Civil Engineers",
+          "what": "design roads, bridges, levees, and water systems, and make sure they are built safely.",
+          "path": "Earn a 4-year engineering degree. Many go on to earn a state engineering license.",
+          "path_short": "4-year engineering degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "15-1211",
+          "name": "Computer Systems Analyst",
+          "plural": "Computer Systems Analysts",
+          "what": "study how a business uses computers and find ways to make its systems work better.",
+          "path": "Earn a 4-year degree in computer science or information systems.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "19-2041",
+          "name": "Environmental Scientist",
+          "plural": "Environmental Scientists",
+          "what": "protect people and nature. They test air, water, and soil for pollution and find ways to clean it up.",
+          "path": "Earn a 4-year degree in environmental science, biology, or chemistry.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
           ]
         }
       ]
     },
-    { "id": "tbd3", "name": "Focus area 3", "tagline": "Coming soon", "status": "soon", "jobs": [] },
-    { "id": "tbd4", "name": "Focus area 4", "tagline": "Coming soon", "status": "soon", "jobs": [] },
-    { "id": "tbd5", "name": "Focus area 5", "tagline": "Coming soon", "status": "soon", "jobs": [] }
+    {
+      "id": "business",
+      "group": "Business",
+      "name": "Business",
+      "status": "live",
+      "tagline": "Every company needs people who can manage money, people, and plans.",
+      "jobs": [
+        {
+          "soc": "13-2011",
+          "name": "Accountant",
+          "plural": "Accountants",
+          "what": "keep track of money for businesses and families. They check records, prepare taxes, and help leaders make smart choices.",
+          "path": "Earn a 4-year degree in accounting. Many become Certified Public Accountants (CPAs).",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "13-1071, 13-1151",
+          "name": "HR & Training Specialist",
+          "plural": "HR & Training Specialists",
+          "what": "hire new workers, help employees with pay and benefits, and teach training classes.",
+          "path": "Earn a 4-year degree in business, human resources, or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "13-1161, 27-3031",
+          "name": "Marketing Specialist",
+          "plural": "Marketing & PR Specialists",
+          "what": "help companies tell people about their products and share news with the public.",
+          "path": "Earn a 4-year degree in marketing, communications, or business.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "13-1082",
+          "name": "Project Manager",
+          "plural": "Project Managers",
+          "what": "keep big projects on schedule and on budget, from building a new plant to launching new software.",
+          "path": "Earn a 4-year degree, then build experience leading projects. Certifications can help.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "13-1111",
+          "name": "Management Analyst",
+          "plural": "Management Analysts",
+          "what": "study how a business works and suggest ways to save money and work smarter.",
+          "path": "Earn a 4-year degree in business or a related field.",
+          "path_short": "4-year degree",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "transportation",
+      "group": "Transportation",
+      "name": "Transportation",
+      "status": "live",
+      "tagline": "Louisiana's highways, rivers, and ports need people to keep goods moving.",
+      "jobs": [
+        {
+          "soc": "53-3032, 53-3033",
+          "name": "Truck Driver",
+          "plural": "Truck Drivers",
+          "what": "deliver goods across town or across the country. Long-haul drivers carry big loads in tractor-trailers.",
+          "path": "Finish high school, then earn a commercial driver's license (CDL) in a training program that takes a few weeks.",
+          "path_short": "CDL training (a few weeks)",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "53-5011",
+          "name": "Deckhand",
+          "plural": "Sailors & Deckhands",
+          "what": "work on boats, barges, and ships. They help steer, keep watch, tie up the boat, and keep the engines running.",
+          "path": "Start after high school with on-the-job training and a U.S. Coast Guard mariner credential.",
+          "path_short": "On-the-job + Coast Guard credential",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
+          "training": [
+            {
+              "label": "Delgado Community College",
+              "url": "https://www.dcc.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "53-5021",
+          "name": "Boat Captain",
+          "plural": "Boat Captains & Pilots",
+          "what": "steer and command boats and ships, like tugboats pushing barges up the Mississippi River.",
+          "path": "Work your way up from deckhand, take maritime training, and earn a U.S. Coast Guard license.",
+          "path_short": "Maritime training + license",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
+          "training": [
+            {
+              "label": "Delgado Community College",
+              "url": "https://www.dcc.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "53-7051",
+          "name": "Forklift Operator",
+          "plural": "Forklift Operators",
+          "what": "drive forklifts and other machines that move heavy materials in warehouses, plants, and ports.",
+          "path": "Start after high school. Most training happens on the job, often with a short safety certification.",
+          "path_short": "On-the-job training",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "53-7072, 53-7121",
+          "name": "Cargo Loader",
+          "plural": "Cargo Loaders & Pump Operators",
+          "what": "load and unload cargo from trucks, rail cars, and ships, and run pumps that move liquids like oil and chemicals.",
+          "path": "Start after high school and learn on the job.",
+          "path_short": "On-the-job training",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "service",
+      "group": "Teaching & Public Service",
+      "name": "Teaching & Public Service",
+      "status": "live",
+      "tagline": "Teach, protect, and serve your community.",
+      "jobs": [
+        {
+          "soc": "25-2012, 25-2021, 25-2022, 25-2031",
+          "name": "Teacher",
+          "plural": "Teachers (K–12)",
+          "what": "help kids learn reading, math, science, and more, from kindergarten through high school.",
+          "path": "Earn a 4-year degree and a Louisiana teaching certificate.",
+          "path_short": "4-year degree + teaching certificate",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "33-3051",
+          "name": "Police Officer",
+          "plural": "Police Officers",
+          "what": "protect people and keep communities safe. They answer calls, patrol neighborhoods, and help in emergencies.",
+          "path": "Finish high school, then complete police academy training.",
+          "path_short": "Police academy",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "25-2052, 25-2058",
+          "name": "Special Education Teacher",
+          "plural": "Special Education Teachers",
+          "what": "teach students who learn in different ways, and change lessons so every student can succeed.",
+          "path": "Earn a 4-year degree and a special education teaching certificate.",
+          "path_short": "4-year degree + teaching certificate",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "21-1012",
+          "name": "School Counselor",
+          "plural": "School & Career Counselors",
+          "what": "help students with schoolwork, plans after graduation, and personal problems.",
+          "path": "Earn a 4-year degree, then a master's degree in counseling.",
+          "path_short": "4-year degree + master's",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
+          "training": [
+            {
+              "label": "Louisiana State University (LSU)",
+              "url": "https://www.lsu.edu/"
+            },
+            {
+              "label": "Southern University",
+              "url": "https://www.subr.edu/"
+            }
+          ]
+        },
+        {
+          "soc": "33-2011",
+          "name": "Firefighter",
+          "plural": "Firefighters",
+          "what": "put out fires, rescue people, and give emergency medical care.",
+          "path": "Finish high school, complete fire academy training, and earn an EMT certification.",
+          "path_short": "Fire academy + EMT",
+          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
+          "training": [
+            {
+              "label": "Louisiana Community & Technical College System",
+              "url": "https://www.lctcs.edu/"
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
