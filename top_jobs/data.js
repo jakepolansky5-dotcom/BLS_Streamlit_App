@@ -289,6 +289,974 @@ window.TOP_JOBS = {
       "jobs": []
     }
   ],
+  "groups": [
+    {
+      "name": "Skilled Trades & Related",
+      "careers": [
+        {
+          "name": "Maintenance and Repair Workers, General",
+          "soc": [
+            "49-9071"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 0,
+          "openings": 2243,
+          "pay": 44000
+        },
+        {
+          "name": "Welders, Cutters, Solderers, and Brazers",
+          "soc": [
+            "51-4121"
+          ],
+          "subgroup": "Make (Plants & Production)",
+          "education": 0,
+          "openings": 1408,
+          "pay": 62200
+        },
+        {
+          "name": "Chemical Plant Operators",
+          "soc": [
+            "51-8091",
+            "51-9011"
+          ],
+          "subgroup": "Make (Plants & Production)",
+          "education": 0,
+          "openings": 1300,
+          "pay": 83900
+        },
+        {
+          "name": "Electricians",
+          "soc": [
+            "47-2111"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 1201,
+          "pay": 61500
+        },
+        {
+          "name": "Carpenters",
+          "soc": [
+            "47-2031"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 966,
+          "pay": 49900
+        },
+        {
+          "name": "Inspectors, Testers, Sorters, Samplers, and Weighers",
+          "soc": [
+            "51-9061"
+          ],
+          "subgroup": "Safety & Inspection",
+          "education": 0,
+          "openings": 965,
+          "pay": 49500
+        },
+        {
+          "name": "Plumbers, Pipefitters, and Steamfitters",
+          "soc": [
+            "47-2152"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 901,
+          "pay": 63700
+        },
+        {
+          "name": "Automotive Service Technicians and Mechanics",
+          "soc": [
+            "49-3023"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 1,
+          "openings": 786,
+          "pay": 46400
+        },
+        {
+          "name": "Diesel & Heavy Equipment Mechanics",
+          "soc": [
+            "49-3031",
+            "49-3042"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 0,
+          "openings": 773,
+          "pay": 61000
+        },
+        {
+          "name": "Operating Engineers and Other Construction Equipment Operators",
+          "soc": [
+            "47-2073"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 665,
+          "pay": 51700
+        },
+        {
+          "name": "Industrial Machinery Mechanics",
+          "soc": [
+            "49-9041"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 0,
+          "openings": 616,
+          "pay": 60300
+        },
+        {
+          "name": "Machinists",
+          "soc": [
+            "51-4041"
+          ],
+          "subgroup": "Make (Plants & Production)",
+          "education": 0,
+          "openings": 513,
+          "pay": 61100
+        },
+        {
+          "name": "Painters, Construction and Maintenance",
+          "soc": [
+            "47-2141"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 512,
+          "pay": 46400
+        },
+        {
+          "name": "Heating, Air Conditioning, and Refrigeration Mechanics and Installers",
+          "soc": [
+            "49-9021"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 1,
+          "openings": 508,
+          "pay": 58600
+        },
+        {
+          "name": "Miscellaneous Assemblers and Fabricators",
+          "soc": [
+            "51-2090"
+          ],
+          "subgroup": "Make (Plants & Production)",
+          "education": 0,
+          "openings": 405,
+          "pay": 45100
+        },
+        {
+          "name": "Occupational Health and Safety Specialists",
+          "soc": [
+            "19-5011"
+          ],
+          "subgroup": "Safety & Inspection",
+          "education": 2,
+          "openings": 260,
+          "pay": 89600
+        },
+        {
+          "name": "Security and Fire Alarm Systems Installers",
+          "soc": [
+            "49-2098"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 0,
+          "openings": 167,
+          "pay": 54700
+        },
+        {
+          "name": "Structural Iron and Steel Workers",
+          "soc": [
+            "47-2221"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 152,
+          "pay": 68800
+        },
+        {
+          "name": "Construction and Building Inspectors",
+          "soc": [
+            "47-4011"
+          ],
+          "subgroup": "Safety & Inspection",
+          "education": 0,
+          "openings": 145,
+          "pay": 68300
+        },
+        {
+          "name": "Boilermakers",
+          "soc": [
+            "47-2011"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 144,
+          "pay": 74000
+        },
+        {
+          "name": "Aircraft Mechanics and Service Technicians",
+          "soc": [
+            "49-3011"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 1,
+          "openings": 125,
+          "pay": 79800
+        },
+        {
+          "name": "Chemical Technicians",
+          "soc": [
+            "19-4031"
+          ],
+          "subgroup": "Make (Plants & Production)",
+          "education": 1,
+          "openings": 119,
+          "pay": 85800
+        },
+        {
+          "name": "Electrical Power-Line Installers and Repairers",
+          "soc": [
+            "49-9051"
+          ],
+          "subgroup": "Fix (Mechanics & Repair)",
+          "education": 0,
+          "openings": 118,
+          "pay": 76400
+        },
+        {
+          "name": "Insulation Workers, Floor, Ceiling, and Wall",
+          "soc": [
+            "47-2131"
+          ],
+          "subgroup": "Build (Construction)",
+          "education": 0,
+          "openings": 105,
+          "pay": 47300
+        }
+      ]
+    },
+    {
+      "name": "Healthcare",
+      "careers": [
+        {
+          "name": "Nursing Assistants",
+          "soc": [
+            "31-1131"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 1,
+          "openings": 3015,
+          "pay": 30500
+        },
+        {
+          "name": "Registered Nurses",
+          "soc": [
+            "29-1141"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 2,
+          "openings": 2776,
+          "pay": 80200
+        },
+        {
+          "name": "Medical Assistants",
+          "soc": [
+            "31-9092"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 1,
+          "openings": 1914,
+          "pay": 36300
+        },
+        {
+          "name": "Licensed Practical and Licensed Vocational Nurses",
+          "soc": [
+            "29-2061"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 1,
+          "openings": 1581,
+          "pay": 57500
+        },
+        {
+          "name": "Substance Abuse, Behavioral Disorder, and Mental Health Counselors",
+          "soc": [
+            "21-1018"
+          ],
+          "subgroup": "Mental Health & Social Work",
+          "education": 2,
+          "openings": 696,
+          "pay": 37900
+        },
+        {
+          "name": "Pharmacy Technicians",
+          "soc": [
+            "29-2052"
+          ],
+          "subgroup": "Dental & Pharmacy",
+          "education": 0,
+          "openings": 644,
+          "pay": 44400
+        },
+        {
+          "name": "Dental Assistants",
+          "soc": [
+            "31-9091"
+          ],
+          "subgroup": "Dental & Pharmacy",
+          "education": 1,
+          "openings": 588,
+          "pay": 44100
+        },
+        {
+          "name": "Nurse Practitioners",
+          "soc": [
+            "29-1171"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 2,
+          "openings": 403,
+          "pay": 125600
+        },
+        {
+          "name": "Phlebotomists",
+          "soc": [
+            "31-9097"
+          ],
+          "subgroup": "Lab, Imaging & Health Tech",
+          "education": 1,
+          "openings": 392,
+          "pay": 36100
+        },
+        {
+          "name": "Physical Therapist Assistants",
+          "soc": [
+            "31-2021"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 1,
+          "openings": 268,
+          "pay": 65400
+        },
+        {
+          "name": "Clinical Laboratory Technologists and Technicians",
+          "soc": [
+            "29-2010"
+          ],
+          "subgroup": "Lab, Imaging & Health Tech",
+          "education": 2,
+          "openings": 258,
+          "pay": 54500
+        },
+        {
+          "name": "Social Workers (Healthcare & Mental Health)",
+          "soc": [
+            "21-1022",
+            "21-1023"
+          ],
+          "subgroup": "Mental Health & Social Work",
+          "education": 2,
+          "openings": 244,
+          "pay": 55300
+        },
+        {
+          "name": "Speech-Language Pathologists",
+          "soc": [
+            "29-1127"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 2,
+          "openings": 227,
+          "pay": 69600
+        },
+        {
+          "name": "Medical Records Specialists",
+          "soc": [
+            "29-2072"
+          ],
+          "subgroup": "Lab, Imaging & Health Tech",
+          "education": 1,
+          "openings": 226,
+          "pay": 44600
+        },
+        {
+          "name": "Pharmacists",
+          "soc": [
+            "29-1051"
+          ],
+          "subgroup": "Dental & Pharmacy",
+          "education": 2,
+          "openings": 216,
+          "pay": 132400
+        },
+        {
+          "name": "Radiologic Technologists and Technicians",
+          "soc": [
+            "29-2034"
+          ],
+          "subgroup": "Lab, Imaging & Health Tech",
+          "education": 1,
+          "openings": 210,
+          "pay": 63700
+        },
+        {
+          "name": "Dental Hygienists",
+          "soc": [
+            "29-1292"
+          ],
+          "subgroup": "Dental & Pharmacy",
+          "education": 1,
+          "openings": 171,
+          "pay": 85200
+        },
+        {
+          "name": "Respiratory Therapists",
+          "soc": [
+            "29-1126"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 1,
+          "openings": 157,
+          "pay": 75200
+        },
+        {
+          "name": "Physical Therapists",
+          "soc": [
+            "29-1123"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 2,
+          "openings": 149,
+          "pay": 98500
+        },
+        {
+          "name": "Occupational Therapists",
+          "soc": [
+            "29-1122"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 2,
+          "openings": 135,
+          "pay": 98500
+        },
+        {
+          "name": "Surgical Technologists",
+          "soc": [
+            "29-2055"
+          ],
+          "subgroup": "Lab, Imaging & Health Tech",
+          "education": 1,
+          "openings": 132,
+          "pay": 57400
+        },
+        {
+          "name": "Massage Therapists",
+          "soc": [
+            "31-9011"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 1,
+          "openings": 128,
+          "pay": 36500
+        },
+        {
+          "name": "Physician Assistants",
+          "soc": [
+            "29-1071"
+          ],
+          "subgroup": "Nursing & Patient Care",
+          "education": 2,
+          "openings": 122,
+          "pay": 128900
+        },
+        {
+          "name": "Occupational Therapy Assistants",
+          "soc": [
+            "31-2011"
+          ],
+          "subgroup": "Therapy & Rehab",
+          "education": 1,
+          "openings": 105,
+          "pay": 66100
+        }
+      ]
+    },
+    {
+      "name": "Transportation",
+      "careers": [
+        {
+          "name": "Truck Drivers",
+          "soc": [
+            "53-3032",
+            "53-3033"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 5001,
+          "pay": 45500
+        },
+        {
+          "name": "Sailors and Marine Oilers",
+          "soc": [
+            "53-5011"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 906,
+          "pay": 46600
+        },
+        {
+          "name": "Captains, Mates, and Pilots of Water Vessels",
+          "soc": [
+            "53-5021"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 713,
+          "pay": 117200
+        },
+        {
+          "name": "Industrial Truck and Tractor Operators",
+          "soc": [
+            "53-7051"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 628,
+          "pay": 49000
+        },
+        {
+          "name": "Pump Operators & Cargo Loaders",
+          "soc": [
+            "53-7072",
+            "53-7121"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 290,
+          "pay": 61800
+        },
+        {
+          "name": "Crane and Tower Operators",
+          "soc": [
+            "53-7021"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 162,
+          "pay": 61200
+        }
+      ]
+    },
+    {
+      "name": "Teaching & Public Service",
+      "careers": [
+        {
+          "name": "Teachers (Kindergarten through High School)",
+          "soc": [
+            "25-2012",
+            "25-2021",
+            "25-2022",
+            "25-2031"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 3233,
+          "pay": 58400
+        },
+        {
+          "name": "Police and Sheriff's Patrol Officers",
+          "soc": [
+            "33-3051"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 1158,
+          "pay": 48400
+        },
+        {
+          "name": "Special Education Teachers",
+          "soc": [
+            "25-2052",
+            "25-2058"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 464,
+          "pay": 58900
+        },
+        {
+          "name": "Educational, Guidance, and Career Counselors and Advisors",
+          "soc": [
+            "21-1012"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 423,
+          "pay": 61900
+        },
+        {
+          "name": "Firefighters",
+          "soc": [
+            "33-2011"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 385,
+          "pay": 33100
+        },
+        {
+          "name": "Preschool Teachers, Except Special Education",
+          "soc": [
+            "25-2011"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 321,
+          "pay": 38000
+        },
+        {
+          "name": "Instructional Coordinators",
+          "soc": [
+            "25-9031"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 216,
+          "pay": 63100
+        },
+        {
+          "name": "Librarians and Media Collections Specialists",
+          "soc": [
+            "25-4022"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 185,
+          "pay": 60700
+        }
+      ]
+    },
+    {
+      "name": "Business",
+      "careers": [
+        {
+          "name": "Accountants and Auditors",
+          "soc": [
+            "13-2011"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 1152,
+          "pay": 73800
+        },
+        {
+          "name": "Human Resources & Training Specialists",
+          "soc": [
+            "13-1071",
+            "13-1151"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 841,
+          "pay": 60300
+        },
+        {
+          "name": "Marketing & Public Relations Specialists",
+          "soc": [
+            "13-1161",
+            "27-3031"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 655,
+          "pay": 59800
+        },
+        {
+          "name": "Project Management Specialists",
+          "soc": [
+            "13-1082"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 591,
+          "pay": 84800
+        },
+        {
+          "name": "Management Analysts",
+          "soc": [
+            "13-1111"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 490,
+          "pay": 95500
+        },
+        {
+          "name": "Compliance Officers",
+          "soc": [
+            "13-1041"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 335,
+          "pay": 70300
+        },
+        {
+          "name": "Buyers and Purchasing Agents",
+          "soc": [
+            "13-1020"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 313,
+          "pay": 66300
+        },
+        {
+          "name": "Court, Municipal, and License Clerks",
+          "soc": [
+            "43-4031"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 239,
+          "pay": 46600
+        },
+        {
+          "name": "Logisticians",
+          "soc": [
+            "13-1081"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 209,
+          "pay": 75200
+        },
+        {
+          "name": "Advertising Sales Agents",
+          "soc": [
+            "41-3011"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 107,
+          "pay": 48800
+        },
+        {
+          "name": "Personal Financial Advisors",
+          "soc": [
+            "13-2052"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 103,
+          "pay": 78200
+        }
+      ]
+    },
+    {
+      "name": "Tech & Engineering",
+      "careers": [
+        {
+          "name": "Software Developers",
+          "soc": [
+            "15-1252"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 285,
+          "pay": 102800
+        },
+        {
+          "name": "Computer User Support Specialists",
+          "soc": [
+            "15-1232"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 251,
+          "pay": 52400
+        },
+        {
+          "name": "Civil Engineers",
+          "soc": [
+            "17-2051"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 224,
+          "pay": 105400
+        },
+        {
+          "name": "Computer Systems Analysts",
+          "soc": [
+            "15-1211"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 166,
+          "pay": 95700
+        },
+        {
+          "name": "Environmental Scientists and Specialists, Including Health",
+          "soc": [
+            "19-2041"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 154,
+          "pay": 69800
+        },
+        {
+          "name": "Industrial Engineers",
+          "soc": [
+            "17-2112"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 149,
+          "pay": 122900
+        },
+        {
+          "name": "Architectural and Civil Drafters",
+          "soc": [
+            "17-3011"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 118,
+          "pay": 61000
+        },
+        {
+          "name": "Mechanical Engineers",
+          "soc": [
+            "17-2141"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 114,
+          "pay": 119500
+        },
+        {
+          "name": "Surveyors",
+          "soc": [
+            "17-1022"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 109,
+          "pay": 63100
+        },
+        {
+          "name": "Architects, Except Landscape and Naval",
+          "soc": [
+            "17-1011"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 107,
+          "pay": 79600
+        },
+        {
+          "name": "Data Scientists",
+          "soc": [
+            "15-2051"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 105,
+          "pay": 78800
+        }
+      ]
+    },
+    {
+      "name": "Misc",
+      "careers": [
+        {
+          "name": "Paralegals and Legal Assistants",
+          "soc": [
+            "23-2011"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 573,
+          "pay": 60300
+        },
+        {
+          "name": "Lawyers",
+          "soc": [
+            "23-1011"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 399,
+          "pay": 104100
+        },
+        {
+          "name": "Pest Control Workers",
+          "soc": [
+            "37-2021"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 278,
+          "pay": 44600
+        },
+        {
+          "name": "Commercial Pilots",
+          "soc": [
+            "53-2012"
+          ],
+          "subgroup": null,
+          "education": 1,
+          "openings": 110,
+          "pay": 95900
+        }
+      ]
+    },
+    {
+      "name": "Creative",
+      "careers": [
+        {
+          "name": "Graphic Designers",
+          "soc": [
+            "27-1024"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 116,
+          "pay": 49900
+        },
+        {
+          "name": "Writers and Authors",
+          "soc": [
+            "27-3043"
+          ],
+          "subgroup": null,
+          "education": 2,
+          "openings": 102,
+          "pay": 89500
+        },
+        {
+          "name": "Photographers",
+          "soc": [
+            "27-4021"
+          ],
+          "subgroup": null,
+          "education": 0,
+          "openings": 102,
+          "pay": 36800
+        }
+      ]
+    }
+  ],
+  "education_levels": [
+    "After high school",
+    "Certificate or 2-year degree",
+    "4-year degree or more"
+  ],
   "sources": {
     "projections": "Louisiana Works, Long-Term Occupational Projections 2024-2034 (statewide)",
     "projections_url": "https://www.laworks.net/LaborMarketInfo/LMI_OccAllProj.asp?years=20242034",

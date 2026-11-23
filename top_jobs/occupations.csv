@@ -1,0 +1,92 @@
+group,subgroup,occupation,soc_codes,education
+Business,,Accountants and Auditors,13-2011,4-year degree or more
+Business,,Project Management Specialists,13-1082,4-year degree or more
+Business,,Management Analysts,13-1111,4-year degree or more
+Business,,Human Resources & Training Specialists,"13-1071, 13-1151",4-year degree or more
+Business,,Marketing & Public Relations Specialists,"13-1161, 27-3031",4-year degree or more
+Business,,Logisticians,13-1081,4-year degree or more
+Business,,Buyers and Purchasing Agents,13-1020,After high school
+Business,,"Court, Municipal, and License Clerks",43-4031,After high school
+Business,,Personal Financial Advisors,13-2052,4-year degree or more
+Business,,Compliance Officers,13-1041,4-year degree or more
+Business,,Advertising Sales Agents,41-3011,After high school
+Tech & Engineering,,Software Developers,15-1252,4-year degree or more
+Tech & Engineering,,Data Scientists,15-2051,4-year degree or more
+Tech & Engineering,,Industrial Engineers,17-2112,4-year degree or more
+Tech & Engineering,,Civil Engineers,17-2051,4-year degree or more
+Tech & Engineering,,Mechanical Engineers,17-2141,4-year degree or more
+Tech & Engineering,,Computer Systems Analysts,15-1211,4-year degree or more
+Tech & Engineering,,"Architects, Except Landscape and Naval",17-1011,4-year degree or more
+Tech & Engineering,,Surveyors,17-1022,4-year degree or more
+Tech & Engineering,,Architectural and Civil Drafters,17-3011,Certificate or 2-year degree
+Tech & Engineering,,"Environmental Scientists and Specialists, Including Health",19-2041,4-year degree or more
+Tech & Engineering,,Computer User Support Specialists,15-1232,Certificate or 2-year degree
+Skilled Trades & Related,Build (Construction),Electricians,47-2111,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),"Maintenance and Repair Workers, General",49-9071,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Industrial Machinery Mechanics,49-9041,After high school
+Skilled Trades & Related,Make (Plants & Production),Chemical Plant Operators,"51-8091, 51-9011",After high school
+Skilled Trades & Related,Make (Plants & Production),"Welders, Cutters, Solderers, and Brazers",51-4121,After high school
+Skilled Trades & Related,Build (Construction),Carpenters,47-2031,After high school
+Skilled Trades & Related,Build (Construction),"Plumbers, Pipefitters, and Steamfitters",47-2152,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),"Heating, Air Conditioning, and Refrigeration Mechanics and Installers",49-9021,Certificate or 2-year degree
+Skilled Trades & Related,Safety & Inspection,"Inspectors, Testers, Sorters, Samplers, and Weighers",51-9061,After high school
+Skilled Trades & Related,Safety & Inspection,Occupational Health and Safety Specialists,19-5011,4-year degree or more
+Skilled Trades & Related,Build (Construction),Operating Engineers and Other Construction Equipment Operators,47-2073,After high school
+Skilled Trades & Related,Build (Construction),"Painters, Construction and Maintenance",47-2141,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Diesel & Heavy Equipment Mechanics,"49-3031, 49-3042",After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Automotive Service Technicians and Mechanics,49-3023,Certificate or 2-year degree
+Skilled Trades & Related,Make (Plants & Production),Machinists,51-4041,After high school
+Skilled Trades & Related,Build (Construction),Structural Iron and Steel Workers,47-2221,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Security and Fire Alarm Systems Installers,49-2098,After high school
+Skilled Trades & Related,Make (Plants & Production),Miscellaneous Assemblers and Fabricators,51-2090,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Aircraft Mechanics and Service Technicians,49-3011,Certificate or 2-year degree
+Skilled Trades & Related,Make (Plants & Production),Chemical Technicians,19-4031,Certificate or 2-year degree
+Skilled Trades & Related,Build (Construction),"Insulation Workers, Floor, Ceiling, and Wall",47-2131,After high school
+Skilled Trades & Related,Fix (Mechanics & Repair),Electrical Power-Line Installers and Repairers,49-9051,After high school
+Skilled Trades & Related,Safety & Inspection,Construction and Building Inspectors,47-4011,After high school
+Skilled Trades & Related,Build (Construction),Boilermakers,47-2011,After high school
+Healthcare,Nursing & Patient Care,Registered Nurses,29-1141,4-year degree or more
+Healthcare,Nursing & Patient Care,Nurse Practitioners,29-1171,4-year degree or more
+Healthcare,Nursing & Patient Care,Medical Assistants,31-9092,Certificate or 2-year degree
+Healthcare,Mental Health & Social Work,"Substance Abuse, Behavioral Disorder, and Mental Health Counselors",21-1018,4-year degree or more
+Healthcare,Therapy & Rehab,Speech-Language Pathologists,29-1127,4-year degree or more
+Healthcare,Dental & Pharmacy,Pharmacy Technicians,29-2052,After high school
+Healthcare,Nursing & Patient Care,Nursing Assistants,31-1131,Certificate or 2-year degree
+Healthcare,Therapy & Rehab,Respiratory Therapists,29-1126,Certificate or 2-year degree
+Healthcare,Therapy & Rehab,Physical Therapist Assistants,31-2021,Certificate or 2-year degree
+Healthcare,"Lab, Imaging & Health Tech",Medical Records Specialists,29-2072,Certificate or 2-year degree
+Healthcare,Nursing & Patient Care,Licensed Practical and Licensed Vocational Nurses,29-2061,Certificate or 2-year degree
+Healthcare,Therapy & Rehab,Occupational Therapists,29-1122,4-year degree or more
+Healthcare,Therapy & Rehab,Physical Therapists,29-1123,4-year degree or more
+Healthcare,Nursing & Patient Care,Physician Assistants,29-1071,4-year degree or more
+Healthcare,Dental & Pharmacy,Pharmacists,29-1051,4-year degree or more
+Healthcare,"Lab, Imaging & Health Tech",Radiologic Technologists and Technicians,29-2034,Certificate or 2-year degree
+Healthcare,Therapy & Rehab,Occupational Therapy Assistants,31-2011,Certificate or 2-year degree
+Healthcare,"Lab, Imaging & Health Tech",Phlebotomists,31-9097,Certificate or 2-year degree
+Healthcare,"Lab, Imaging & Health Tech",Surgical Technologists,29-2055,Certificate or 2-year degree
+Healthcare,Mental Health & Social Work,Social Workers (Healthcare & Mental Health),"21-1022, 21-1023",4-year degree or more
+Healthcare,Therapy & Rehab,Massage Therapists,31-9011,Certificate or 2-year degree
+Healthcare,Dental & Pharmacy,Dental Assistants,31-9091,Certificate or 2-year degree
+Healthcare,"Lab, Imaging & Health Tech",Clinical Laboratory Technologists and Technicians,29-2010,4-year degree or more
+Healthcare,Dental & Pharmacy,Dental Hygienists,29-1292,Certificate or 2-year degree
+Teaching & Public Service,,Teachers (Kindergarten through High School),"25-2012, 25-2021, 25-2022, 25-2031",4-year degree or more
+Teaching & Public Service,,Special Education Teachers,"25-2052, 25-2058",4-year degree or more
+Teaching & Public Service,,"Preschool Teachers, Except Special Education",25-2011,Certificate or 2-year degree
+Teaching & Public Service,,"Educational, Guidance, and Career Counselors and Advisors",21-1012,4-year degree or more
+Teaching & Public Service,,Instructional Coordinators,25-9031,4-year degree or more
+Teaching & Public Service,,Librarians and Media Collections Specialists,25-4022,4-year degree or more
+Teaching & Public Service,,Police and Sheriff's Patrol Officers,33-3051,After high school
+Teaching & Public Service,,Firefighters,33-2011,Certificate or 2-year degree
+Transportation,,Truck Drivers,"53-3032, 53-3033",After high school
+Transportation,,Sailors and Marine Oilers,53-5011,After high school
+Transportation,,"Captains, Mates, and Pilots of Water Vessels",53-5021,Certificate or 2-year degree
+Transportation,,Crane and Tower Operators,53-7021,After high school
+Transportation,,Industrial Truck and Tractor Operators,53-7051,After high school
+Transportation,,Pump Operators & Cargo Loaders,"53-7072, 53-7121",After high school
+Creative,,Graphic Designers,27-1024,4-year degree or more
+Creative,,Writers and Authors,27-3043,4-year degree or more
+Creative,,Photographers,27-4021,After high school
+Misc,,Lawyers,23-1011,4-year degree or more
+Misc,,Paralegals and Legal Assistants,23-2011,Certificate or 2-year degree
+Misc,,Pest Control Workers,37-2021,After high school
+Misc,,Commercial Pilots,53-2012,Certificate or 2-year degree
