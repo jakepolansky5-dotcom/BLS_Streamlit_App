@@ -45,12 +45,25 @@ CES_INDUSTRIES = {
 }
 
 
+KEY_NAMES = ("BLS_API_KEY", "bls_api_key", "BLS_KEY", "bls_key", "registrationkey", "api_key", "key")
+
+
 def api_key() -> str | None:
+    """BLS key from Streamlit secrets (top level or a [bls] section) or the environment."""
     try:
-        key = st.secrets.get("BLS_API_KEY")
+        secrets = st.secrets
+        for name in KEY_NAMES[:5]:
+            if name in secrets and str(secrets[name]).strip():
+                return str(secrets[name]).strip()
+        for section in ("bls", "BLS"):
+            if section in secrets:
+                for name in KEY_NAMES:
+                    if name in secrets[section] and str(secrets[section][name]).strip():
+                        return str(secrets[section][name]).strip()
     except Exception:
-        key = None
-    return key or os.environ.get("BLS_API_KEY") or None
+        pass
+    key = os.environ.get("BLS_API_KEY", "").strip()
+    return key or None
 
 
 # ---------------------------------------------------------------------------
