@@ -13,16 +13,28 @@ import streamlit as st
 
 from .. import config as C
 from .. import geo as G
+from .. import monthly_data as md
 from .. import qcew
 from .. import ui
 
 
+NEW = "➕ New watchlist…"
+
+
 def _editor(lists: dict) -> tuple[str, dict]:
-    names = list(lists) + ["➕ New watchlist…"]
+    # A save/delete on the previous run asks to change the selection. Apply it before
+    # the selectbox exists (Streamlit forbids changing a widget's value afterwards).
+    if "_pw_pending" in st.session_state:
+        st.session_state["pw_choice"] = st.session_state.pop("_pw_pending")
+    names = list(lists) + [NEW]
+    if st.session_state.get("pw_choice") not in names:
+        st.session_state.pop("pw_choice", None)
     choice = st.selectbox("Watchlist", names, key="pw_choice")
-    if choice != "➕ New watchlist…":
+    if "_pw_flash" in st.session_state:
+        st.success(st.session_state.pop("_pw_flash"))
+    if choice != NEW:
         wl = lists[choice]
-        with st.expander("✏️ Edit / save as new", expanded=False):
+        with st.expander("✏️ Edit watchlist (parishes, industries, default baseline, notes)", expanded=False):
             _edit_form(choice, wl, existing=True)
         return choice, wl
     _edit_form("", {"parishes": [], "industries": C.INDUSTRY_BUNDLES["Data center construction & operations"],
@@ -32,42 +44,121 @@ def _editor(lists: dict) -> tuple[str, dict]:
 
 def _edit_form(name, wl, existing):
     with st.form(f"pw_form_{name or 'new'}"):
-        new_name = st.text_input("Name", value=name if existing and not wl.get("builtin") else
-                                 (f"{name} (copy)" if name else ""))
+        new_name = st.text_input("Name", value=name,
+                                 help="Keep the name to update this watchlist; change it to save a new one.")
         parishes = st.multiselect("Parishes", list(C.LA_PARISHES), default=wl["parishes"], format_func=C.LA_PARISHES.get)
         opts = ui.industry_options()
         inds = st.multiselect("Industries", opts, default=[i for i in wl["industries"] if i in opts],
                               format_func=qcew.industry_label)
-        periods = qcew.available_periods("Q")
-        base_keys = [p.key for p in periods]
-        base = st.selectbox("Baseline quarter (before the project)", base_keys,
+        base_keys = [p.key for p in qcew.available_periods("Q")]
+        base = st.selectbox("Default baseline quarter (before the project)", base_keys,
                             index=base_keys.index(wl["baseline"]) if wl["baseline"] in base_keys else min(8, len(base_keys) - 1))
         notes = st.text_area("Notes", value=wl.get("notes", ""))
         c1, c2 = st.columns(2)
-        save = c1.form_submit_button("💾 Save watchlist", type="primary")
-        delete = c2.form_submit_button("🗑️ Delete", disabled=not existing or wl.get("builtin", False))
+        save = c1.form_submit_button("💾 Save", type="primary")
+        if wl.get("builtin") and not wl.get("customized"):
+            delete = False
+        else:
+            delete = c2.form_submit_button("↩️ Reset to built-in version" if wl.get("customized") else "🗑️ Delete")
     if save:
         if not new_name or not parishes or not inds:
             st.error("Name, parishes and industries are required.")
-        else:
-            try:
-                G.save_watchlist(new_name, parishes, inds, base, notes)
-                st.session_state["pw_choice"] = new_name
-                st.success("Saved to watchlists.json.")
-                st.rerun()
-            except OSError as exc:
-                st.error(f"Could not write watchlists.json ({exc}). On read-only hosting, add the watchlist "
-                         "to WATCHLIST_PRESETS in bls_explorer/config.py instead.")
+            return
+        try:
+            G.save_watchlist(new_name, parishes, inds, base, notes)
+        except OSError as exc:
+            st.error(f"Could not save ({exc}). Add the watchlist to WATCHLIST_PRESETS in bls_explorer/config.py instead.")
+            return
+        st.session_state["_pw_pending"] = new_name
+        st.session_state.pop(f"pw_base_{new_name}", None)
+        st.session_state["_pw_flash"] = f"Saved “{new_name}”."
+        st.rerun()
     if delete:
         G.delete_watchlist(name)
-        st.session_state.pop("pw_choice", None)
+        st.session_state["_pw_pending"] = name if wl.get("customized") else None
+        st.session_state.pop(f"pw_base_{name}", None)
+        st.session_state["_pw_flash"] = "Reset to the built-in version." if wl.get("customized") else f"Deleted “{name}”."
+        if st.session_state["_pw_pending"] is None:
+            st.session_state.pop("_pw_pending")
         st.rerun()
+
+
+def _metros_for(parishes: list[str]) -> list:
+    return [G.la_metro(code) for code, (_, ps) in C.LA_METROS.items() if set(ps) & set(parishes)]
+
+
+def _monthly_now(name, wl, region, parishes, baseline):
+    """LAUS for the watchlist parishes and CES for metros that contain them."""
+    st.markdown("Monthly BLS data are **more current** than QCEW but less detailed: LAUS gives unemployment and "
+                "employed residents for every parish; CES gives payroll jobs by sector only for metro areas.")
+    laus, msgs = md.laus_series([region, *parishes, G.LOUISIANA], years=4)
+    md.show_messages(msgs)
+    if not laus.empty:
+        each = st.toggle("Show each parish", value=False, key="pw_laus_each")
+        a, b = st.columns(2)
+        with a:
+            keep = [region.key, "22000"] + ([p.key for p in parishes] if each else [])
+            d = laus[laus["geo_key"].isin(keep)]
+            cmap = {region.name: "#F59E0B", "Louisiana": ui.LA_COLOR}
+            others = [n for n in d["geo"].unique() if n not in cmap]
+            cmap.update({n: c for n, c in zip(others, [c for c in ui.PALETTE if c not in cmap.values()])})
+            fig = px.line(d, x="date", y="rate", color="geo", color_discrete_map=cmap,
+                          labels={"rate": "Unemployment rate (%)", "date": "", "geo": ""})
+            fig.update_traces(line=dict(width=1.3))
+            fig.update_traces(selector=dict(name=region.name), line=dict(width=3.5))
+            fig.add_vline(x=baseline.end_date, line_dash="dash", line_color="gray")
+            fig.update_layout(title="Unemployment rate (region & parishes not seasonally adjusted; LA adjusted)")
+            st.plotly_chart(ui.style_fig(fig, 420), width="stretch")
+        with b:
+            d = laus[laus["geo_key"].isin(keep)].sort_values("date").copy()
+            prev = d.set_index(["geo", "date"])["employed"]
+            key = list(zip(d["geo"], d["date"] - pd.DateOffset(years=1)))
+            d["yoy"] = (d["employed"].to_numpy() / prev.reindex(key).to_numpy() - 1) * 100
+            fig = px.line(d.dropna(subset=["yoy"]), x="date", y="yoy", color="geo", color_discrete_map=cmap,
+                          labels={"yoy": "% change vs. a year earlier", "date": "", "geo": ""})
+            fig.update_traces(line=dict(width=1.3))
+            fig.update_traces(selector=dict(name=region.name), line=dict(width=3.5))
+            fig.add_hline(y=0, line_dash="dot", line_color="gray")
+            fig.add_vline(x=baseline.end_date, line_dash="dash", line_color="gray")
+            fig.update_layout(title="Employed residents, change over the year (%)")
+            st.plotly_chart(ui.style_fig(fig, 420), width="stretch")
+        st.caption("Employed residents counts people who live in these parishes and have a job anywhere, so it "
+                   "captures commuters. QCEW and CES count jobs located in the area.")
+    metros = _metros_for(wl["parishes"])
+    if metros:
+        inds = ["00000000", "15000000", "20000000", "40000000", "60000000", "65000000", "70000000"]
+        ces, msgs = md.ces_series(metros, inds, years=4)
+        md.show_messages(msgs)
+        if not ces.empty:
+            ces = ces.sort_values("date").copy()
+            prev = ces.set_index(["geo", "industry", "date"])["jobs"]
+            key = list(zip(ces["geo"], ces["industry"], ces["date"] - pd.DateOffset(years=1)))
+            ces["yoy"] = ces["jobs"].to_numpy() - prev.reindex(key).to_numpy()
+            fig = px.line(ces.dropna(subset=["yoy"]), x="date", y="yoy", color="industry", facet_col="geo",
+                          facet_col_wrap=2, color_discrete_sequence=ui.PALETTE,
+                          labels={"yoy": "Jobs vs. a year earlier", "date": "", "industry": ""})
+            fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+            fig.update_yaxes(matches=None, showticklabels=True)
+            fig.add_hline(y=0, line_dash="dot", line_color="gray")
+            fig.add_vline(x=baseline.end_date, line_dash="dash", line_color="gray")
+            fig.update_layout(title="Payroll jobs by sector, change over the year · metro areas containing watchlist "
+                                    "parishes (CES)")
+            st.plotly_chart(ui.style_fig(fig, 440 if len(metros) <= 2 else 720), width="stretch")
+            lt = md.latest(ces, "jobs", ["geo", "industry"])
+            st.dataframe(lt[["geo", "industry", "date", "value", "yoy", "yoy_pct"]], hide_index=True, width="stretch",
+                         column_config={"geo": "Metro", "industry": "Sector",
+                                        "date": st.column_config.DateColumn("Month", format="MMM YYYY"),
+                                        "value": st.column_config.NumberColumn("Jobs", format="localized"),
+                                        "yoy": st.column_config.NumberColumn("YoY", format="%+d"),
+                                        "yoy_pct": st.column_config.NumberColumn("YoY %", format="%+.1f%%")})
+            st.caption("Small metros often publish only combined 'Mining, logging, and construction'. Sectors BLS "
+                       "doesn't publish for a metro are left out.")
 
 
 def render():
     ui.header("Project Watch",
-              "Track jobs, establishments and wages in a group of parishes against a pre-project baseline, "
-              "benchmarked against Louisiana and the U.S.")
+              "Track a group of parishes against a pre-project baseline: the latest monthly unemployment and payroll "
+              "data first, then detailed QCEW jobs and wages by industry.")
     lists = G.load_watchlists()
     name, wl = _editor(lists)
     if wl.get("notes"):
@@ -75,9 +166,17 @@ def render():
 
     info = qcew.latest_periods()
     latest = info["quarter"]
-    baseline = qcew.Period.parse(wl["baseline"])
-    c1, c2, c3 = st.columns(3)
-    own = c1.selectbox("Ownership", list(C.OWNERSHIPS), index=list(C.OWNERSHIPS).index("5"),
+    base_keys = [p.key for p in qcew.available_periods("Q")]
+    bkey = f"pw_base_{name}"
+    if bkey not in st.session_state:
+        st.session_state[bkey] = wl["baseline"] if wl["baseline"] in base_keys else base_keys[min(8, len(base_keys) - 1)]
+    c0, c1, c2, c3 = st.columns(4)
+    base_choice = c0.selectbox("Baseline quarter", base_keys, key=bkey,
+                               format_func=lambda k: qcew.Period.parse(k).label,
+                               help="Try different baselines here. To make one the default for this watchlist, "
+                                    "use Edit watchlist above.")
+    baseline = qcew.Period.parse(base_choice)
+    own = c1.selectbox("Ownership (QCEW)", list(C.OWNERSHIPS), index=list(C.OWNERSHIPS).index("5"),
                        format_func=C.OWNERSHIPS.get, key="pw_own")
     lookback = c2.slider("Quarters of history before baseline", 0, 12, 4, key="pw_lookback")
     compare_q = c3.selectbox("Compare latest against", ["Baseline", "Same quarter last year"], key="pw_cmp")
@@ -89,6 +188,11 @@ def render():
     parishes = [G.parish(p) for p in wl["parishes"]]
     region = G.region(name, wl["parishes"])
     inds = list(dict.fromkeys(["10", *wl["industries"]]))
+
+    md.render_strip(region, title=f"Where things stand now · {len(parishes)}-parish region (LAUS)")
+    st.divider()
+    st.markdown(f"##### 🏗️ Detailed jobs and wages by industry (QCEW, through {latest.label})")
+
     df = ui.load([region, *parishes, G.LOUISIANA, G.US], periods, inds, own)
     if df.empty:
         st.warning("No data.")
@@ -120,7 +224,11 @@ def render():
     k[3].metric("Establishments", ui.fnum(e_now),
                 delta=f"{ui.fdelta(e_now - e_then)} vs {ref.label}" if pd.notna(e_then) else None, border=True)
 
-    tabs = st.tabs(["📈 Monthly jobs", "🧱 Parish × industry", "⚖️ vs. Louisiana & U.S.", "💵 Wages", "🆕 Latest quarter"])
+    tabs = st.tabs(["🗓️ Monthly (LAUS & CES)", "📈 QCEW monthly jobs", "🧱 Parish × industry", "⚖️ vs. Louisiana & U.S.",
+                    "💵 Wages", "🆕 Latest quarter"])
+    with tabs[0]:
+        _monthly_now(name, wl, region, parishes, baseline)
+    tabs = tabs[1:]
 
     # ---- monthly chart -----------------------------------------------------
     with tabs[0]:

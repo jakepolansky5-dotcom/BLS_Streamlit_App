@@ -9,13 +9,15 @@ import streamlit as st
 
 from .. import config as C
 from .. import geo as G
+from .. import monthly_data as md
 from .. import qcew
 from .. import ui
 
 
 def render():
     ui.header("Region Overview",
-              "Employment, wages and industry structure for any Louisiana parish, metro, custom region, or state.")
+              "Current labor-market conditions (monthly LAUS/CES), then detailed employment, wages and industry "
+              "structure (QCEW) for any Louisiana parish, metro, custom region, or state.")
 
     c1, c2, c3, c4 = st.columns([3, 2, 2, 2])
     with c1:
@@ -29,6 +31,9 @@ def render():
     ui.custom_region_builder("ov")
     level = C.INDUSTRY_LEVELS[level_label]
 
+    if md.render_strip(g, title=f"Where {g.label} stands now (monthly LAUS/CES)"):
+        st.divider()
+    st.markdown(f"##### 🏗️ Detailed jobs, wages and industries (QCEW · {period.label})")
     df = ui.load([g], [period], None, own, lq=True)
     if df.empty:
         st.warning(f"No QCEW data for {g.name} in {period.label}. It may not be released yet.")
