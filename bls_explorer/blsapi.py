@@ -176,3 +176,15 @@ def requests_needed(n_series: int, n_years: int = 3) -> int:
     per = 50 if api_key() else 25
     span = 20 if api_key() else 10
     return -(-n_series // per) * -(-n_years // span)
+
+
+def clear_cache():
+    """Expire saved API responses so the next request fetches fresh data.
+
+    Files are kept (marked old) so they still serve as a fallback if BLS refuses a request.
+    """
+    if CACHE_DIR.exists():
+        old = time.time() - CACHE_TTL - 60
+        for f in CACHE_DIR.glob("*.parquet"):
+            os.utime(f, (old, old))
+    fetch_series.clear()

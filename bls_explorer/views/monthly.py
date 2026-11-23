@@ -17,6 +17,7 @@ import streamlit as st
 from .. import blsapi
 from .. import config as C
 from .. import geo as G
+from .. import monthly_data as md
 from .. import ui
 
 LA_CES = [k for k in blsapi.CES_INDUSTRIES if k != "15000000"]
@@ -66,24 +67,11 @@ def _get(ids, label: str) -> pd.DataFrame:
 
 
 def summarize(df: pd.DataFrame) -> pd.DataFrame:
-    """One row per series: latest value, prior month, a year earlier, preliminary flag."""
+    """One row per series: latest value, prior month, a year earlier (with fallback), preliminary flag."""
     if df.empty:
-        return pd.DataFrame(columns=["series_id", "date", "value", "prev", "yago", "prelim"])
-    df = df.sort_values(["series_id", "date"])
-    rows = []
-    for sid, g in df.groupby("series_id"):
-        g = g.set_index("date")
-        last = g.index.max()
-        prev = last - pd.DateOffset(months=1)
-        yago = last - pd.DateOffset(years=1)
-        rows.append({"series_id": sid, "date": last, "value": g.loc[last, "value"],
-                     "prev": g["value"].get(prev, np.nan), "yago": g["value"].get(yago, np.nan),
-                     "prelim": "P" in str(g.loc[last, "footnotes"])})
-    out = pd.DataFrame(rows)
-    out["mom"] = out["value"] - out["prev"]
-    out["yoy"] = out["value"] - out["yago"]
-    out["yoy_pct"] = np.where(out["yago"] > 0, out["yoy"] / out["yago"] * 100, np.nan)
-    return out
+        return md.latest(df, "value", ["series_id"])
+    df = df.assign(prelim=df["footnotes"].astype(str).str.contains("P"))
+    return md.latest(df, "value", ["series_id"])
 
 
 def _month(ts) -> str:
@@ -142,9 +130,12 @@ def render():
                     delta=f"{nf['yoy_pct']:+.1f}% · U.S. {us_nf['yoy_pct']:+.1f}%" if us_nf is not None and pd.notna(nf["yoy_pct"]) else None,
                     delta_color="normal", border=True)
     if lf is not None:
-        k[4].metric("LA labor force", f"{lf['value']:,.0f}", help="Year-over-year change is blank when BLS has no value for the same month last year.",
+        k[4].metric("LA labor force", f"{lf['value']:,.0f}", help="If BLS has no value for the same month last year, the change uses the latest month that has one.",
                     delta=f"{lf['yoy']:+,.0f} YoY" if pd.notna(lf["yoy"]) else None, border=True)
 
+    if lf is not None and pd.notna(lf["yoy_date"]) and lf["yoy_date"] != lf["date"]:
+        st.caption(f"Louisiana LAUS year-over-year changes compare {_month(lf['yoy_date'])} with a year earlier: BLS "
+                   f"has no statewide value for the month a year before {_month(lf['date'])}.")
     tabs = st.tabs(["🏭 Jobs by sector", "📉 Unemployment", "🗺️ Parishes", "🏙️ Metros", "🇺🇸 States", "🎯 Watchlists"])
     with tabs[0]:
         _sectors(core, s, names)

@@ -119,7 +119,8 @@ def load_watchlists() -> dict:
     try:
         if WATCHLIST_FILE.exists():
             for k, v in json.loads(WATCHLIST_FILE.read_text()).items():
-                lists[k] = dict(v, builtin=False)
+                # A saved list with a built-in's name is the user's customized version of it.
+                lists[k] = dict(v, builtin=k in C.WATCHLIST_PRESETS, customized=k in C.WATCHLIST_PRESETS)
     except (OSError, ValueError):
         pass
     return lists

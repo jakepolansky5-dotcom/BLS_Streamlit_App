@@ -20,7 +20,7 @@ def render():
   from the BLS QCEW Open Data files at `data.bls.gov/cew/data/api`, which go back to **{info['earliest_year']}**.
   The newest quarter is **{info['quarter'].label}**, published about 5–6 months after the quarter ends.
 * **LAUS (Local Area Unemployment Statistics)** and **CES (Current Employment Statistics)**: monthly
-  series from the BLS Public Data API v2, shown on **Monthly Snapshot** and **Labor Force & Jobs**. They are more
+  series from the BLS Public Data API v2, shown on **Monthly Snapshot**, **Monthly Data Explorer**, Project Watch, Region Overview and Compare Regions. They are more
   current but less detailed. State data come out about three weeks after the month ends; parish and metro data
   about two weeks after that. API results are saved for 12 hours, and saved data is reused if the daily request
   limit is reached.

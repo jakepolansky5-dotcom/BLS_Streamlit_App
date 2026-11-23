@@ -7,6 +7,7 @@ import plotly.express as px
 import streamlit as st
 
 from .. import config as C
+from .. import monthly_data as md
 from .. import qcew
 from .. import ui
 
@@ -40,6 +41,8 @@ def render():
         st.info("Pick at least one geography.")
         return
 
+    _monthly_table(geos)
+    st.markdown(f"##### 🏗️ Detailed jobs, wages and industries (QCEW · {period.label})")
     df = ui.load(geos, [period], None, own, lq=True)
     if df.empty:
         st.warning("No data for this selection.")
@@ -49,7 +52,7 @@ def render():
 
     # ---- headline table -------------------------------------------------------
     tot = df[df["industry_code"] == "10"].set_index("geo").reindex(names).reset_index()
-    st.subheader(f"Headline indicators · {period.label}")
+    st.markdown(f"**QCEW headline indicators · {period.label}**")
     st.dataframe(tot[["geo", "emp", "emp_chg", "emp_pct", "estabs", "estabs_pct", "avg_wkly_wage", "wage_pct", "wages"]],
                  hide_index=True, width="stretch",
                  column_config={"geo": "Geography",
@@ -160,3 +163,33 @@ def _trend(geos, own, period):
     fig.update_layout(title=f"{qcew.industry_label(ind)} · {C.OWNERSHIPS[own]}")
     st.plotly_chart(ui.style_fig(fig, 440), width="stretch")
     ui.download(d, f"compare_trend_{ind}", key="dl_cmp_trend")
+
+
+def _monthly_table(geos):
+    """Latest monthly LAUS + CES side by side: the 'where are we now' comparison."""
+    with st.spinner("Loading latest monthly data (LAUS/CES)…"):
+        t, msgs = md.conditions_table(geos)
+    md.show_messages(msgs)
+    if t.empty or t.drop(columns="geo").dropna(how="all").empty:
+        return
+    months = []
+    if "laus_month" in t and t["laus_month"].notna().any():
+        months.append(f"unemployment through {t['laus_month'].max():%b %Y}")
+    if "ces_month" in t and t["ces_month"].notna().any():
+        months.append(f"payroll jobs through {t['ces_month'].max():%b %Y}")
+    st.markdown("##### 🗓️ Where things stand now (monthly LAUS/CES)")
+    st.caption("Latest BLS monthly data (" + "; ".join(months) + "). Changes vs. the same month a year earlier. "
+               "States/U.S. seasonally adjusted; parishes, metros and regions not. Payroll jobs (CES) exist only "
+               "for the U.S., states and metros.")
+    cols = [c for c in ["geo", "rate", "rate_yoy", "lf", "lf_yoy_pct", "emp_yoy", "jobs", "jobs_yoy", "jobs_yoy_pct"] if c in t]
+    st.dataframe(t[cols], hide_index=True, width="stretch",
+                 column_config={"geo": "Geography",
+                                "rate": st.column_config.NumberColumn("Unemployment %", format="%.1f"),
+                                "rate_yoy": st.column_config.NumberColumn("vs. yr ago (pts)", format="%+.1f"),
+                                "lf": st.column_config.NumberColumn("Labor force", format="localized"),
+                                "lf_yoy_pct": st.column_config.NumberColumn("LF YoY %", format="%+.1f%%"),
+                                "emp_yoy": st.column_config.NumberColumn("Employed residents YoY", format="%+,d"),
+                                "jobs": st.column_config.NumberColumn("Payroll jobs", format="localized"),
+                                "jobs_yoy": st.column_config.NumberColumn("Jobs YoY", format="%+,d"),
+                                "jobs_yoy_pct": st.column_config.NumberColumn("Jobs YoY %", format="%+.2f%%")})
+    st.divider()
