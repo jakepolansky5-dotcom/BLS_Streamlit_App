@@ -4,6 +4,14 @@ A simple static site that shows K-12 students the top projected jobs in Louisian
 
 Open `index.html` in a browser. No server or build step is needed to view it.
 
+## Publishing on Streamlit Community Cloud
+
+`top_jobs_app.py` (repo root) serves this page full-screen as its own Streamlit app, separate from the
+BLS explorer (`app.py`). In share.streamlit.io: **Create app → Deploy a public app from GitHub**, pick this repo
+and branch, set **Main file path** to `top_jobs_app.py`, and choose a URL. No secrets are needed: the app reads the
+committed `data.js` and makes no API calls. To update numbers, run `build_data.py`, commit `data.js`, and the app
+picks it up on the next push. Test locally with `streamlit run top_jobs_app.py`.
+
 ## Files
 
 | File | What it is |
