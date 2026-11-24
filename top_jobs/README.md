@@ -12,6 +12,17 @@ and branch, set **Main file path** to `top_jobs_app.py`, and choose a URL. No se
 committed `data.js` and makes no API calls. To update numbers, run `build_data.py`, commit `data.js`, and the app
 picks it up on the next push. Test locally with `streamlit run top_jobs_app.py`.
 
+## Branding
+
+Styled to the Louisiana Works brand guide: navy `#04345c` (text, buttons), green `#0c9162` (accents, demand bars),
+gold `#ffc107` (play buttons, number rings), coral `#ff6f61` ("Growing fast"), gray `#d3d3d3` (lines). Fonts: Noto Serif
+for headings (alt Georgia Pro), Nexa for body text (alt Arial), DIN Next for labels and numbers (alt Bahnschrift).
+Noto Serif loads from Google Fonts; Nexa and DIN Next are licensed fonts, so visitors see Arial / Bahnschrift unless
+they have them installed or a web license is added (`@font-face` in `index.html`).
+
+**Logo:** save the official logo as `top_jobs/logo.svg` or `top_jobs/logo.png`. It appears at the top of the page
+(the Streamlit app embeds it automatically; for `index.html` opened directly, name it `logo.png`).
+
 ## Files
 
 | File | What it is |

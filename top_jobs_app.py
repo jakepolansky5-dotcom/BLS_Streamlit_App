@@ -6,6 +6,7 @@ Run locally with:  streamlit run top_jobs_app.py
 The page itself lives in top_jobs/ (index.html + data.js). This file only shows it full-screen;
 it makes no API calls. To refresh the numbers, run `python top_jobs/build_data.py` and commit data.js.
 """
+import base64
 from pathlib import Path
 
 import streamlit as st
@@ -24,7 +25,15 @@ def page_html(index_mtime: float, data_mtime: float) -> str:
     tag = '<script src="data.js"></script>'
     if tag not in html:
         raise RuntimeError("top_jobs/index.html no longer loads data.js the expected way")
-    return html.replace(tag, "<script>\n" + data.replace("</script", "<\\/script") + "\n</script>")
+    html = html.replace(tag, "<script>\n" + data.replace("</script", "<\\/script") + "\n</script>")
+    # The brand logo, if one has been added as top_jobs/logo.png or logo.svg, is embedded directly.
+    for name, mime in (("logo.svg", "image/svg+xml"), ("logo.png", "image/png")):
+        f = SITE / name
+        if f.exists():
+            uri = f"data:{mime};base64," + base64.b64encode(f.read_bytes()).decode()
+            html = html.replace('src="logo.png"', f'src="{uri}"')
+            break
+    return html
 
 
 # Hide Streamlit's own chrome and let the page fill the window; the page scrolls inside its frame.
