@@ -14,12 +14,23 @@
           "what": "build and repair homes, businesses, and other buildings using wood and other materials. They make structures safe and sturdy.",
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
           "train_at": [
             "apprenticeship",
             "college"
           ],
-          "look_for": "carpentry or construction"
+          "look_for": "carpentry or construction",
+          "videos": [
+            {
+              "url": "https://www.michiganlearning.org/learning-hub/educational-videos/high-schoolers-learn-carpentry/",
+              "title": "High Schoolers Learn Carpentry",
+              "source": "Michigan Learning Channel"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "51-4121",
@@ -28,11 +39,22 @@
           "what": "use heat and special tools to join metal pieces together. They help build and repair machines, pipes, ships, and buildings.",
           "path": "Take a welding program at a community or technical college. Many take less than a year.",
           "path_short": "Technical college certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
           "train_at": [
             "college"
           ],
-          "look_for": "welding"
+          "look_for": "welding",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/welder-gt9vac/",
+              "title": "A day as a welder",
+              "source": "PBS · Careers That Work"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "47-2111",
@@ -41,12 +63,28 @@
           "what": "install and repair the wiring and equipment that bring electricity to homes, schools, and businesses, so the lights stay on safely.",
           "path": "Finish high school, then join a paid apprenticeship (about 4 years). You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
           "train_at": [
             "apprenticeship",
             "college"
           ],
-          "look_for": "electrical"
+          "look_for": "electrical",
+          "videos": [
+            {
+              "url": "https://www.michiganlearning.org/learning-hub/educational-videos/on-the-job-with-motor-city-electric/",
+              "title": "On the Job with Motor City Electric",
+              "source": "Michigan Learning Channel"
+            },
+            {
+              "url": "https://www.pbs.org/video/electrician-jsjfht/",
+              "title": "A day as an electrician",
+              "source": "PBS · Careers That Work"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "49-9041",
@@ -55,11 +93,27 @@
           "what": "keep the big machines in factories and plants running. They find out what is broken and fix it fast.",
           "path": "Take an industrial maintenance program at a technical college, then keep learning on the job.",
           "path_short": "Technical college + on-the-job",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
           "train_at": [
             "college"
           ],
-          "look_for": "industrial maintenance"
+          "look_for": "industrial maintenance",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/millwright-6srsar/",
+              "title": "A day as a millwright",
+              "source": "PBS · Careers That Work"
+            },
+            {
+              "url": "https://www.pbs.org/video/byyou-education-when-i-grow-i-want-be-maintenance-mechanic/",
+              "title": "When I Grow Up: Maintenance Mechanic",
+              "source": "Valley PBS"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "47-2152",
@@ -68,12 +122,28 @@
           "what": "install and fix the pipes that carry water and gas in homes, businesses, and factories.",
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
           "train_at": [
             "apprenticeship",
             "college"
           ],
-          "look_for": "plumbing or pipefitting"
+          "look_for": "plumbing or pipefitting",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/plumbing-jtjo7j/",
+              "title": "Plumbing",
+              "source": "PBS · I Build NH"
+            },
+            {
+              "url": "https://www.pbs.org/video/pipefitter-c0khc0/",
+              "title": "Pipefitter",
+              "source": "PBS · WVPB American Graduate"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         }
       ],
       "group": "Skilled Trades & Related"
@@ -91,12 +161,18 @@
           "what": "care for patients in hospitals, clinics, and schools. They give medicine, check on patients, and work with doctors.",
           "path": "Earn a nursing degree (2 or 4 years) and pass the state nursing exam.",
           "path_short": "Nursing degree (2 or 4 years)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
           "train_at": [
             "college",
             "university"
           ],
-          "look_for": "nursing (ADN or BSN)"
+          "look_for": "nursing (ADN or BSN)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "29-1171",
@@ -105,11 +181,17 @@
           "what": "are nurses with extra training. They can examine patients, figure out what is wrong, and prescribe medicine.",
           "path": "Become a registered nurse first, then earn a graduate degree in nursing.",
           "path_short": "Nursing degree + graduate degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
           "train_at": [
             "university"
           ],
-          "look_for": "nursing degrees, then graduate nursing"
+          "look_for": "nursing degrees, then graduate nursing",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "31-1131",
@@ -118,11 +200,17 @@
           "what": "help patients with everyday needs like eating, bathing, and moving around. They are often the first step into a nursing career.",
           "path": "Finish a short, state-approved training program (a few weeks) and pass a skills test.",
           "path_short": "Short training program",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
           "train_at": [
             "college"
           ],
-          "look_for": "nurse aide (CNA)"
+          "look_for": "nurse aide (CNA)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "31-9092",
@@ -131,11 +219,17 @@
           "what": "keep doctors' offices running. They check patients in, take vital signs, and help doctors during exams.",
           "path": "Earn a certificate from a community or technical college. It usually takes about a year.",
           "path_short": "College certificate (about 1 year)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
           "train_at": [
             "college"
           ],
-          "look_for": "medical assisting"
+          "look_for": "medical assisting",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         }
       ],
       "group": "Healthcare"
@@ -154,11 +248,17 @@
           "what": "write the code behind apps, websites, and games. They plan how a program should work, then build and test it.",
           "path": "Earn a 4-year degree in computer science or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
           "train_at": [
             "university"
           ],
-          "look_for": "computer science"
+          "look_for": "computer science",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "15-1232",
@@ -167,11 +267,17 @@
           "what": "help people when their computers, phones, or networks stop working. They find the problem and fix it.",
           "path": "Earn a certificate or 2-year degree in information technology. Industry certifications help you get hired.",
           "path_short": "Certificate or 2-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
           "train_at": [
             "college"
           ],
-          "look_for": "information technology or networking"
+          "look_for": "information technology or networking",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "17-2051",
@@ -180,11 +286,17 @@
           "what": "design roads, bridges, levees, and water systems, and make sure they are built safely.",
           "path": "Earn a 4-year engineering degree. Many go on to earn a state engineering license.",
           "path_short": "4-year engineering degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
           "train_at": [
             "university"
           ],
-          "look_for": "civil engineering"
+          "look_for": "civil engineering",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "15-1211",
@@ -193,11 +305,17 @@
           "what": "study how a business uses computers and find ways to make its systems work better.",
           "path": "Earn a 4-year degree in computer science or information systems.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
           "train_at": [
             "university"
           ],
-          "look_for": "computer information systems"
+          "look_for": "computer information systems",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "19-2041",
@@ -206,11 +324,17 @@
           "what": "protect people and nature. They test air, water, and soil for pollution and find ways to clean it up.",
           "path": "Earn a 4-year degree in environmental science, biology, or chemistry.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
           "train_at": [
             "university"
           ],
-          "look_for": "environmental science"
+          "look_for": "environmental science",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         }
       ]
     },
@@ -228,11 +352,17 @@
           "what": "keep track of money for businesses and families. They check records, prepare taxes, and help leaders make smart choices.",
           "path": "Earn a 4-year degree in accounting. Many become Certified Public Accountants (CPAs).",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
           "train_at": [
             "university"
           ],
-          "look_for": "accounting"
+          "look_for": "accounting",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "13-1071, 13-1151",
@@ -241,11 +371,17 @@
           "what": "hire new workers, help employees with pay and benefits, and teach training classes.",
           "path": "Earn a 4-year degree in business, human resources, or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
           "train_at": [
             "university"
           ],
-          "look_for": "business or human resources"
+          "look_for": "business or human resources",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "13-1161, 27-3031",
@@ -254,11 +390,17 @@
           "what": "help companies tell people about their products and share news with the public.",
           "path": "Earn a 4-year degree in marketing, communications, or business.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
           "train_at": [
             "university"
           ],
-          "look_for": "marketing or communications"
+          "look_for": "marketing or communications",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "13-1082",
@@ -267,11 +409,17 @@
           "what": "keep big projects on schedule and on budget, from building a new plant to launching new software.",
           "path": "Earn a 4-year degree, then build experience leading projects. Certifications can help.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
           "train_at": [
             "university"
           ],
-          "look_for": "business or project management"
+          "look_for": "business or project management",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "13-1111",
@@ -280,11 +428,17 @@
           "what": "study how a business works and suggest ways to save money and work smarter.",
           "path": "Earn a 4-year degree in business or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
           "train_at": [
             "university"
           ],
-          "look_for": "business"
+          "look_for": "business",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         }
       ]
     },
@@ -302,11 +456,17 @@
           "what": "deliver goods across town or across the country. Long-haul drivers carry big loads in tractor-trailers.",
           "path": "Finish high school, then earn a commercial driver's license (CDL) in a training program that takes a few weeks.",
           "path_short": "CDL training (a few weeks)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
           "train_at": [
             "college"
           ],
-          "look_for": "commercial driving (CDL)"
+          "look_for": "commercial driving (CDL)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "53-5011",
@@ -315,12 +475,18 @@
           "what": "work on boats, barges, and ships. They help steer, keep watch, tie up the boat, and keep the engines running.",
           "path": "Start after high school with on-the-job training and a U.S. Coast Guard mariner credential.",
           "path_short": "On-the-job + Coast Guard credential",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
           "train_at": [
             "onjob",
             "college"
           ],
-          "look_for": "maritime or marine training"
+          "look_for": "maritime or marine training",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "53-5021",
@@ -329,11 +495,17 @@
           "what": "steer and command boats and ships, like tugboats pushing barges up the Mississippi River.",
           "path": "Work your way up from deckhand, take maritime training, and earn a U.S. Coast Guard license.",
           "path_short": "Maritime training + license",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
           "train_at": [
             "college"
           ],
-          "look_for": "maritime or marine training"
+          "look_for": "maritime or marine training",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "53-7051",
@@ -342,12 +514,18 @@
           "what": "drive forklifts and other machines that move heavy materials in warehouses, plants, and ports.",
           "path": "Start after high school. Most training happens on the job, often with a short safety certification.",
           "path_short": "On-the-job training",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
           "train_at": [
             "onjob",
             "college"
           ],
-          "look_for": "forklift or warehouse safety"
+          "look_for": "forklift or warehouse safety",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "53-7072, 53-7121",
@@ -356,9 +534,15 @@
           "what": "load and unload cargo from trucks, rail cars, and ships, and run pumps that move liquids like oil and chemicals.",
           "path": "Start after high school and learn on the job.",
           "path_short": "On-the-job training",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
           "train_at": [
             "onjob"
+          ],
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
           ]
         }
       ]
@@ -377,11 +561,17 @@
           "what": "help kids learn reading, math, science, and more, from kindergarten through high school.",
           "path": "Earn a 4-year degree and a Louisiana teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
           "train_at": [
             "university"
           ],
-          "look_for": "education (teacher preparation)"
+          "look_for": "education (teacher preparation)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "33-3051",
@@ -390,12 +580,18 @@
           "what": "protect people and keep communities safe. They answer calls, patrol neighborhoods, and help in emergencies.",
           "path": "Finish high school, then complete police academy training.",
           "path_short": "Police academy",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
           "train_at": [
             "academy",
             "college"
           ],
-          "look_for": "criminal justice"
+          "look_for": "criminal justice",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "25-2052, 25-2058",
@@ -404,11 +600,17 @@
           "what": "teach students who learn in different ways, and change lessons so every student can succeed.",
           "path": "Earn a 4-year degree and a special education teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
           "train_at": [
             "university"
           ],
-          "look_for": "special education"
+          "look_for": "special education",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "21-1012",
@@ -417,11 +619,17 @@
           "what": "help students with schoolwork, plans after graduation, and personal problems.",
           "path": "Earn a 4-year degree, then a master's degree in counseling.",
           "path_short": "4-year degree + master's",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
           "train_at": [
             "university"
           ],
-          "look_for": "psychology or counseling"
+          "look_for": "psychology or counseling",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         },
         {
           "soc": "33-2011",
@@ -430,11 +638,17 @@
           "what": "put out fires, rescue people, and give emergency medical care.",
           "path": "Finish high school, complete fire academy training, and earn an EMT certification.",
           "path_short": "Fire academy + EMT",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
           "train_at": [
             "college"
           ],
-          "look_for": "fire science or EMT"
+          "look_for": "fire science or EMT",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ]
         }
       ]
     }

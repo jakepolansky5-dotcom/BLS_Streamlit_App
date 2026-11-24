@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
 <style>
 /* Layout: one long page; each focus area = big numbered marker + summary list + a job-by-row grid (columns = jobs, rows = what / video / training), collapsing to one card per job on phones. */
 :root {
@@ -22,8 +22,9 @@
   --gold-soft: #fff4d1;
   --good: #1f7a4d;
   --good-soft: #e3f4ea;
-  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --font-body: "Atkinson Hyperlegible", "Verdana", "Segoe UI", system-ui, sans-serif;
+  /* Noto Serif (Google Fonts); if it cannot load, the browser tries each next font in order */
+  --font-display: "Noto Serif", "Georgia Pro", "Nexa", Arial, "DIN Next", Bahnschrift, serif;
+  --font-body: "Noto Serif", "Georgia Pro", "Nexa", Arial, "DIN Next", Bahnschrift, serif;
   --step--1: 0.875rem;
   --step-0: 1.0625rem;
   --step-1: 1.3rem;
@@ -45,6 +46,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
@@ -163,6 +165,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 .video:hover .play { transform: scale(1.08); }
 @media (prefers-reduced-motion: reduce) { .video .thumb .play { transition: none; } }
 .video .cap { font-size: var(--step--1); color: var(--muted); }
+.video .cap b { color: var(--ink); font-weight: 600; }
+.more-vids { margin: .45rem 0 0; font-size: .8rem; color: var(--muted); }
 
 .training ul { margin: 0; padding-left: 1.1rem; display: grid; gap: .35rem; font-size: .97rem; }
 
@@ -408,10 +412,12 @@ footer p { margin: 0; max-width: 85ch; }
           </div>
           <div class="cell">
             <span class="cell-label">What's it like?</span>
-            <a class="video" href="${esc(j.video)}" target="_blank" rel="noopener">
+            ${(() => { const [v, ...more] = j.videos; return `
+            <a class="video" href="${esc(v.url)}" target="_blank" rel="noopener">
               <span class="thumb"><span class="play" aria-hidden="true"></span><span class="tag">${esc(j.name)}</span></span>
-              <span class="cap">Watch a day on the job ↗</span>
+              <span class="cap"><b>${esc(v.title)}</b> · ${esc(v.source)} ↗</span>
             </a>
+            ${more.length ? `<p class="more-vids">More: ${more.map((m) => `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.source === "CareerOneStop" ? "CareerOneStop" : m.title)}</a>`).join(" · ")}</p>` : ""}`; })()}
           </div>
           <div class="cell spacer" aria-hidden="true"></div>
           <div class="cell training">
@@ -543,7 +549,7 @@ footer p { margin: 0; max-width: 85ch; }
 
   const src = data.sources;
   document.getElementById("sources").innerHTML = `
-    <p class="demo-note"><strong>Demo version.</strong> "Find training near me" lists public colleges and universities in each Louisiana Works region (Regional Labor Market Area); check each school for its current programs. Videos open CareerOneStop's free career videos in a new tab.</p>
+    <p class="demo-note"><strong>Demo version.</strong> "Find training near me" lists public colleges and universities in each Louisiana Works region (Regional Labor Market Area); check each school for its current programs. Videos open in a new tab on PBS, the Michigan Learning Channel, or CareerOneStop.</p>
     <p><strong>Where the numbers come from.</strong> Job demand: <a href="${esc(src.projections_url)}" target="_blank" rel="noopener">${esc(src.projections)}</a>. "Very high demand" means at least 1,000 openings a year statewide, "High demand" at least 400, and every other job here is marked "In demand." "Growing fast" means the job is expected to grow 10% or more by 2034.</p>
     <p>Pay: <a href="${esc(src.wages_url)}" target="_blank" rel="noopener">${esc(src.wages)}</a>. Starting pay is what the lower-paid quarter of workers earn (25th percentile); typical pay is the middle (median).</p>
     <p>In "Browse all in-demand careers," careers that combine several job codes (like K–12 teachers) add up the openings of every code, and their pay is an average weighted by openings. Each career shows the least school you need to start.</p>

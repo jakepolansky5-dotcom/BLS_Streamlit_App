@@ -63,10 +63,10 @@ The choice is remembered in the browser. Schools are listed by type, not by veri
 
 The free BLS API allows a limited number of requests per day without a key. The build tries v2, then v1, and saves
 what it gets to `wages_cache.json`, so later builds only ask for codes it hasn't seen (delete the cache to refresh).
-If BLS refuses entirely, the build keeps the pay from the previous `data.js` and prints which spotlight jobs have no
+If BLS refuses, the build fills missing values from O*NET OnLine's Louisiana wage pages (the same BLS OEWS estimates; only used when the year matches). If that also fails, it keeps the pay from the previous `data.js` and prints which spotlight jobs have no
 starting pay yet; the page then shows typical pay for those. Rerun when BLS is reachable.
 
 ## Still to verify
 
-- Video links point to CareerOneStop career video pages by O*NET code. They could not be checked from the build environment, so click through each one before showing the site to students.
+- Videos: each job's `videos` list in `content.json`; the first is the main one. Skilled Trades lead with student-friendly videos from PBS and the Michigan Learning Channel, found by web search but not watched from the build environment. Preview each before showing students. CareerOneStop links (by O*NET code) are kept as backups and are also unchecked.
 - Training near me lists each region's public colleges and universities by type. Link to specific programs (and add private schools, apprenticeship sponsors, academies) as you confirm them.

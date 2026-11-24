@@ -152,6 +152,30 @@ def spotlight_numbers(codes: list[str], proj: pd.DataFrame, wages: dict) -> dict
     }
 
 
+ONET_WAGES = "https://www.onetonline.org/link/localwages/{code}?st=LA"
+ONET_UA = {"User-Agent": "la-top-jobs-build/1.0 (static site build script)"}
+
+
+def onet_wages(soc: str) -> dict:
+    """Louisiana 25th percentile and median from O*NET OnLine, which republishes the same BLS OEWS
+    estimates. Fallback when the BLS API refuses. Tries the .00 O*NET code, then .01."""
+    import re
+    for suffix in ("00", "01", "02", "03"):
+        try:
+            r = requests.get(ONET_WAGES.format(code=f"{soc}.{suffix}"), headers=ONET_UA, timeout=60)
+        except requests.RequestException:
+            continue
+        if r.status_code != 200:
+            continue
+        text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", r.text))
+        m = re.search(r"Louisiana \$([\d,]+) \$([\d,]+) \$([\d,]+) \$([\d,]+) \$([\d,]+)", text)
+        y = re.search(r"Bureau of Labor Statistics (\d{4}) wage data", text)
+        if m:
+            num = lambda v: int(v.replace(",", ""))
+            return {"start": num(m.group(2)), "typical": num(m.group(3)), "year": y.group(1) if y else ""}
+    return {}
+
+
 def load_previous() -> dict | None:
     f = HERE / "data.js"
     if not f.exists():
@@ -167,6 +191,22 @@ def main() -> None:
     all_codes = sorted({c for v in occ["soc_codes"] for c in split_codes(v)} | set(spot_codes))
     proj = load_projections()
     wages, wage_year = load_wages(all_codes, spot_codes)
+    if wages is None:  # BLS API refused: use cached BLS values, then O*NET for missing starting pay
+        cache = json.loads(WAGE_CACHE.read_text()) if WAGE_CACHE.exists() else {"year": "", "wages": {}}
+        wages, wage_year = {c: dict(v) for c, v in cache["wages"].items()}, cache["year"]
+        missing = [c for c in spot_codes if "start" not in wages.get(c, {})]
+        missing += [c for c in all_codes if "typical" not in wages.get(c, {}) and c not in missing]
+        for c in missing:
+            o = onet_wages(c)
+            if o and (not wage_year or o["year"] == wage_year):
+                wages.setdefault(c, {}).update({k: o[k] for k in ("start", "typical")})
+                print(f"  {c}: from O*NET (BLS {o['year']})")
+            else:
+                print(f"  {c}: no O*NET wages for {wage_year or 'the same year'}")
+        # Codes still missing have no published Louisiana estimate: they drop out of weighted averages
+        # (typical pay then falls back to the LA Works median).
+        cache["wages"].update(wages)
+        WAGE_CACHE.write_text(json.dumps(cache, indent=1, sort_keys=True) + "\n")
     prev = load_previous()
     stale = wages is None
     if stale:

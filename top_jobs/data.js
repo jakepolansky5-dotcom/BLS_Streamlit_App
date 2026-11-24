@@ -14,12 +14,23 @@ window.TOP_JOBS = {
           "what": "build and repair homes, businesses, and other buildings using wood and other materials. They make structures safe and sturdy.",
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
           "train_at": [
             "apprenticeship",
             "college"
           ],
           "look_for": "carpentry or construction",
+          "videos": [
+            {
+              "url": "https://www.michiganlearning.org/learning-hub/educational-videos/high-schoolers-learn-carpentry/",
+              "title": "High Schoolers Learn Carpentry",
+              "source": "Michigan Learning Channel"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "47-2031"
           ],
@@ -28,7 +39,7 @@ window.TOP_JOBS = {
           "demand": "High demand",
           "growing_fast": false,
           "pay_start": 43730,
-          "pay_typical": 49900,
+          "pay_typical": 49920,
           "_lmi": {
             "titles": [
               "Carpenters"
@@ -45,11 +56,22 @@ window.TOP_JOBS = {
           "what": "use heat and special tools to join metal pieces together. They help build and repair machines, pipes, ships, and buildings.",
           "path": "Take a welding program at a community or technical college. Many take less than a year.",
           "path_short": "Technical college certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
           "train_at": [
             "college"
           ],
           "look_for": "welding",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/welder-gt9vac/",
+              "title": "A day as a welder",
+              "source": "PBS \u00b7 Careers That Work"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "51-4121"
           ],
@@ -58,7 +80,7 @@ window.TOP_JOBS = {
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 50680,
-          "pay_typical": 62200,
+          "pay_typical": 62250,
           "_lmi": {
             "titles": [
               "Welders, Cutters, Solderers, and Brazers"
@@ -75,12 +97,28 @@ window.TOP_JOBS = {
           "what": "install and repair the wiring and equipment that bring electricity to homes, schools, and businesses, so the lights stay on safely.",
           "path": "Finish high school, then join a paid apprenticeship (about 4 years). You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
           "train_at": [
             "apprenticeship",
             "college"
           ],
           "look_for": "electrical",
+          "videos": [
+            {
+              "url": "https://www.michiganlearning.org/learning-hub/educational-videos/on-the-job-with-motor-city-electric/",
+              "title": "On the Job with Motor City Electric",
+              "source": "Michigan Learning Channel"
+            },
+            {
+              "url": "https://www.pbs.org/video/electrician-jsjfht/",
+              "title": "A day as an electrician",
+              "source": "PBS \u00b7 Careers That Work"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "47-2111"
           ],
@@ -89,7 +127,7 @@ window.TOP_JOBS = {
           "demand": "Very high demand",
           "growing_fast": true,
           "pay_start": 48910,
-          "pay_typical": 61500,
+          "pay_typical": 61540,
           "_lmi": {
             "titles": [
               "Electricians"
@@ -106,11 +144,27 @@ window.TOP_JOBS = {
           "what": "keep the big machines in factories and plants running. They find out what is broken and fix it fast.",
           "path": "Take an industrial maintenance program at a technical college, then keep learning on the job.",
           "path_short": "Technical college + on-the-job",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
           "train_at": [
             "college"
           ],
           "look_for": "industrial maintenance",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/millwright-6srsar/",
+              "title": "A day as a millwright",
+              "source": "PBS \u00b7 Careers That Work"
+            },
+            {
+              "url": "https://www.pbs.org/video/byyou-education-when-i-grow-i-want-be-maintenance-mechanic/",
+              "title": "When I Grow Up: Maintenance Mechanic",
+              "source": "Valley PBS"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "49-9041"
           ],
@@ -119,7 +173,7 @@ window.TOP_JOBS = {
           "demand": "High demand",
           "growing_fast": true,
           "pay_start": 47470,
-          "pay_typical": 60300,
+          "pay_typical": 60260,
           "_lmi": {
             "titles": [
               "Industrial Machinery Mechanics"
@@ -136,12 +190,28 @@ window.TOP_JOBS = {
           "what": "install and fix the pipes that carry water and gas in homes, businesses, and factories.",
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
           "train_at": [
             "apprenticeship",
             "college"
           ],
           "look_for": "plumbing or pipefitting",
+          "videos": [
+            {
+              "url": "https://www.pbs.org/video/plumbing-jtjo7j/",
+              "title": "Plumbing",
+              "source": "PBS \u00b7 I Build NH"
+            },
+            {
+              "url": "https://www.pbs.org/video/pipefitter-c0khc0/",
+              "title": "Pipefitter",
+              "source": "PBS \u00b7 WVPB American Graduate"
+            },
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "47-2152"
           ],
@@ -150,7 +220,7 @@ window.TOP_JOBS = {
           "demand": "High demand",
           "growing_fast": false,
           "pay_start": 50750,
-          "pay_typical": 63700,
+          "pay_typical": 63680,
           "_lmi": {
             "titles": [
               "Plumbers, Pipefitters, and Steamfitters"
@@ -176,12 +246,18 @@ window.TOP_JOBS = {
           "what": "care for patients in hospitals, clinics, and schools. They give medicine, check on patients, and work with doctors.",
           "path": "Earn a nursing degree (2 or 4 years) and pass the state nursing exam.",
           "path_short": "Nursing degree (2 or 4 years)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
           "train_at": [
             "college",
             "university"
           ],
           "look_for": "nursing (ADN or BSN)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "29-1141"
           ],
@@ -190,7 +266,7 @@ window.TOP_JOBS = {
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 69040,
-          "pay_typical": 80200,
+          "pay_typical": 80230,
           "_lmi": {
             "titles": [
               "Registered Nurses"
@@ -207,11 +283,17 @@ window.TOP_JOBS = {
           "what": "are nurses with extra training. They can examine patients, figure out what is wrong, and prescribe medicine.",
           "path": "Become a registered nurse first, then earn a graduate degree in nursing.",
           "path_short": "Nursing degree + graduate degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
           "train_at": [
             "university"
           ],
           "look_for": "nursing degrees, then graduate nursing",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "29-1171"
           ],
@@ -237,11 +319,17 @@ window.TOP_JOBS = {
           "what": "help patients with everyday needs like eating, bathing, and moving around. They are often the first step into a nursing career.",
           "path": "Finish a short, state-approved training program (a few weeks) and pass a skills test.",
           "path_short": "Short training program",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
           "train_at": [
             "college"
           ],
           "look_for": "nurse aide (CNA)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "31-1131"
           ],
@@ -250,7 +338,7 @@ window.TOP_JOBS = {
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 29070,
-          "pay_typical": 30500,
+          "pay_typical": 30510,
           "_lmi": {
             "titles": [
               "Nursing Assistants"
@@ -267,11 +355,17 @@ window.TOP_JOBS = {
           "what": "keep doctors' offices running. They check patients in, take vital signs, and help doctors during exams.",
           "path": "Earn a certificate from a community or technical college. It usually takes about a year.",
           "path_short": "College certificate (about 1 year)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
           "train_at": [
             "college"
           ],
           "look_for": "medical assisting",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "31-9092"
           ],
@@ -280,7 +374,7 @@ window.TOP_JOBS = {
           "demand": "Very high demand",
           "growing_fast": false,
           "pay_start": 32020,
-          "pay_typical": 36300,
+          "pay_typical": 36320,
           "_lmi": {
             "titles": [
               "Medical Assistants"
@@ -307,11 +401,17 @@ window.TOP_JOBS = {
           "what": "write the code behind apps, websites, and games. They plan how a program should work, then build and test it.",
           "path": "Earn a 4-year degree in computer science or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
           "train_at": [
             "university"
           ],
           "look_for": "computer science",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "15-1252"
           ],
@@ -319,7 +419,7 @@ window.TOP_JOBS = {
           "openings_per_year": 280,
           "demand": "In demand",
           "growing_fast": true,
-          "pay_start": null,
+          "pay_start": 82930,
           "pay_typical": 102800,
           "_lmi": {
             "titles": [
@@ -337,11 +437,17 @@ window.TOP_JOBS = {
           "what": "help people when their computers, phones, or networks stop working. They find the problem and fix it.",
           "path": "Earn a certificate or 2-year degree in information technology. Industry certifications help you get hired.",
           "path_short": "Certificate or 2-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
           "train_at": [
             "college"
           ],
           "look_for": "information technology or networking",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "15-1232"
           ],
@@ -349,8 +455,8 @@ window.TOP_JOBS = {
           "openings_per_year": 250,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 52400,
+          "pay_start": 45050,
+          "pay_typical": 52440,
           "_lmi": {
             "titles": [
               "Computer User Support Specialists"
@@ -367,11 +473,17 @@ window.TOP_JOBS = {
           "what": "design roads, bridges, levees, and water systems, and make sure they are built safely.",
           "path": "Earn a 4-year engineering degree. Many go on to earn a state engineering license.",
           "path_short": "4-year engineering degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
           "train_at": [
             "university"
           ],
           "look_for": "civil engineering",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "17-2051"
           ],
@@ -379,8 +491,8 @@ window.TOP_JOBS = {
           "openings_per_year": 220,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 105400,
+          "pay_start": 78770,
+          "pay_typical": 105380,
           "_lmi": {
             "titles": [
               "Civil Engineers"
@@ -397,11 +509,17 @@ window.TOP_JOBS = {
           "what": "study how a business uses computers and find ways to make its systems work better.",
           "path": "Earn a 4-year degree in computer science or information systems.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
           "train_at": [
             "university"
           ],
           "look_for": "computer information systems",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "15-1211"
           ],
@@ -409,8 +527,8 @@ window.TOP_JOBS = {
           "openings_per_year": 170,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 95700,
+          "pay_start": 78760,
+          "pay_typical": 95660,
           "_lmi": {
             "titles": [
               "Computer Systems Analysts"
@@ -427,11 +545,17 @@ window.TOP_JOBS = {
           "what": "protect people and nature. They test air, water, and soil for pollution and find ways to clean it up.",
           "path": "Earn a 4-year degree in environmental science, biology, or chemistry.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
           "train_at": [
             "university"
           ],
           "look_for": "environmental science",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "19-2041"
           ],
@@ -439,8 +563,8 @@ window.TOP_JOBS = {
           "openings_per_year": 150,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 69800,
+          "pay_start": 58500,
+          "pay_typical": 69820,
           "_lmi": {
             "titles": [
               "Environmental Scientists and Specialists, Including Health"
@@ -466,11 +590,17 @@ window.TOP_JOBS = {
           "what": "keep track of money for businesses and families. They check records, prepare taxes, and help leaders make smart choices.",
           "path": "Earn a 4-year degree in accounting. Many become Certified Public Accountants (CPAs).",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
           "train_at": [
             "university"
           ],
           "look_for": "accounting",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "13-2011"
           ],
@@ -478,8 +608,8 @@ window.TOP_JOBS = {
           "openings_per_year": 1150,
           "demand": "Very high demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 73800,
+          "pay_start": 59960,
+          "pay_typical": 73810,
           "_lmi": {
             "titles": [
               "Accountants and Auditors"
@@ -496,11 +626,17 @@ window.TOP_JOBS = {
           "what": "hire new workers, help employees with pay and benefits, and teach training classes.",
           "path": "Earn a 4-year degree in business, human resources, or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
           "train_at": [
             "university"
           ],
           "look_for": "business or human resources",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "13-1071",
             "13-1151"
@@ -509,8 +645,8 @@ window.TOP_JOBS = {
           "openings_per_year": 840,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 60300,
+          "pay_start": 48622,
+          "pay_typical": 60302,
           "_lmi": {
             "titles": [
               "Human Resources Specialists",
@@ -528,11 +664,17 @@ window.TOP_JOBS = {
           "what": "help companies tell people about their products and share news with the public.",
           "path": "Earn a 4-year degree in marketing, communications, or business.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
           "train_at": [
             "university"
           ],
           "look_for": "marketing or communications",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "13-1161",
             "27-3031"
@@ -541,8 +683,8 @@ window.TOP_JOBS = {
           "openings_per_year": 660,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 59800,
+          "pay_start": 46462,
+          "pay_typical": 59837,
           "_lmi": {
             "titles": [
               "Market Research Analysts and Marketing Specialists",
@@ -560,11 +702,17 @@ window.TOP_JOBS = {
           "what": "keep big projects on schedule and on budget, from building a new plant to launching new software.",
           "path": "Earn a 4-year degree, then build experience leading projects. Certifications can help.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
           "train_at": [
             "university"
           ],
           "look_for": "business or project management",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "13-1082"
           ],
@@ -572,8 +720,8 @@ window.TOP_JOBS = {
           "openings_per_year": 590,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 84800,
+          "pay_start": 66800,
+          "pay_typical": 84850,
           "_lmi": {
             "titles": [
               "Project Management Specialists"
@@ -590,11 +738,17 @@ window.TOP_JOBS = {
           "what": "study how a business works and suggest ways to save money and work smarter.",
           "path": "Earn a 4-year degree in business or a related field.",
           "path_short": "4-year degree",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
           "train_at": [
             "university"
           ],
           "look_for": "business",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "13-1111"
           ],
@@ -602,8 +756,8 @@ window.TOP_JOBS = {
           "openings_per_year": 490,
           "demand": "High demand",
           "growing_fast": true,
-          "pay_start": null,
-          "pay_typical": 95500,
+          "pay_start": 73730,
+          "pay_typical": 95540,
           "_lmi": {
             "titles": [
               "Management Analysts"
@@ -629,11 +783,17 @@ window.TOP_JOBS = {
           "what": "deliver goods across town or across the country. Long-haul drivers carry big loads in tractor-trailers.",
           "path": "Finish high school, then earn a commercial driver's license (CDL) in a training program that takes a few weeks.",
           "path_short": "CDL training (a few weeks)",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
           "train_at": [
             "college"
           ],
           "look_for": "commercial driving (CDL)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "53-3032",
             "53-3033"
@@ -642,7 +802,7 @@ window.TOP_JOBS = {
           "openings_per_year": 5000,
           "demand": "Very high demand",
           "growing_fast": false,
-          "pay_start": null,
+          "pay_start": 39129,
           "pay_typical": 45500,
           "_lmi": {
             "titles": [
@@ -661,12 +821,18 @@ window.TOP_JOBS = {
           "what": "work on boats, barges, and ships. They help steer, keep watch, tie up the boat, and keep the engines running.",
           "path": "Start after high school with on-the-job training and a U.S. Coast Guard mariner credential.",
           "path_short": "On-the-job + Coast Guard credential",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
           "train_at": [
             "onjob",
             "college"
           ],
           "look_for": "maritime or marine training",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "53-5011"
           ],
@@ -674,8 +840,8 @@ window.TOP_JOBS = {
           "openings_per_year": 910,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 46600,
+          "pay_start": 37570,
+          "pay_typical": 46610,
           "_lmi": {
             "titles": [
               "Sailors and Marine Oilers"
@@ -692,11 +858,17 @@ window.TOP_JOBS = {
           "what": "steer and command boats and ships, like tugboats pushing barges up the Mississippi River.",
           "path": "Work your way up from deckhand, take maritime training, and earn a U.S. Coast Guard license.",
           "path_short": "Maritime training + license",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
           "train_at": [
             "college"
           ],
           "look_for": "maritime or marine training",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "53-5021"
           ],
@@ -704,8 +876,8 @@ window.TOP_JOBS = {
           "openings_per_year": 710,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 117200,
+          "pay_start": 79830,
+          "pay_typical": 117160,
           "_lmi": {
             "titles": [
               "Captains, Mates, and Pilots of Water Vessels"
@@ -722,12 +894,18 @@ window.TOP_JOBS = {
           "what": "drive forklifts and other machines that move heavy materials in warehouses, plants, and ports.",
           "path": "Start after high school. Most training happens on the job, often with a short safety certification.",
           "path_short": "On-the-job training",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
           "train_at": [
             "onjob",
             "college"
           ],
           "look_for": "forklift or warehouse safety",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "53-7051"
           ],
@@ -735,8 +913,8 @@ window.TOP_JOBS = {
           "openings_per_year": 630,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 49000,
+          "pay_start": 40880,
+          "pay_typical": 48950,
           "_lmi": {
             "titles": [
               "Industrial Truck and Tractor Operators"
@@ -753,9 +931,15 @@ window.TOP_JOBS = {
           "what": "load and unload cargo from trucks, rail cars, and ships, and run pumps that move liquids like oil and chemicals.",
           "path": "Start after high school and learn on the job.",
           "path_short": "On-the-job training",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
           "train_at": [
             "onjob"
+          ],
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
           ],
           "codes": [
             "53-7072",
@@ -765,8 +949,8 @@ window.TOP_JOBS = {
           "openings_per_year": 290,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 61800,
+          "pay_start": 59039,
+          "pay_typical": 61844,
           "_lmi": {
             "titles": [
               "Pump Operators, Except Wellhead Pumpers",
@@ -793,11 +977,17 @@ window.TOP_JOBS = {
           "what": "help kids learn reading, math, science, and more, from kindergarten through high school.",
           "path": "Earn a 4-year degree and a Louisiana teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
           "train_at": [
             "university"
           ],
           "look_for": "education (teacher preparation)",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "25-2012",
             "25-2021",
@@ -808,8 +998,8 @@ window.TOP_JOBS = {
           "openings_per_year": 3230,
           "demand": "Very high demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 58400,
+          "pay_start": 49336,
+          "pay_typical": 58410,
           "_lmi": {
             "titles": [
               "Kindergarten Teachers, Except Special Education",
@@ -829,12 +1019,18 @@ window.TOP_JOBS = {
           "what": "protect people and keep communities safe. They answer calls, patrol neighborhoods, and help in emergencies.",
           "path": "Finish high school, then complete police academy training.",
           "path_short": "Police academy",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
           "train_at": [
             "academy",
             "college"
           ],
           "look_for": "criminal justice",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "33-3051"
           ],
@@ -842,8 +1038,8 @@ window.TOP_JOBS = {
           "openings_per_year": 1160,
           "demand": "Very high demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 48400,
+          "pay_start": 43090,
+          "pay_typical": 48380,
           "_lmi": {
             "titles": [
               "Police and Sheriff's Patrol Officers"
@@ -860,11 +1056,17 @@ window.TOP_JOBS = {
           "what": "teach students who learn in different ways, and change lessons so every student can succeed.",
           "path": "Earn a 4-year degree and a special education teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
           "train_at": [
             "university"
           ],
           "look_for": "special education",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "25-2052",
             "25-2058"
@@ -873,8 +1075,8 @@ window.TOP_JOBS = {
           "openings_per_year": 460,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 58900,
+          "pay_start": 50037,
+          "pay_typical": 58940,
           "_lmi": {
             "titles": [
               "Special Education Teachers, Kindergarten and Elementary School",
@@ -892,11 +1094,17 @@ window.TOP_JOBS = {
           "what": "help students with schoolwork, plans after graduation, and personal problems.",
           "path": "Earn a 4-year degree, then a master's degree in counseling.",
           "path_short": "4-year degree + master's",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
           "train_at": [
             "university"
           ],
           "look_for": "psychology or counseling",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "21-1012"
           ],
@@ -904,8 +1112,8 @@ window.TOP_JOBS = {
           "openings_per_year": 420,
           "demand": "High demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 61900,
+          "pay_start": 50770,
+          "pay_typical": 61870,
           "_lmi": {
             "titles": [
               "Educational, Guidance, and Career Counselors and Advisors"
@@ -922,11 +1130,17 @@ window.TOP_JOBS = {
           "what": "put out fires, rescue people, and give emergency medical care.",
           "path": "Finish high school, complete fire academy training, and earn an EMT certification.",
           "path_short": "Fire academy + EMT",
-          "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
           "train_at": [
             "college"
           ],
           "look_for": "fire science or EMT",
+          "videos": [
+            {
+              "url": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
+              "title": "Career video",
+              "source": "CareerOneStop"
+            }
+          ],
           "codes": [
             "33-2011"
           ],
@@ -934,8 +1148,8 @@ window.TOP_JOBS = {
           "openings_per_year": 380,
           "demand": "In demand",
           "growing_fast": false,
-          "pay_start": null,
-          "pay_typical": 33100,
+          "pay_start": 27510,
+          "pay_typical": 33120,
           "_lmi": {
             "titles": [
               "Firefighters"
