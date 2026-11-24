@@ -47,6 +47,7 @@
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+[tabindex="-1"]:focus { outline: none; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
@@ -60,7 +61,7 @@ body {
 }
 h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
 a { color: var(--brand); }
-a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
+a:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 6px; }
 
 /* utility face: labels, numbers, buttons */
 .eyebrow, .glance th, .glance .pay, .demand, .demand-sub, .chip, .near-toggle, .toggle, .control-label, .clist-head,
@@ -381,6 +382,20 @@ footer p { margin: 0; max-width: 85ch; }
       const n = document.getElementById("near-" + s.id); if (n) n.innerHTML = nearHtml(s);
     });
   }
+
+  // In-page links (the category buttons, "Watch the video"): scroll here instead of navigating, because
+  // inside a frame (Streamlit, the preview) a "#section" link can replace the whole page.
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.getAttribute("href").length < 2) return;
+    const target = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+    if (!target) return;
+    e.preventDefault();
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    target.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  });
 
   // jump links
   document.getElementById("jump").innerHTML = data.sectors.map((s, i) => s.status === "live"
