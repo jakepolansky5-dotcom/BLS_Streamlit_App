@@ -15,16 +15,11 @@ window.TOP_JOBS = {
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47203100",
-          "training": [
-            {
-              "label": "ABC Pelican Chapter: craft training",
-              "url": "https://www.abcpelican.com/"
-            },
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "apprenticeship",
+            "college"
           ],
+          "look_for": "carpentry or construction",
           "codes": [
             "47-2031"
           ],
@@ -51,16 +46,10 @@ window.TOP_JOBS = {
           "path": "Take a welding program at a community or technical college. Many take less than a year.",
           "path_short": "Technical college certificate",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=51412100",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            },
-            {
-              "label": "ABC Pelican Chapter: craft training",
-              "url": "https://www.abcpelican.com/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "welding",
           "codes": [
             "51-4121"
           ],
@@ -87,16 +76,11 @@ window.TOP_JOBS = {
           "path": "Finish high school, then join a paid apprenticeship (about 4 years). You earn money while you learn.",
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47211100",
-          "training": [
-            {
-              "label": "ABC Pelican Chapter: craft training",
-              "url": "https://www.abcpelican.com/"
-            },
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "apprenticeship",
+            "college"
           ],
+          "look_for": "electrical",
           "codes": [
             "47-2111"
           ],
@@ -123,12 +107,10 @@ window.TOP_JOBS = {
           "path": "Take an industrial maintenance program at a technical college, then keep learning on the job.",
           "path_short": "Technical college + on-the-job",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=49904100",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "industrial maintenance",
           "codes": [
             "49-9041"
           ],
@@ -155,12 +137,11 @@ window.TOP_JOBS = {
           "path": "Finish high school, then join a paid apprenticeship. You earn money while you learn.",
           "path_short": "Paid apprenticeship",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=47215200",
-          "training": [
-            {
-              "label": "ABC Pelican Chapter: craft training",
-              "url": "https://www.abcpelican.com/"
-            }
+          "train_at": [
+            "apprenticeship",
+            "college"
           ],
+          "look_for": "plumbing or pipefitting",
           "codes": [
             "47-2152"
           ],
@@ -196,16 +177,11 @@ window.TOP_JOBS = {
           "path": "Earn a nursing degree (2 or 4 years) and pass the state nursing exam.",
           "path_short": "Nursing degree (2 or 4 years)",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29114100",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            },
-            {
-              "label": "LSU Health New Orleans School of Nursing",
-              "url": "https://nursing.lsuhsc.edu/"
-            }
+          "train_at": [
+            "college",
+            "university"
           ],
+          "look_for": "nursing (ADN or BSN)",
           "codes": [
             "29-1141"
           ],
@@ -232,12 +208,10 @@ window.TOP_JOBS = {
           "path": "Become a registered nurse first, then earn a graduate degree in nursing.",
           "path_short": "Nursing degree + graduate degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=29117100",
-          "training": [
-            {
-              "label": "LSU Health New Orleans School of Nursing",
-              "url": "https://nursing.lsuhsc.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "nursing degrees, then graduate nursing",
           "codes": [
             "29-1171"
           ],
@@ -264,12 +238,10 @@ window.TOP_JOBS = {
           "path": "Finish a short, state-approved training program (a few weeks) and pass a skills test.",
           "path_short": "Short training program",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31113100",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "nurse aide (CNA)",
           "codes": [
             "31-1131"
           ],
@@ -296,12 +268,10 @@ window.TOP_JOBS = {
           "path": "Earn a certificate from a community or technical college. It usually takes about a year.",
           "path_short": "College certificate (about 1 year)",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=31909200",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "medical assisting",
           "codes": [
             "31-9092"
           ],
@@ -338,16 +308,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in computer science or a related field.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15125200",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "computer science",
           "codes": [
             "15-1252"
           ],
@@ -374,12 +338,10 @@ window.TOP_JOBS = {
           "path": "Earn a certificate or 2-year degree in information technology. Industry certifications help you get hired.",
           "path_short": "Certificate or 2-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15123200",
-          "training": [
-            {
-              "label": "Baton Rouge Community College",
-              "url": "https://www.mybrcc.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "information technology or networking",
           "codes": [
             "15-1232"
           ],
@@ -406,16 +368,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year engineering degree. Many go on to earn a state engineering license.",
           "path_short": "4-year engineering degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=17205100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "civil engineering",
           "codes": [
             "17-2051"
           ],
@@ -442,16 +398,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in computer science or information systems.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=15121100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "computer information systems",
           "codes": [
             "15-1211"
           ],
@@ -478,16 +428,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in environmental science, biology, or chemistry.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=19204100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "environmental science",
           "codes": [
             "19-2041"
           ],
@@ -523,16 +467,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in accounting. Many become Certified Public Accountants (CPAs).",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13201100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "accounting",
           "codes": [
             "13-2011"
           ],
@@ -559,16 +497,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in business, human resources, or a related field.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13107100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "business or human resources",
           "codes": [
             "13-1071",
             "13-1151"
@@ -597,16 +529,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in marketing, communications, or business.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13116100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "marketing or communications",
           "codes": [
             "13-1161",
             "27-3031"
@@ -635,16 +561,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree, then build experience leading projects. Certifications can help.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13108200",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "business or project management",
           "codes": [
             "13-1082"
           ],
@@ -671,16 +591,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree in business or a related field.",
           "path_short": "4-year degree",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=13111100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "business",
           "codes": [
             "13-1111"
           ],
@@ -716,12 +630,10 @@ window.TOP_JOBS = {
           "path": "Finish high school, then earn a commercial driver's license (CDL) in a training program that takes a few weeks.",
           "path_short": "CDL training (a few weeks)",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53303200",
-          "training": [
-            {
-              "label": "Louisiana Community & Technical College System",
-              "url": "https://www.lctcs.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "commercial driving (CDL)",
           "codes": [
             "53-3032",
             "53-3033"
@@ -750,12 +662,11 @@ window.TOP_JOBS = {
           "path": "Start after high school with on-the-job training and a U.S. Coast Guard mariner credential.",
           "path_short": "On-the-job + Coast Guard credential",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53501100",
-          "training": [
-            {
-              "label": "Delgado Community College",
-              "url": "https://www.dcc.edu/"
-            }
+          "train_at": [
+            "onjob",
+            "college"
           ],
+          "look_for": "maritime or marine training",
           "codes": [
             "53-5011"
           ],
@@ -782,12 +693,10 @@ window.TOP_JOBS = {
           "path": "Work your way up from deckhand, take maritime training, and earn a U.S. Coast Guard license.",
           "path_short": "Maritime training + license",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53502100",
-          "training": [
-            {
-              "label": "Delgado Community College",
-              "url": "https://www.dcc.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "maritime or marine training",
           "codes": [
             "53-5021"
           ],
@@ -814,12 +723,11 @@ window.TOP_JOBS = {
           "path": "Start after high school. Most training happens on the job, often with a short safety certification.",
           "path_short": "On-the-job training",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53705100",
-          "training": [
-            {
-              "label": "Louisiana Community & Technical College System",
-              "url": "https://www.lctcs.edu/"
-            }
+          "train_at": [
+            "onjob",
+            "college"
           ],
+          "look_for": "forklift or warehouse safety",
           "codes": [
             "53-7051"
           ],
@@ -846,11 +754,8 @@ window.TOP_JOBS = {
           "path": "Start after high school and learn on the job.",
           "path_short": "On-the-job training",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=53712100",
-          "training": [
-            {
-              "label": "Louisiana Community & Technical College System",
-              "url": "https://www.lctcs.edu/"
-            }
+          "train_at": [
+            "onjob"
           ],
           "codes": [
             "53-7072",
@@ -889,16 +794,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree and a Louisiana teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25202100",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "education (teacher preparation)",
           "codes": [
             "25-2012",
             "25-2021",
@@ -931,12 +830,11 @@ window.TOP_JOBS = {
           "path": "Finish high school, then complete police academy training.",
           "path_short": "Police academy",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33305100",
-          "training": [
-            {
-              "label": "Louisiana Community & Technical College System",
-              "url": "https://www.lctcs.edu/"
-            }
+          "train_at": [
+            "academy",
+            "college"
           ],
+          "look_for": "criminal justice",
           "codes": [
             "33-3051"
           ],
@@ -963,16 +861,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree and a special education teaching certificate.",
           "path_short": "4-year degree + teaching certificate",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=25205200",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "special education",
           "codes": [
             "25-2052",
             "25-2058"
@@ -1001,16 +893,10 @@ window.TOP_JOBS = {
           "path": "Earn a 4-year degree, then a master's degree in counseling.",
           "path_short": "4-year degree + master's",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=21101200",
-          "training": [
-            {
-              "label": "Louisiana State University (LSU)",
-              "url": "https://www.lsu.edu/"
-            },
-            {
-              "label": "Southern University",
-              "url": "https://www.subr.edu/"
-            }
+          "train_at": [
+            "university"
           ],
+          "look_for": "psychology or counseling",
           "codes": [
             "21-1012"
           ],
@@ -1037,12 +923,10 @@ window.TOP_JOBS = {
           "path": "Finish high school, complete fire academy training, and earn an EMT certification.",
           "path_short": "Fire academy + EMT",
           "video": "https://www.careeronestop.org/Videos/CareerVideos/career-videos.aspx?videocode=33201100",
-          "training": [
-            {
-              "label": "Louisiana Community & Technical College System",
-              "url": "https://www.lctcs.edu/"
-            }
+          "train_at": [
+            "college"
           ],
+          "look_for": "fire science or EMT",
           "codes": [
             "33-2011"
           ],
@@ -1064,6 +948,287 @@ window.TOP_JOBS = {
       ]
     }
   ],
+  "regions": [
+    {
+      "id": "1",
+      "name": "New Orleans",
+      "parishes": [
+        "Jefferson",
+        "Orleans",
+        "Plaquemines",
+        "St. Bernard",
+        "St. Charles",
+        "St. James",
+        "St. John the Baptist",
+        "St. Tammany"
+      ],
+      "schools": [
+        {
+          "name": "Delgado Community College",
+          "url": "https://www.dcc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "Nunez Community College",
+          "url": "https://www.nunez.edu/",
+          "type": "college"
+        },
+        {
+          "name": "Northshore Technical Community College",
+          "url": "https://www.northshorecollege.edu/",
+          "type": "college"
+        },
+        {
+          "name": "University of New Orleans",
+          "url": "https://www.uno.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Southern University at New Orleans",
+          "url": "https://www.suno.edu/",
+          "type": "university"
+        },
+        {
+          "name": "LSU Health New Orleans",
+          "url": "https://www.lsuhsc.edu/",
+          "type": "university",
+          "only": [
+            "health"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Baton Rouge",
+      "parishes": [
+        "Ascension",
+        "East Baton Rouge",
+        "East Feliciana",
+        "Iberville",
+        "Livingston",
+        "Pointe Coupee",
+        "St. Helena",
+        "Tangipahoa",
+        "Washington",
+        "West Baton Rouge",
+        "West Feliciana"
+      ],
+      "schools": [
+        {
+          "name": "Baton Rouge Community College",
+          "url": "https://www.mybrcc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "River Parishes Community College",
+          "url": "https://www.rpcc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "Louisiana State University (LSU)",
+          "url": "https://www.lsu.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Southern University",
+          "url": "https://www.subr.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Southeastern Louisiana University",
+          "url": "https://www.southeastern.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Houma",
+      "parishes": [
+        "Assumption",
+        "Lafourche",
+        "Terrebonne"
+      ],
+      "schools": [
+        {
+          "name": "Fletcher Technical Community College",
+          "url": "https://www.fletcher.edu/",
+          "type": "college"
+        },
+        {
+          "name": "Nicholls State University",
+          "url": "https://www.nicholls.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Lafayette",
+      "parishes": [
+        "Acadia",
+        "Evangeline",
+        "Iberia",
+        "Lafayette",
+        "St. Landry",
+        "St. Martin",
+        "St. Mary",
+        "Vermilion"
+      ],
+      "schools": [
+        {
+          "name": "South Louisiana Community College",
+          "url": "https://www.solacc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "University of Louisiana at Lafayette",
+          "url": "https://www.louisiana.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Lake Charles",
+      "parishes": [
+        "Allen",
+        "Beauregard",
+        "Calcasieu",
+        "Cameron",
+        "Jefferson Davis",
+        "Vernon"
+      ],
+      "schools": [
+        {
+          "name": "SOWELA Technical Community College",
+          "url": "https://www.sowela.edu/",
+          "type": "college"
+        },
+        {
+          "name": "McNeese State University",
+          "url": "https://www.mcneese.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Alexandria",
+      "parishes": [
+        "Avoyelles",
+        "Catahoula",
+        "Concordia",
+        "Grant",
+        "LaSalle",
+        "Rapides",
+        "Winn"
+      ],
+      "schools": [
+        {
+          "name": "Central Louisiana Technical Community College",
+          "url": "https://www.cltcc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "LSU of Alexandria",
+          "url": "https://www.lsua.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Shreveport",
+      "parishes": [
+        "Bienville",
+        "Bossier",
+        "Caddo",
+        "Claiborne",
+        "DeSoto",
+        "Lincoln",
+        "Natchitoches",
+        "Red River",
+        "Sabine",
+        "Webster"
+      ],
+      "schools": [
+        {
+          "name": "Bossier Parish Community College",
+          "url": "https://www.bpcc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "Northwest Louisiana Technical Community College",
+          "url": "https://www.nwltc.edu/",
+          "type": "college"
+        },
+        {
+          "name": "LSU Shreveport",
+          "url": "https://www.lsus.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Louisiana Tech University",
+          "url": "https://www.latech.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Grambling State University",
+          "url": "https://www.gram.edu/",
+          "type": "university"
+        },
+        {
+          "name": "Northwestern State University",
+          "url": "https://www.nsula.edu/",
+          "type": "university"
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Monroe",
+      "parishes": [
+        "Caldwell",
+        "East Carroll",
+        "Franklin",
+        "Jackson",
+        "Madison",
+        "Morehouse",
+        "Ouachita",
+        "Richland",
+        "Tensas",
+        "Union",
+        "West Carroll"
+      ],
+      "schools": [
+        {
+          "name": "Louisiana Delta Community College",
+          "url": "https://www.ladelta.edu/",
+          "type": "college"
+        },
+        {
+          "name": "University of Louisiana Monroe",
+          "url": "https://www.ulm.edu/",
+          "type": "university"
+        }
+      ]
+    }
+  ],
+  "statewide_training": {
+    "apprenticeship": {
+      "label": "Find a paid apprenticeship",
+      "url": "https://www.apprenticeship.gov/apprenticeship-job-finder"
+    },
+    "onjob": {
+      "label": "Find jobs that train you on HiRE (Louisiana Works)",
+      "url": "https://www.louisianaworks.net/hire/"
+    },
+    "academy": {
+      "text": "Ask your local police department or sheriff's office about its training academy."
+    }
+  },
   "groups": [
     {
       "name": "Skilled Trades & Related",
@@ -2037,6 +2202,6 @@ window.TOP_JOBS = {
     "projections_url": "https://www.laworks.net/LaborMarketInfo/LMI_OccAllProj.asp?years=20242034",
     "wages": "U.S. Bureau of Labor Statistics, Occupational Employment and Wage Statistics, Louisiana, May 2025",
     "wages_url": "https://www.bls.gov/oes/current/oes_la.htm",
-    "built": "2026-11-23"
+    "built": "2026-11-24"
   }
 };

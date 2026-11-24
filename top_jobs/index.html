@@ -110,8 +110,34 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-
 .chip { display: inline-block; margin-top: .35rem; padding: .1rem .55rem; border-radius: 999px; background: var(--gold-soft); color: var(--ink); font-size: var(--step--1); font-weight: 700; border: 1px solid var(--gold); }
 
 /* job grid: label column + one column per job, rows aligned with subgrid */
-.track { display: grid; gap: 0 1.1rem; grid-template-rows: repeat(3, auto); }
-.row-labels, .job { display: grid; grid-row: 1 / span 3; grid-template-rows: subgrid; }
+.track { display: grid; gap: 0 1.1rem; grid-template-rows: repeat(4, auto); }
+.row-labels, .job { display: grid; grid-row: 1 / span 4; grid-template-rows: subgrid; }
+.row-labels { grid-column: 1; }
+.job { grid-column: var(--col); }
+.cell.spacer, .row-label.spacer { padding: 0; border: 0; }
+
+/* "Find training near me": a full-width row under the videos */
+.near { grid-row: 3; grid-column: 1 / -1; position: relative; z-index: 1; display: grid; gap: .8rem; justify-items: start; padding-block: 1rem; border-top: 1px solid var(--line); }
+.near-toggle {
+  display: inline-flex; align-items: center; gap: .5rem; font: inherit; font-weight: 700; font-size: var(--step--1); cursor: pointer;
+  padding: .45rem .95rem .45rem .7rem; border-radius: 999px; border: 2px solid var(--brand); background: var(--surface); color: var(--brand);
+}
+.near-toggle:hover { background: var(--bg); }
+.near-toggle svg { width: 1.05rem; height: 1.05rem; flex: none; }
+.near-toggle .chev { transition: transform .15s ease; }
+.near-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .near-toggle .chev { transition: none; } }
+.near-panel { display: grid; gap: .7rem; width: 100%; padding: .9rem 1rem; background: var(--bg); border-radius: 12px; border: 1px solid var(--line); }
+.near-q { margin: 0; font-weight: 700; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.parish-pick { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; font-size: var(--step--1); color: var(--muted); }
+.parish-pick select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: .3rem .5rem; max-width: 100%; }
+.near-parishes { margin: 0; font-size: var(--step--1); color: var(--muted); max-width: 90ch; }
+.near-hint { margin: 0; font-size: .95rem; color: var(--muted); }
+.train-where { margin: 0 0 .4rem; font-size: var(--step--1); font-weight: 700; color: var(--muted); }
+.training .ask { margin: .55rem 0 0; font-size: var(--step--1); color: var(--muted); }
+.training .ask b { color: var(--ink); }
+.training .kind { display: block; font-size: .75rem; color: var(--muted); }
 .row-label { font-family: var(--font-display); font-weight: 600; font-size: var(--step-1); line-height: 1.15; padding-block: 1rem; border-top: 1px solid var(--line); }
 .cell { padding-block: 1rem; border-top: 1px solid var(--line); min-width: 0; }
 .cell-label { display: none; }
@@ -209,6 +235,9 @@ footer p { margin: 0; max-width: 85ch; }
   .track { display: grid; grid-template-columns: 1fr !important; gap: 1rem; }
   .row-labels { display: none; }
   .job { grid-row: auto; display: grid; grid-template-rows: none; gap: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: .25rem 1rem; }
+  .cell.spacer { display: none; }
+  .job { grid-column: auto; }
+  .near { grid-row: auto; order: -1; border-top: 0; padding-block: 0 .25rem; }
   .cell:first-child { border-top: 0; }
   .cell-label { display: block; font-size: var(--step--1); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
   .video { grid-template-columns: 9rem 1fr; align-items: center; }
@@ -275,6 +304,67 @@ footer p { margin: 0; max-width: 85ch; }
     <span class="demand-sub">About ${roughly(j.openings_per_year)} job openings every year</span>
     ${j.growing_fast ? '<span class="chip">Growing fast</span>' : ""}`;
 
+  // ---------- training near me (LA Works Regional Labor Market Areas) ----------
+  const regions = data.regions || [];
+  const parishToRegion = {};
+  regions.forEach((r) => r.parishes.forEach((p) => { parishToRegion[p] = r.id; }));
+  const allParishes = Object.keys(parishToRegion).sort();
+  let regionId = null;
+  try { regionId = localStorage.getItem("latj-region"); } catch (e) { /* storage blocked */ }
+  if (!regions.some((r) => r.id === regionId)) regionId = null;
+  const openNear = new Set();
+  const region = () => regions.find((r) => r.id === regionId);
+  const PIN = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
+  const KIND = { college: "Community & technical college", university: "University" };
+
+  function trainingHtml(j, s) {
+    const r = region();
+    if (!r) return `<p class="near-hint">Choose your region with <b>Find training near me</b> to see schools near you.</p>`;
+    const sw = data.statewide_training || {};
+    const items = [];
+    (j.train_at || []).forEach((t) => {
+      if (t === "college" || t === "university") {
+        r.schools.filter((x) => x.type === t && (!x.only || x.only.includes(s.id)))
+          .forEach((x) => items.push(`<li><a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)}</a><span class="kind">${KIND[t]}</span></li>`));
+      } else if (sw[t] && sw[t].url) {
+        items.push(`<li><a href="${esc(sw[t].url)}" target="_blank" rel="noopener">${esc(sw[t].label)}</a><span class="kind">Statewide</span></li>`);
+      } else if (sw[t] && sw[t].text) {
+        items.push(`<li>${esc(sw[t].text)}</li>`);
+      }
+    });
+    return `<p class="train-where">${esc(r.name)} region</p><ul>${items.join("")}</ul>` +
+      (j.look_for ? `<p class="ask">Ask about: <b>${esc(j.look_for)}</b></p>` : "");
+  }
+
+  function nearHtml(s) {
+    const r = region(), open = openNear.has(s.id);
+    const label = r ? `Training near me: ${esc(r.name)} region · Change` : "Find training near me";
+    return `<button type="button" class="near-toggle" data-near="${esc(s.id)}" aria-expanded="${open}" aria-controls="nearp-${esc(s.id)}">${PIN}<span>${label}</span>${CHEV}</button>
+      <div class="near-panel" id="nearp-${esc(s.id)}" ${open ? "" : "hidden"}>
+        <p class="near-q">Which part of Louisiana do you live in?</p>
+        <div class="chips" role="group" aria-label="Louisiana regions">
+          ${regions.map((x) => `<button type="button" class="toggle" data-region="${esc(x.id)}" aria-pressed="${x.id === regionId}">${esc(x.name)}</button>`).join("")}
+        </div>
+        <label class="parish-pick">Not sure? Pick your parish:
+          <select id="parish-${esc(s.id)}" data-parish>
+            <option value="">Choose a parish</option>
+            ${allParishes.map((p) => `<option value="${esc(p)}">${esc(p)}</option>`).join("")}
+          </select>
+        </label>
+        ${r ? `<p class="near-parishes">The ${esc(r.name)} region includes ${esc(r.parishes.join(", "))} parishes.</p>` : ""}
+      </div>`;
+  }
+
+  function setRegion(id) {
+    regionId = id;
+    try { localStorage.setItem("latj-region", id); } catch (e) { /* storage blocked */ }
+    data.sectors.filter((s) => s.status === "live").forEach((s) => {
+      s.jobs.forEach((j) => { const el = document.getElementById("train-" + j.anchor); if (el) el.innerHTML = trainingHtml(j, s); });
+      const n = document.getElementById("near-" + s.id); if (n) n.innerHTML = nearHtml(s);
+    });
+  }
+
   // jump links
   document.getElementById("jump").innerHTML = data.sectors.map((s, i) => s.status === "live"
     ? `<li><a href="#${esc(s.id)}"><span class="dot">${i + 1}</span>${esc(s.name)}</a></li>`
@@ -306,10 +396,11 @@ footer p { margin: 0; max-width: 85ch; }
         <div class="row-labels" aria-hidden="true">
           <div class="row-label">What is a…</div>
           <div class="row-label">What's it like to be a…</div>
+          <div class="row-label spacer"></div>
           <div class="row-label">Training near you</div>
         </div>
-        ${s.jobs.map((j) => `
-        <article class="job" id="${esc(j.anchor)}" aria-label="${esc(j.name)}">
+        ${s.jobs.map((j, ji) => `
+        <article class="job" id="${esc(j.anchor)}" style="--col:${ji + 2}" aria-label="${esc(j.name)}">
           <div class="cell what">
             <span class="cell-label">What is ${article(j.name)}${esc(lower(j.name))}?</span>
             <b>${esc(j.plural)}</b><p>${esc(j.what)}</p>
@@ -322,11 +413,13 @@ footer p { margin: 0; max-width: 85ch; }
               <span class="cap">Watch a day on the job ↗</span>
             </a>
           </div>
+          <div class="cell spacer" aria-hidden="true"></div>
           <div class="cell training">
             <span class="cell-label">Training near you</span>
-            <ul>${j.training.map((t) => `<li><a href="${esc(t.url)}" target="_blank" rel="noopener">${esc(t.label)}</a></li>`).join("")}</ul>
+            <div id="train-${esc(j.anchor)}" aria-live="polite">${trainingHtml(j, s)}</div>
           </div>
         </article>`).join("")}
+        <div class="near" id="near-${esc(s.id)}">${nearHtml(s)}</div>
       </div>`;
 
     return `<section id="${esc(s.id)}" class="sector">
@@ -339,6 +432,34 @@ footer p { margin: 0; max-width: 85ch; }
         ${track}
       </div></section>`;
   }).join("");
+
+  // training-near-me interactions
+  const sectorsEl = document.getElementById("sectors");
+  sectorsEl.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-near]");
+    if (t) {
+      const sid = t.dataset.near;
+      openNear.has(sid) ? openNear.delete(sid) : openNear.add(sid);
+      const n = document.getElementById("near-" + sid);
+      n.innerHTML = nearHtml(data.sectors.find((s) => s.id === sid));
+      n.querySelector("[data-near]").focus();
+      return;
+    }
+    const b = e.target.closest("[data-region]");
+    if (b) {
+      const sid = b.closest(".near").id.slice(5);
+      setRegion(b.dataset.region);
+      document.querySelector(`#near-${sid} [data-region="${b.dataset.region}"]`).focus();
+    }
+  });
+  sectorsEl.addEventListener("change", (e) => {
+    const sel = e.target.closest("[data-parish]");
+    if (!sel || !sel.value) return;
+    const sid = sel.closest(".near").id.slice(5), parish = sel.value;
+    setRegion(parishToRegion[parish]);
+    const again = document.getElementById("parish-" + sid);
+    again.value = parish; again.focus();
+  });
 
   // ---------- browse all careers ----------
   const TOP_N = 5;
@@ -422,7 +543,7 @@ footer p { margin: 0; max-width: 85ch; }
 
   const src = data.sources;
   document.getElementById("sources").innerHTML = `
-    <p class="demo-note"><strong>Demo version.</strong> Training links are examples from the Baton Rouge area. Videos open CareerOneStop's free career videos in a new tab.</p>
+    <p class="demo-note"><strong>Demo version.</strong> "Find training near me" lists public colleges and universities in each Louisiana Works region (Regional Labor Market Area); check each school for its current programs. Videos open CareerOneStop's free career videos in a new tab.</p>
     <p><strong>Where the numbers come from.</strong> Job demand: <a href="${esc(src.projections_url)}" target="_blank" rel="noopener">${esc(src.projections)}</a>. "Very high demand" means at least 1,000 openings a year statewide, "High demand" at least 400, and every other job here is marked "In demand." "Growing fast" means the job is expected to grow 10% or more by 2034.</p>
     <p>Pay: <a href="${esc(src.wages_url)}" target="_blank" rel="noopener">${esc(src.wages)}</a>. Starting pay is what the lower-paid quarter of workers earn (25th percentile); typical pay is the middle (median).</p>
     <p>In "Browse all in-demand careers," careers that combine several job codes (like K–12 teachers) add up the openings of every code, and their pay is an average weighted by openings. Each career shows the least school you need to start.</p>

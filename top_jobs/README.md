@@ -42,6 +42,15 @@ Teaching & Public Service. Each is a `sector` in `content.json` with a `group` t
 code; a job can list several codes (`"25-2012, 25-2021"`), which are combined: openings add up and pay is an
 openings-weighted average. To add a focus area, add a sector with `"status": "live"` and rerun the build.
 
+## Training near me
+
+Under the videos in each focus area, "Find training near me" lets a student pick one of the 8 Louisiana Works
+Regional Labor Market Areas (or their parish). Each job's "Training near you" cell then lists matching schools in
+that region. The region list, parishes (from the LA Works projections page) and public community/technical colleges
+and universities are in `content.json` under `regions`. Each job's `train_at` says what kind of training fits
+(`college`, `university`, `apprenticeship`, `onjob`, `academy`) and `look_for` says which program to ask about.
+The choice is remembered in the browser. Schools are listed by type, not by verified program, so check each one.
+
 ## When BLS is unavailable
 
 The free BLS API allows a limited number of requests per day without a key. The build tries v2, then v1, and saves
@@ -52,4 +61,4 @@ starting pay yet; the page then shows typical pay for those. Rerun when BLS is r
 ## Still to verify
 
 - Video links point to CareerOneStop career video pages by O*NET code. They could not be checked from the build environment, so click through each one before showing the site to students.
-- Training links are sample Baton Rouge-area providers (top-level sites). Replace them with specific programs per region.
+- Training near me lists each region's public colleges and universities by type. Link to specific programs (and add private schools, apprenticeship sponsors, academies) as you confirm them.
